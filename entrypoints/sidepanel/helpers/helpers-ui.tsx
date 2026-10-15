@@ -13,7 +13,9 @@ import {
     FaTimesCircle,
     FaClock,
     FaSpinner,
-    FaThreads,\n    FaInstagram\n} from "../assets/constants/icons";
+    FaThreads,
+    FaInstagram
+} from "../assets/constants/icons";
 
 export const getStatusColor = (state: string) => {
     switch (state) {
@@ -47,7 +49,7 @@ export const getChannelIcon = (channelName: string) => {
     const name = channelName?.toLowerCase();
     if (name === "facebook")
         return <FaFacebook data-preserve-color="true" style={{ color: "#1877F2" }} size={12} />;
-    if (name === "instagram")\n        return <FaInstagram data-preserve-color="true" style={{ color: "#E4405F" }} size={12} />;\n    if (name === "telegram")
+    if (name === "instagram") return <FaInstagram data-preserve-color="true" style={{ color: "#E4405F" }} size={12} />; if (name === "telegram")
         return <FaTelegram data-preserve-color="true" style={{ color: "#24A1DE" }} size={12} />;
     if (name === "tiktok")
         return <FaTiktok data-preserve-color="true" style={{ color: "#000000" }} size={12} />;

@@ -10,21 +10,21 @@ import { TYPE_OPTIONS, PLATFORM_OPTIONS } from "../../helpers/constants";
 import { MultiSelectFilter, SearchInput } from "../../components/ui";
 import { getPageNumbers } from "../../helpers/helpers";
 import AssignItem, { getInfiltrationStatus, infiltrationLabels, type InfiltrationStatus } from "./AssignItem";
-import { getMemberSourcesApi } from "../../infrastructure/api/source-member.api";
+import { getMemberSourcesApi, getMemberSourcesGroup } from "../../infrastructure/api/source-member.api";
 
 
 const PAGE_SIZE = 10;
 
 // ─── Component ───────────────────────────────────────────────────────────────
-export type GroupPageDataSource = typeof getMemberSourcesApi;
+export type GroupPageDataSource = typeof getMemberSourcesGroup;
 
 export interface GroupPageProps {
   dataSource?: GroupPageDataSource;
 }
 
-function GroupPage({ dataSource = getMemberSourcesApi }: GroupPageProps = {}) {
+function GroupPage({ dataSource = getMemberSourcesGroup }: GroupPageProps = {}) {
   const { user, loading: authLoading } = useAuth();
-  const [profiles, setProfiles] = useState<GroupProfile[]>([]);
+  const [profiles, setProfiles] = useState<any>([]);
   const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -50,21 +50,20 @@ function GroupPage({ dataSource = getMemberSourcesApi }: GroupPageProps = {}) {
       const limit = PAGE_SIZE;
       const offset = (page - 1) * PAGE_SIZE;
 
-      const res = await dataSource(
-        assigneeId,
-        undefined,
-        debouncedSearch || undefined,
-        offset,
-        limit,
-        selectedPlatforms.length > 0 ? selectedPlatforms : undefined,
-        selectedTypes.length > 0 ? selectedTypes : undefined,
-      );
+      // const res = await dataSource(
+      //   assigneeId,
+      //   undefined,
+      //   debouncedSearch || undefined,
+      //   offset,
+      //   limit,
+      //   selectedPlatforms.length > 0 ? selectedPlatforms : undefined,
+      //   selectedTypes.length > 0 ? selectedTypes : undefined,
+      // );
 
-      const dataList = res?.data || res?.memberSources || (Array.isArray(res) ? res : []);
-      
+      const res = await dataSource();
+      const dataList = res?.data || (Array.isArray(res) ? res : []);
       const count = typeof res?.total === "number" ? res.total : dataList.length;
-      
-
+      console.log("Fetched profiles:", dataList, "Total count:", count);
       setProfiles(dataList);
       setTotalCount(count);
     } catch (err: any) {
@@ -109,8 +108,7 @@ function GroupPage({ dataSource = getMemberSourcesApi }: GroupPageProps = {}) {
   const visibleProfiles = statusFilter === "all" ? profiles : profiles.filter((item) => getInfiltrationStatus(item) === statusFilter);
 
   const handleSearch = (v: string) => { setSearch(v); setPage(1); };
-  const handleStatusFilter = (s: "all" | InfiltrationStatus) => { setStatusFilter(s); };
-
+  const handleStatusFilter = (s: any) => { setStatusFilter(s); };
 
   return (
     <div className="group-page">
@@ -138,9 +136,9 @@ function GroupPage({ dataSource = getMemberSourcesApi }: GroupPageProps = {}) {
       <nav className="group-page__status-tabs" aria-label="Lọc trạng thái nhiệm vụ">
         {[
           { id: 'all', label: 'Tất cả' },
-          { id: 'NOT_EXIST', label: infiltrationLabels.NOT_EXIST },
-          { id: 'UNASSIGNED', label: infiltrationLabels.UNASSIGNED },
-          { id: 'ASSIGNED', label: infiltrationLabels.ASSIGNED },
+          { id: 'NOT_EXIST', label: "not existed" },
+          { id: 'UNASSIGNED', label: "unassigned" },
+          { id: 'ASSIGNED', label: "assigned" },
         ].map((item) => (
           <button key={item.id} type="button"
             className={`group-page__status-tab ${statusFilter === item.id ? 'is-active' : ''}`}

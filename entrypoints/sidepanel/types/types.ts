@@ -49,7 +49,8 @@ export interface GroupProfile {
     favorite: boolean;
     avatarPath: string;
     /** Assignment status codes provided by the API. */
-    assign_status?: string[];\n    /** Membership status codes supplied by the source API. */\n    status?: string[];\n    group_id?: string;\n    is_profile?: boolean;\n    crawler_system?: string;\n    crawled_time?: number;\n    created_time?: number;\n    updated_time?: number;
+    assign_status?: string[];
+    /** Membership status codes supplied by the source API. */    status?: string[]; group_id?: string; is_profile?: boolean; crawler_system?: string; crawled_time?: number; created_time?: number; updated_time?: number;
     /** Optional infiltration/task details when supplied by the API. */
     infiltrationStatus?: "NOT_JOINED" | "REQUESTED" | "JOINED";
     infiltratedAccountCount?: number;

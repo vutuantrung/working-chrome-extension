@@ -1,5 +1,92 @@
 import { http } from "../../helpers/helpers-http";
 
+export const getMemberSourcesGroup = async () => {
+    const sampleData = [
+        {
+            "group_id": "598381425115485",
+            "name": "TỔNG TRANG GÀ M99-F88-W855 M99-F88-WA855",
+            "channel_name": "facebook",
+            "url": "https://www.facebook.com/groups/598381425115485/",
+            "crawled_time": 1785296232970,
+            "created_time": 1785296232970,
+            "updated_time": 1789460597117,
+            "is_profile": true,
+            "status": [
+                "not_joined"
+            ],
+            "crawler_system": "extension",
+            "type": "private_group"
+        },
+        {
+            "group_id": "284247790559697",
+            "name": "Cộng đồng game casino sodo, kubet, f88, thabet,.....",
+            "channel_name": "facebook",
+            "url": "https://www.facebook.com/groups/congdonggamecasino/",
+            "crawled_time": 1785258000000,
+            "created_time": 1785279797341,
+            "updated_time": 1789460498886,
+            "is_profile": true,
+            "status": [
+                "joined"
+            ],
+            "type": "private_group",
+            "crawler_system": "extension",
+            "created_time ": 1785258000000,
+            "updated_time ": 1785258000000
+        },
+        {
+            "group_id": "292526197950612",
+            "name": "Việc làm Bạc Liêu",
+            "channel_name": "facebook",
+            "url": "https://www.facebook.com/groups/ZIECLAMBACLIEU",
+            "crawled_time": 1785254642248,
+            "created_time": 1785254642248,
+            "updated_time": 1785254654174,
+            "is_profile": false,
+            "status": [
+                "requested"
+            ],
+            "crawler_system": "extension",
+            "type": "private_group"
+        },
+        {
+            "group_id": "460376280661443",
+            "name": "Hội trao đổi buôn bán các bà mẹ thành phố Bắc Giang",
+            "channel_name": "facebook",
+            "url": "https://www.facebook.com/groups/hoitraodoimuabancacbamethanhphobacgiang",
+            "crawled_time": 1785254593223,
+            "created_time": 1785254593223,
+            "updated_time": 1785254593223,
+            "is_profile": false,
+            "status": [
+                "requested"
+            ],
+            "crawler_system": "extension",
+            "type": "private_group"
+        },
+        {
+            "group_id": "460376280661443",
+            "name": "Hội trao đổi buôn bán các bà mẹ thành phố Bắc Giang",
+            "channel_name": "facebook",
+            "url": "https://www.facebook.com/groups/hoitraodoimuabancacbamethanhphobacgiang",
+            "crawled_time": 1785254593223,
+            "created_time": 1785254593223,
+            "updated_time": 1785254593223,
+            "is_profile": false,
+            "status": [
+                "requested"
+            ],
+            "crawler_system": "extension",
+            "type": "private_group"
+        }
+    ]
+
+    return {
+        data: sampleData,
+        total: sampleData?.length ?? (Array.isArray(sampleData) ? sampleData.length : 0),
+    }
+};
+
 export const getMemberSourcesApi = async (
     data?: string,
     status?: string,
@@ -94,9 +181,9 @@ export const getMemberSourcesApi = async (
         return {
             ...item,
             id:
-                item.id\n                || item.group_id\n                || item.profile_id,
+                item.id || item.group_id || item.profile_id,
             socialId:
-                item.socialId\n                || item.group_id\n                || item.profile_id
+                item.socialId || item.group_id || item.profile_id
                 || (Array.isArray(item.profile_ids) ? item.profile_ids[0] : ""),
             profileName:
                 item.profileName
@@ -118,7 +205,22 @@ export const getMemberSourcesApi = async (
                 item.assignedUserId
                 || item.assignee_id
                 || null,
-            type: item.type,\n            status: Array.isArray(item.status) ? item.status : [],\n            crawled_time: item.crawled_time,\n            created_time: item.created_time,\n            updated_time: item.updated_time,\n            crawler_system: item.crawler_system,\n            is_profile: item.is_profile,
+            type:
+                item.type,
+            status:
+                Array.isArray(item.status)
+                    ? item.status
+                    : [],
+            crawled_time:
+                item.crawled_time,
+            created_time:
+                item.created_time,
+            updated_time:
+                item.updated_time,
+            crawler_system:
+                item.crawler_system,
+            is_profile:
+                item.is_profile,
             originalProfileType:
                 item.originalProfileType
                 || item.type,
