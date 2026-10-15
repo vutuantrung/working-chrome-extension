@@ -392,3 +392,41 @@ html[data-color-mode="dark"] .image-detail-modal :is(.image-detail-modal__input,
 html[data-color-mode="dark"] .image-detail-modal :is(input, textarea)::placeholder {
   color: #95a2b5;
 }
+
+/* SwitchPlatform: both steps and PlatformSelect grid, including forced light backgrounds. */
+html[data-color-mode="dark"] .switch-platform-redesign { background: #10151f; color: #edf0f7; }
+html[data-color-mode="dark"] .switch-platform-redesign__shell { background: #1b2331; border-color: #354255; box-shadow: 0 12px 38px #00000024; }
+html[data-color-mode="dark"] .switch-platform-redesign__eyebrow { color: #ff9aaf; }
+html[data-color-mode="dark"] .switch-platform-redesign__step,
+html[data-color-mode="dark"] .switch-platform-redesign__heading p,
+html[data-color-mode="dark"] .switch-platform-redesign__hint,
+html[data-color-mode="dark"] .switch-platform-redesign__selected small,
+html[data-color-mode="dark"] .switch-platform-redesign__mode-copy small,
+html[data-color-mode="dark"] .switch-platform-redesign__section-heading > span:last-child { color: #aab6c9; }
+html[data-color-mode="dark"] .switch-platform-redesign__heading h1,
+html[data-color-mode="dark"] .switch-platform-redesign__section-heading,
+html[data-color-mode="dark"] .switch-platform-redesign__selected strong,
+html[data-color-mode="dark"] .switch-platform-redesign__mode-copy strong { color: #f0f3f9; }
+html[data-color-mode="dark"] .switch-platform-redesign__heading-icon,
+html[data-color-mode="dark"] .switch-platform-redesign__mode-icon { background: #442733; color: #ff9eb3; }
+html[data-color-mode="dark"] .switch-platform-redesign__pulse { background: #ff7293; box-shadow: 0 0 0 4px #442733; }
+html[data-color-mode="dark"] .switch-platform-redesign__progress span { background: #354255; }
+html[data-color-mode="dark"] .switch-platform-redesign__progress .is-complete { background: #e34d6d; }
+html[data-color-mode="dark"] .switch-platform-redesign__hint { border-color: #354255; }
+html[data-color-mode="dark"] .switch-platform-redesign__back { color: #ff9eb3; }
+html[data-color-mode="dark"] .switch-platform-redesign__selected { background: #202b3a; border-color: #42516a; }
+html[data-color-mode="dark"] .switch-platform-redesign__selected-icon { background: #2c394c; }
+html[data-color-mode="dark"] .switch-platform-redesign__selected-check { background: #193b2f; color: #7ce2b0; }
+html[data-color-mode="dark"] .switch-platform-redesign__mode { background: #202b3a; border-color: #42516a; color: #edf0f7; }
+html[data-color-mode="dark"] .switch-platform-redesign__mode:hover:not(:disabled),
+html[data-color-mode="dark"] .switch-platform-redesign__mode:focus-visible { background: #342935; border-color: #a95770; }
+html[data-color-mode="dark"] .switch-platform-redesign__mode-arrow { color: #ff9eb3; }
+html[data-color-mode="dark"] .platform-select--switch .platform-select__card { background: #202b3a !important; border-color: #42516a; color: #edf0f7; }
+html[data-color-mode="dark"] .platform-select--switch .platform-select__card:hover:not(:disabled),
+html[data-color-mode="dark"] .platform-select--switch .platform-select__card:focus-visible { background: #342935 !important; border-color: #a95770; box-shadow: 0 0 0 3px #b90b2f26; }
+html[data-color-mode="dark"] .platform-select--switch .platform-select__card--current { background: #392732 !important; border-color: #875064; }
+html[data-color-mode="dark"] .platform-select--switch .platform-select__icon { background: #2b374a; }
+html[data-color-mode="dark"] .platform-select--switch .platform-select__label { color: #f0f3f9; }
+html[data-color-mode="dark"] .platform-select--switch .platform-select__action { color: #c4cede; }
+html[data-color-mode="dark"] .platform-select--switch .platform-select__card--current .platform-select__action { background: #532d3c; color: #ffafc0; }
+html[data-color-mode="dark"] .platform-select--switch .platform-select__coming-soon { background: #303d50; color: #c4cede; }
