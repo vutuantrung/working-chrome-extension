@@ -9,7 +9,7 @@ import { GroupProfile, User } from "../../types/types";
 import { TYPE_OPTIONS, PLATFORM_OPTIONS } from "../../helpers/constants";
 import { MultiSelectFilter, SearchInput } from "../../components/ui";
 import { getPageNumbers } from "../../helpers/helpers";
-import AssignItem, { getAssignmentStatus, infiltrationLabels, type AssignmentStatus } from "./AssignItem";
+import AssignItem, { getInfiltrationStatus, infiltrationLabels, type InfiltrationStatus } from "./AssignItem";
 import { getMemberSourcesApi } from "../../infrastructure/api/source-member.api";
 
 
@@ -30,7 +30,7 @@ function GroupPage({ dataSource = getMemberSourcesApi }: GroupPageProps = {}) {
   const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
-  const [statusFilter, setStatusFilter] = useState<"all" | AssignmentStatus>("all");
+  const [statusFilter, setStatusFilter] = useState<"all" | InfiltrationStatus>("all");
   const [page, setPage] = useState(1);
   const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>([]);
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
@@ -61,9 +61,9 @@ function GroupPage({ dataSource = getMemberSourcesApi }: GroupPageProps = {}) {
       );
 
       const dataList = res?.data || res?.memberSources || (Array.isArray(res) ? res : []);
-      console.log("Fetched data list:", dataList);
+      
       const count = typeof res?.total === "number" ? res.total : dataList.length;
-      console.log("Total count:", count);
+      
 
       setProfiles(dataList);
       setTotalCount(count);
@@ -99,19 +99,17 @@ function GroupPage({ dataSource = getMemberSourcesApi }: GroupPageProps = {}) {
   ]);
 
   const totalPages = Math.max(1, Math.ceil(totalCount / PAGE_SIZE));
-  // Counts are based on the currently loaded API page; no missing status is inferred.
-  const taskStatusCounts: Record<"all" | AssignmentStatus, number> = {
+  // Status counts apply to the current API page, not the entire dataset.
+  const taskStatusCounts: Record<"all" | InfiltrationStatus, number> = {
     all: totalCount,
-    NOT_EXIST: profiles.filter((item) => getAssignmentStatus(item) === "NOT_EXIST").length,
-    UNASSIGNED: profiles.filter((item) => getAssignmentStatus(item) === "UNASSIGNED").length,
-    ASSIGNED: profiles.filter((item) => getAssignmentStatus(item) === "ASSIGNED").length,
+    requested: profiles.filter((item) => getInfiltrationStatus(item) === "requested").length,
+    not_joined: profiles.filter((item) => getInfiltrationStatus(item) === "not_joined").length,
+    joined: profiles.filter((item) => getInfiltrationStatus(item) === "joined").length,
   };
-  const visibleProfiles = statusFilter === "all"
-    ? profiles
-    : profiles.filter((item) => getAssignmentStatus(item) === statusFilter);
+  const visibleProfiles = statusFilter === "all" ? profiles : profiles.filter((item) => getInfiltrationStatus(item) === statusFilter);
 
   const handleSearch = (v: string) => { setSearch(v); setPage(1); };
-  const handleStatusFilter = (s: any) => { setStatusFilter(s); };
+  const handleStatusFilter = (s: "all" | InfiltrationStatus) => { setStatusFilter(s); };
 
 
   return (
