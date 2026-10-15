@@ -21,7 +21,7 @@ export { LuArrowLeftRight as FaExchangeAlt } from "react-icons/lu";
 export { LuTriangleAlert as FaExclamationTriangle } from "react-icons/lu";
 export { LuEye as FaEye } from "react-icons/lu";
 export { LuEyeOff as FaEyeSlash } from "react-icons/lu";
-export { FaFacebook } from "react-icons/fa";
+export { FaFacebook, FaInstagram } from "react-icons/fa";
 export { LuFolder as FaFolder } from "react-icons/lu";
 export { LuFolderOpen as FaFolderOpen } from "react-icons/lu";
 export { LuGlobe as FaGlobe } from "react-icons/lu";
