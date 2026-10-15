@@ -52,7 +52,7 @@ export const PLATFORM_OPTIONS = [
 export const TYPE_OPTIONS = [
     { id: "group", label: "Nhóm công khai" },
     { id: "private_group", label: "Nhóm kín" },
-    { id: "person", label: "Cá nhân" },
+    { id: "profile", label: "Cá nhân" },
     { id: "fanpage", label: "Trang" },
 ];
 
