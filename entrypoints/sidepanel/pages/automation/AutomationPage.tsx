@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import AutomationTab from "../../components/AutomationTab";
 import JsonEditor from "../../components/JsonEditor";
 import TaskMonitorTab from "../../components/Automation/TaskMonitorTab";
-import { updateExtensionSession } from "../../infrastructure/api/user.api";
+import { updateExtensionSession } from "../../infrastructure/api/extension-user.api";
 import {
   appStorage,
   extensionCommands,

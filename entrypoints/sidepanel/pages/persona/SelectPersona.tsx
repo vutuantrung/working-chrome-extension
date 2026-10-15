@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import {
-  activePersonaSession,
-  createPersona,
-  getPersonas,
-} from "../../infrastructure/api/user.api";
+import api from "../../infrastructure/api";
 import { parseList } from "../../helpers/helpers";
 import StatusScreen from "../../components/Persona/StatusScreen";
 import PersonaCard from "../../components/Persona/PersonaCard";
@@ -89,7 +85,7 @@ const SelectPersona: React.FC = () => {
 
     try {
       try {
-        await activePersonaSession(persona.id);
+        await api.extensionUser.activatePersonaSession(persona.id);
       } catch {
         console.warn(
           "[SelectPersona] activePersonaSession failed, proceeding anyway",
@@ -113,7 +109,7 @@ const SelectPersona: React.FC = () => {
       let list: Persona[] = [];
 
       try {
-        const data = await getPersonas(user?.id ?? "");
+        const data = await api.persona.getPersonas(user?.id ?? "");
         console.log("[SelectPersona] raw data:", data);
         list = parseList(data);
         console.log("[SelectPersona] parsed list:", list.length, list);
@@ -129,7 +125,7 @@ const SelectPersona: React.FC = () => {
       if (list.length === 0) {
         setViewState("creating");
         try {
-          const response = await createPersona();
+          const response = await api.persona.createPersona();
           const created: Persona = response?.data ?? response;
           await activateAndProceed(created);
         } catch (err) {

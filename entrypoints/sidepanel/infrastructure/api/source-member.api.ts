@@ -1,35 +1,5 @@
 import { http } from "../../helpers/helpers-http";
 
-// background, sidepanel
-export const getProxyInfo = async (proxy_id: string) => {
-    const response = await http.get(`/proxies/${proxy_id}`);
-    return response.data;
-};
-// background, sidepanel
-export const getExtensionConfigInfo = async (
-    extension_config_id: string,
-    filter?: any,
-) => {
-    const response = await http.get(`/extension-configs/${extension_config_id}`, {
-        params: {
-            relation_proxy: true,
-            relation_user: true,
-            relation_social_accounts: true,
-            ...(filter && { filter: JSON.stringify(filter) }),
-            include_topics: true,
-        },
-    });
-    return response.data;
-};
-
-
-export interface GetMemberSourcesResponse {
-    success?: boolean;
-    memberSources?: any[];
-    data?: any[];
-    total?: number;
-}
-
 export const getMemberSourcesApi = async (
     data?: string,
     status?: string,
@@ -39,7 +9,7 @@ export const getMemberSourcesApi = async (
     platform?: string[],
     type?: string[],
     assigneeId?: string,
-): Promise<GetMemberSourcesResponse> => {
+) => {
     const where: Record<string, any> = {};
 
     const effectiveAssigneeId = assigneeId || data;

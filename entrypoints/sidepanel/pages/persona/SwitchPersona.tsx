@@ -1,8 +1,8 @@
 import "../../assets/css/pages/PersonaPage.css";
+import api from "../../infrastructure/api";
 import { localStorageService } from "../../../../entrypoints/sidepanel/application/services/SidepanelServices";
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import { getPersonas } from "../../infrastructure/api/user.api";
 import { parseList } from "../../helpers/helpers";
 import { Persona, ViewState } from "../../types/types";
 import ConfirmModal from "../../components/modal/ConfirmModal";
@@ -47,7 +47,7 @@ const SwitchPersona: React.FC<SwitchPersonaProps> = ({ onSwitched }) => {
       const currentPersonaId = localStorageService.getItem("selectedPersonaId");
 
       try {
-        const data = await getPersonas(user?.id ?? "");
+        const data = await api.persona.getPersonas(user?.id ?? "");
         const list: Persona[] = parseList(data?.data ?? data);
         const switchable = list.filter((p) => p.id !== currentPersonaId);
 

@@ -6,9 +6,9 @@ import {
   extensionStorage,
   localStorageService,
 } from "../../../../entrypoints/sidepanel/application/services/SidepanelServices";
+import api from '../../../../entrypoints/sidepanel/infrastructure/api';
 import { useLocation, useNavigate } from "react-router-dom";
 import { setSelectedPlatformId } from "../../helpers/helpers";
-import { getSocialAccountsByPersona, getProxyInfo } from "../../infrastructure/api/user.api";
 import { normalizePersonaSocialAccount } from "../../../../entrypoints/sidepanel/utils/resolveEffectiveProxy";
 import { PLATFORMS } from "../../helpers/helpers-ui";
 import { useAuth } from "../../contexts/AuthContext";
@@ -167,7 +167,7 @@ const FacebookLoginMode: React.FC = () => {
       const personaId = localStorageService.getItem("selectedPersonaId");
       if (!personaId) return;
 
-      const response = await getSocialAccountsByPersona(personaId);
+      const response = await api.socialAccount.getSocialAccountsByPersona(personaId);
       const accounts: SocialAccount[] = Array.isArray(response?.data)
         ? response.data
         : Array.isArray(response)
@@ -191,7 +191,7 @@ const FacebookLoginMode: React.FC = () => {
             (!account.proxy || Object.keys(account.proxy).length === 0)
           ) {
             try {
-              const proxyData = await getProxyInfo(account.proxy_id);
+              const proxyData = await api.proxy.getProxyInfo(account.proxy_id);
               return { ...account, proxy: proxyData };
             } catch (err) {
               console.warn(

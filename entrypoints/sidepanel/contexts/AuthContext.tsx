@@ -15,20 +15,7 @@ import {
   localStorageService,
 } from "../../sidepanel/application/services/SidepanelServices";
 import type { BrowserCookie, CookieSetDetails, StorageChangeMap } from "../types/BrowserPorts";
-import {
-  activePersonaSession,
-  createPersona,
-  inactivePersona,
-  getExtensionConfigInfo,
-  getPersonaById,
-  getPersonas,
-  getProxiesByPersona,
-  loginApi,
-  loginWithApikeyApi,
-  logoutApi,
-  getProxyInfo,
-  getSocialAccountsByPersona,
-} from "../infrastructure/api/user.api";
+import api from "../infrastructure/api"
 import {
   getPlatformCookieDomains,
   SOCIAL_COOKIE_DOMAINS,
@@ -124,7 +111,7 @@ const hydrateAccountsWithProxy = async (accounts: SocialAccount[]): Promise<Soci
         (!account.proxy || Object.keys(account.proxy || {}).length === 0)
       ) {
         try {
-          const proxyData = await getProxyInfo(account.proxy_id);
+          const proxyData = await api.proxy.getProxyInfo(account.proxy_id);
           return { ...account, proxy: proxyData };
         } catch (err) {
           console.warn(
@@ -387,7 +374,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       try {
         const personaId = localStorageService.getItem("selectedPersonaId");
         if (personaId) {
-          const response = await getSocialAccountsByPersona(personaId);
+          const response = await api.socialAccount.getSocialAccountsByPersona(personaId);
           const rawAccounts: SocialAccount[] = Array.isArray(response?.data)
             ? response.data
             : Array.isArray(response)
@@ -538,7 +525,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     // Persona has no proxy — fetch from API
     try {
-      const list = await getProxiesByPersona(personaId);
+      const list = await api.proxy.getProxiesByPersona(personaId);
       if (Array.isArray(list)) {
         const active = list.find((p: any) => p.active && p.status === "live");
         const first = active ?? list[0];
@@ -572,12 +559,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (existing) return;
 
     try {
-      const data = await getPersonas(userId);
+      const data = await api.persona.getPersonas(userId);
       const list = parseList(data?.data ?? data);
       let persona: unknown = list[0] ?? null;
 
       if (!persona) {
-        const created = await createPersona();
+        const created = await api.persona.createPersona();
         persona = created?.data ?? created;
       }
 
@@ -586,7 +573,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const personaId = getPersonaId(persona);
         if (personaId) {
           try {
-            await activePersonaSession(personaId);
+            await api.extensionUser.activatePersonaSession(personaId);
           } catch (err: any) {
             console.warn(
               "[AuthContext] activePersonaSession (extension config):",
@@ -607,22 +594,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const id = String(personaId).trim();
     if (!id) return;
     try {
-      await activePersonaSession(id);
+      await api.extensionUser.activatePersonaSession(id);
     } catch (err: any) {
       console.warn(
         "[AuthContext] activePersonaSession failed:",
         err?.response?.data || err?.message || err,
       );
-    }
-  };
-
-  const deactivatePersonaSessionApi = async (personaId: string) => {
-    const id = String(personaId).trim();
-    if (!id) return;
-    try {
-      await inactivePersona(id);
-    } catch (err) {
-      console.warn("[AuthContext] inactivePersona failed:", err);
     }
   };
 
@@ -697,7 +674,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const personaId = getPersonaId(persona);
     if (personaId) {
       try {
-        const raw = await getPersonaById(personaId);
+        const raw = await api.persona.getPersonaById(personaId);
         resolved = parsePersonaRecord(raw) ?? persona;
       } catch {
         resolved = persona;
@@ -713,51 +690,57 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const switchPersona = async (personaId: string): Promise<{ success: boolean; error?: string }> => {
-    if (await readHasExtensionConfig()) {
-      return {
-        success: false,
-        error: "Switch persona is only available without extension config.",
-      };
-    }
-
-    const id = String(personaId).trim();
-    if (!id) {
-      return { success: false, error: "Invalid persona id." };
-    }
-
-    const previousPersonaId = localStorageService.getItem("selectedPersonaId");
-
     try {
-      if (previousPersonaId && previousPersonaId !== id) {
-        await deactivatePersonaSessionApi(previousPersonaId);
+      if (await readHasExtensionConfig()) {
+        return {
+          success: false,
+          error: "Switch persona is only available without extension config.",
+        };
       }
-      await activatePersonaSessionApi(id);
+      const currentId = String(personaId).trim();
+      if (!currentId) {
+        return {
+          success: false,
+          error: "Invalid persona id."
+        };
+      }
+      const localSelectedId = localStorageService.getItem("selectedPersonaId");
+      const previousId = String(localSelectedId).trim();
 
-      const raw = await getPersonaById(id);
-      const persona = parsePersonaRecord(raw);
+
+      if (previousId && previousId !== currentId) {
+        await api.extensionUser.deactivatePersona(previousId);
+      }
+      const activationResult = await api.extensionUser.activatePersonaSession(currentId);
+      console.log('[activationResult]', activationResult);
+
+      const currentPersonaData = await api.persona.getPersonaById(currentId);
+      const persona = parsePersonaRecord(currentPersonaData);
       if (!persona) {
-        return { success: false, error: "Persona not found." };
+        return {
+          success: false,
+          error: "Persona not found."
+        };
       }
 
-      localStorageService.setItem("selectedPersonaId", id);
+      localStorageService.setItem("selectedPersonaId", currentId);
       localStorageService.setItem("selectedPersona", JSON.stringify(persona));
 
-      await appStorage.setItem("local:selectedPersonaId", id);
+      await appStorage.setItem("local:selectedPersonaId", currentId);
       await appStorage.removeItem("local:profile");
       await appStorage.removeItem("local:profileId");
 
       await applyPersonaSession(persona, { reapplyPlatformLogin: true });
       try {
-        await extensionCommands.initializeAfterLogin(
-          (await appStorage.getItem<User>("local:user"))?.extension_session,
-        );
+        const user = await appStorage.getItem<User>("local:user");
+        await extensionCommands.initializeAfterLogin(user?.extension_session);
       } catch (err) {
-        console.warn(
-          "[AuthContext] switchPersona: failed to notify background:",
-          err,
-        );
+        console.warn("[AuthContext] switchPersona: failed to notify background:", err);
       }
-      return { success: true };
+
+      return {
+        success: true
+      };
     } catch (err) {
       console.error("[AuthContext] switchPersona:", err);
       return {
@@ -768,14 +751,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const hasExtensionConfig = hasExtensionConfigId(user?.extension_session?.extension_config_id);
-
   const canSwitchPersona = !hasExtensionConfig;
 
   const syncPersonaContextFromLocalStorage = async (updateState = false) => {
     try {
-      const raw = localStorageService.getItem("selectedPersona");
-      if (!raw) return;
-      const persona = JSON.parse(raw);
+      const localPersona = localStorageService.getItem("selectedPersona");
+      if (!localPersona) return;
+      const persona = JSON.parse(localPersona);
       await persistSelectedPersonaId(persona);
 
       const personaId = getPersonaId(persona);
@@ -1062,7 +1044,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       (async () => {
         try {
           const curExtensionId = extensionId || extensionCommands.getExtensionId()
-          const loginResponse = await loginWithApikeyApi(newApikey, curExtensionId);
+          const loginResponse = await api.extensionUser.loginWithApikeyApi(newApikey, curExtensionId);
           await processLoginResponse(loginResponse, true);
         } catch (err) {
           console.warn(
@@ -1097,11 +1079,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (!apikey || isCancelled) return;
 
         loginInFlight = true;
-        console.log(
-          "[AuthContext] Polling found apikey — attempting auto-login",
-        );
+        console.log("[AuthContext] Polling found apikey — attempting auto-login");
         try {
-          const loginResponse = await loginWithApikeyApi(
+          const loginResponse = await api.extensionUser.loginWithApikeyApi(
             apikey,
             extensionId || extensionCommands.getExtensionId(),
           );
@@ -1172,7 +1152,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     try {
       if (useExtensionConfig) {
-        const extensionConfigInfo = await getExtensionConfigInfo(
+        const extensionConfigInfo = await api.extensionUser.getExtensionConfigInfo(
           extensionConfigId,
           { include: [{ relation: "extension_sessions" }] },
         );
@@ -1262,7 +1242,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const apikey = await getStoredApikey();
         if (apikey) {
           try {
-            const loginResponse = await loginWithApikeyApi(
+            const loginResponse = await api.extensionUser.loginWithApikeyApi(
               apikey,
               extensionId || extensionCommands.getExtensionId(),
             );
@@ -1327,7 +1307,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setError(null);
     try {
       if (username && password) {
-        const loginResponse = await loginApi(
+        const loginResponse = await api.extensionUser.loginApi(
           username,
           password,
           extensionId || extensionCommands.getExtensionId(),
@@ -1349,7 +1329,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       const idToUse = extensionId || extensionCommands.getExtensionId();
       try {
-        await logoutApi(idToUse);
+        await api.extensionUser.logoutApi(idToUse);
       } catch (err) {
         console.warn(
           "[AuthContext] logoutApi error (proceeding with local cleanup):",
@@ -1395,7 +1375,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const apikey = await getStoredApikey();
       if (apikey) {
         try {
-          const loginResponse = await loginWithApikeyApi(
+          const loginResponse = await api.extensionUser.loginWithApikeyApi(
             apikey,
             extensionId || extensionCommands.getExtensionId(),
           );

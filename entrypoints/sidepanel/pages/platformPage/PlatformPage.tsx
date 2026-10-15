@@ -12,8 +12,6 @@ import {
   setSelectedPlatformId,
 } from "../../helpers/helpers";
 import { PlatformId, PlatformObject } from "../../types/types";
-
-import PlatformMetaBar from "../../components/PlatformMetaBar";
 import PlatformSelect from "../../components/PlatformSelect";
 
 const chromeStorageKey = (id: PlatformId) => id === "facebook" ? "fbLoginMode" : `${id}LoginMode`;
