@@ -94,11 +94,9 @@ export const getMemberSourcesApi = async (
         return {
             ...item,
             id:
-                item.id
-                || item.profile_id,
+                item.id\n                || item.group_id\n                || item.profile_id,
             socialId:
-                item.socialId
-                || item.profile_id
+                item.socialId\n                || item.group_id\n                || item.profile_id
                 || (Array.isArray(item.profile_ids) ? item.profile_ids[0] : ""),
             profileName:
                 item.profileName
@@ -120,7 +118,7 @@ export const getMemberSourcesApi = async (
                 item.assignedUserId
                 || item.assignee_id
                 || null,
-            type: item.type,
+            type: item.type,\n            status: Array.isArray(item.status) ? item.status : [],\n            crawled_time: item.crawled_time,\n            created_time: item.created_time,\n            updated_time: item.updated_time,\n            crawler_system: item.crawler_system,\n            is_profile: item.is_profile,
             originalProfileType:
                 item.originalProfileType
                 || item.type,

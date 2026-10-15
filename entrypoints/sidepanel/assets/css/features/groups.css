@@ -650,3 +650,23 @@
         max-width: 51%
     }
 }
+/* Membership state and profile-type display (GroupPage task cards). */
+.group-task-card__type { display:inline-flex; align-items:center; gap:5px; min-width:0; color:#6b7890; font-weight:500; }
+.group-task-card__type svg { flex:none; width:13px; height:13px; }
+.group-task-card__identifier { color:#8992a3; font-size:11px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.group-task-card__meta { flex-wrap:wrap; white-space:normal; overflow:visible; }
+.group-task-card__state { font-weight:600; border-radius:5px; padding:3px 7px; }
+.group-task-card__state--requested { background:#e8f4ff; color:#237bc4; }
+.group-task-card__state--not_joined { background:#edf0f3; color:#687280; }
+.group-task-card__state--joined { background:#e6f8ec; color:#168747; }
+.group-task-card__source, .group-task-card__updated { display:inline-flex; align-items:center; gap:5px; color:#748094; font-size:11px; }
+.group-task-card__updated { margin-left:auto; }
+.group-task-card__avatar svg { width:23px; height:23px; }
+.group-task-card__channel svg { width:14px; height:14px; }
+html[data-color-mode="dark"] .group-task-card__state--requested { background:#17364c; color:#9bd3ff; }
+html[data-color-mode="dark"] .group-task-card__state--not_joined { background:#303946; color:#cad2df; }
+html[data-color-mode="dark"] .group-task-card__state--joined { background:#193b2e; color:#8ce5b1; }
+html[data-color-mode="dark"] .group-task-card__type,
+html[data-color-mode="dark"] .group-task-card__identifier,
+html[data-color-mode="dark"] .group-task-card__source,
+html[data-color-mode="dark"] .group-task-card__updated { color:#aab6c9; }
