@@ -1,0 +1,250 @@
+import { http } from "../helpers/helpers-http";
+import { GetProfileCasesResponse, ImageItem, ImageMeta, Persona, PlatformId, ProfileCase, SavedImage } from "../types/types";
+import { localStorageService } from "../application/services/SidepanelServices";
+import {
+    PLATFORM_CHANGED_EVENT,
+    PLATFORM_LABELS,
+    SELECTED_PLATFORM_KEY
+} from "./constants";
+import { useState, useEffect } from "react";
+
+export function formatTime(timestamp: number) {
+    const date = new Date(timestamp);
+    return date.toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+    });
+};
+
+export function formatDuration(start: number, end?: number) {
+    const duration = (end || Date.now()) - start;
+    const seconds = Math.floor(duration / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+
+    if (hours > 0) {
+        return `${hours}h ${minutes % 60}m`;
+    } else if (minutes > 0) {
+        return `${minutes}m ${seconds % 60}s`;
+    } else {
+        return `${seconds}s`;
+    }
+};
+
+export function formatBytes(bytes: number, decimals: number = 2): string {
+    if (bytes < 0) return "0 B";
+    if (bytes < 1_000) return `${bytes} B`;
+    if (bytes < 1_000_000) return `${(bytes / 1_000).toFixed(decimals)} KB`;
+    return `${(bytes / 1_000_000).toFixed(decimals)} MB`;
+};
+
+export function normalizeSameSite(value: any) {
+    if (value === "no_restriction") return "no_restriction" as const;
+    if (value === "lax") return "lax" as const;
+    if (value === "strict") return "strict" as const;
+    return "unspecified" as const;
+};
+
+export function itemKey(item: ImageItem): string {
+    return item.kind === "saved" ? item.image.id : String(item.timestamp);
+};
+
+export function defaultPendingMeta(timestamp: number): ImageMeta {
+    return { name: "", description: "", capture_time: timestamp, capacity: 0 };
+};
+
+export function defaultSavedMeta(img: SavedImage): ImageMeta {
+    return {
+        name: img.name ?? "",
+        description: img.description ?? "",
+        capture_time: img.capture_time ?? Date.now(),
+        capacity: img.capacity
+    };
+};
+
+export function buildImageUrl(baseUrl: string, caseId: string, evidenId: string): string {
+    return `${baseUrl}/profile-cases/${caseId}/evidens/${evidenId}`;
+};
+
+export function countryFlag(code: string) {
+    if (!code || code.length !== 2) return "🌐";
+    return String.fromCodePoint(
+        ...code
+            .toUpperCase()
+            .split("")
+            .map((c) => 0x1f1e0 - 65 + c.charCodeAt(0)),
+    );
+}
+
+export function parseList(data: any): Persona[] {
+    if (Array.isArray(data)) return data;
+    if (Array.isArray(data?.data)) return data.data;
+    return [];
+}
+
+export function parsePersonaRecord(data: unknown): Persona | null {
+    if (!data || typeof data !== "object") return null;
+    const row = data as Record<string, unknown>;
+    if (row.data && typeof row.data === "object") {
+        return row.data as Persona;
+    }
+    return row as Persona;
+}
+
+export function isTimeValid(time: string): boolean {
+    // matches 00:00:00 to 23:59:59
+    const regex = /^([01]\d|2[0-3]):([0-5]\d):([0-5]\d)$/;
+    return regex.test(time);
+}
+
+export function isPlatformId(value: string | null | undefined): value is PlatformId {
+    return ["facebook", "tiktok", "x", "threads", "youtube"].includes(value ?? "")
+}
+
+function dataUrlToBlob(dataUrl: string): Blob {
+    const [header, base64] = dataUrl.split(',');
+    const mime = header.match(/:(.*?);/)?.[1] ?? 'image/png';
+    const binary = atob(base64);
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) {
+        bytes[i] = binary.charCodeAt(i);
+    }
+    return new Blob([bytes], { type: mime });
+}
+
+export const getProfileCases = async (filter?: any) => {
+    const response = await http.get('/profile-cases', {
+        params: {
+            ...(filter && { filter: JSON.stringify(filter) }),
+        },
+    });
+    return response.data as GetProfileCasesResponse;
+}
+
+export const createProfileCase = async (
+    profileCase: ProfileCase,
+    dataUrls: string[],
+    metadata: { name: string; description: string; capture_time: number }[],
+) => {
+    const form = new FormData();
+
+    form.append("profileCase", JSON.stringify({
+        name: profileCase.name,
+        platform: profileCase.platform,
+        profile_url: profileCase.profile_url,
+        origin_url: profileCase.origin_url,
+        description: profileCase.description
+    }));
+    form.append("evidens", JSON.stringify(metadata));
+
+    dataUrls.forEach((dataUrl, i) => {
+        const blob = dataUrlToBlob(dataUrl);
+        form.append("files", blob, `screenshot-${Date.now()}-${i}.png`);
+    });
+
+    const response = await http.post('/profile-cases', form)
+    return response.data as ProfileCase
+}
+
+export const patchCaseInfo = async (
+    profileCaseId: string,
+    info: { name?: string; platform?: string; profile_url?: string; origin_url?: string; description?: string; },
+    updateImages: { id: string; name: string; description: string }[],
+    deleteIds: string[]
+) => {
+    const response = await http.patch(`/profile-cases/${profileCaseId}`, {
+        ...info,
+        update_images: updateImages,
+        delete_ids: deleteIds
+    })
+    return response.data as ProfileCase
+}
+
+export const postCaseImages = async (
+    profileCaseId: string,
+    dataUrls: string[],
+    metadata: { name: string; description: string; capture_time: number }[]
+) => {
+    const form = new FormData();
+    form.append("evidens", JSON.stringify(metadata));
+    await Promise.all(
+        dataUrls.map(async (dataUrl, i) => {
+            const blob = dataUrlToBlob(dataUrl);
+            form.append("files", blob, `screenshot-${Date.now()}-${i}.png`);
+        })
+    );
+
+    await http.post(`/profile-cases/${profileCaseId}/images`, form)
+}
+
+export function useDebounce<T>(value: T, delay: number) {
+    const [debouncedValue, setDebouncedValue] = useState(value);
+
+    useEffect(() => {
+        const handler = setTimeout(() => { setDebouncedValue(value); }, delay);
+        return () => { clearTimeout(handler); };
+    }, [value, delay]);
+
+    return debouncedValue;
+}
+
+export function getPlatformLabel(id: PlatformId | string | null | undefined): string | null {
+    if (!id || !isPlatformId(id)) return null;
+    return PLATFORM_LABELS[id];
+}
+
+export function getSelectedPlatformId(): PlatformId | null {
+    try {
+        const id = localStorageService.getItem(SELECTED_PLATFORM_KEY);
+        return isPlatformId(id) ? id : null;
+    } catch {
+        return null;
+    }
+}
+
+export function setSelectedPlatformId(id: PlatformId): void {
+    try {
+        localStorageService.setItem(SELECTED_PLATFORM_KEY, id);
+        window.dispatchEvent(
+            new CustomEvent(PLATFORM_CHANGED_EVENT, { detail: { id } }),
+        );
+    } catch { }
+}
+
+export function getSelectedPlatformLabel(): string | null {
+    return getPlatformLabel(getSelectedPlatformId());
+}
+
+export function getCaseStorageKey(caseId: string) {
+    return `screenshots_${caseId}`;
+}
+
+export const getPageNumbers = (current: number, total: number): (number | string)[] => {
+    const pages: (number | string)[] = [];
+    if (total <= 5) {
+        for (let i = 1; i <= total; i++) pages.push(i);
+    } else {
+        pages.push(1);
+        let start = Math.max(2, current - 1);
+        let end = Math.min(total - 1, current + 1);
+
+        if (current <= 3) {
+            end = 4;
+        } else if (current >= total - 2) {
+            start = total - 3;
+        }
+
+        if (start > 2) {
+            pages.push("...");
+        }
+        for (let i = start; i <= end; i++) {
+            pages.push(i);
+        }
+        if (end < total - 1) {
+            pages.push("...");
+        }
+        pages.push(total);
+    }
+    return pages;
+};
