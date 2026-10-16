@@ -14,6 +14,7 @@ import { PLATFORMS } from "../../helpers/helpers-ui";
 import { useAuth } from "../../contexts/AuthContext";
 import type { PlatformId, PlatformObject, SocialAccount } from "../../types/types";
 import PlatformSelect from "../../components/PlatformSelect";
+import { useTranslation } from "../../helpers/i18n";
 
 const chromeStorageKey = (id: PlatformId) => id === "facebook" ? "fbLoginMode" : `${id}LoginMode`;
 const localStorageKey = (id: PlatformId) => id === "facebook" ? "local:fbLoginMode" : `local:${id}LoginMode`;
@@ -26,6 +27,7 @@ const LOGIN_ERROR_MESSAGES: Record<string, string> = {
 };
 
 const FacebookLoginMode: React.FC = () => {
+  const { t } = useTranslation();
   const { loginWithMode } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -247,14 +249,14 @@ const FacebookLoginMode: React.FC = () => {
       {/* Platform switcher preview section */}
       <div className="switch-platform-redesign__shell">
         <WorkspacePageHeader
-          eyebrow="WORKSPACE / PLATFORM"
+          eyebrow={t("platform")}
           title={selectedPlatform
-            ? "Choose how to connect"
-            : "Switch platform"
+            ? t("chooseConnect")
+            : t("switchPlatform")
           }
           description={selectedPlatform
-            ? "Select a sign-in method for the selected network." :
-            "Choose a network to manage in your workspace."
+            ? t("chooseOne") :
+            t("chooseNetwork")
           } />
 
         {/* Progress indicator for platform switch steps */}
@@ -266,14 +268,14 @@ const FacebookLoginMode: React.FC = () => {
         {selectedPlatform
           ?
           < section className="switch-platform-redesign__section">
-            <button className="switch-platform-redesign__back" onClick={() => setSelectedPlatform(null)}>← All platforms
+            <button className="switch-platform-redesign__back" onClick={() => setSelectedPlatform(null)}>← {t("allPlatforms")}
             </button>
             <div className="switch-platform-redesign__selected">
               <strong>{selectedPlatform.label}</strong>
               <span className="switch-platform-redesign__selected-check">✓</span>
             </div>
             <div className="switch-platform-redesign__section-heading">
-              <span>SIGN-IN METHOD</span>
+              <span>{t("signInMethod")}</span>
             </div>
             <div className="switch-platform-redesign__mode-list">
               <button
@@ -282,8 +284,8 @@ const FacebookLoginMode: React.FC = () => {
               >
                 <span className="switch-platform-redesign__mode-icon">⚡</span>
                 <span className="switch-platform-redesign__mode-copy">
-                  <strong>System account</strong>
-                  <small>Continue with the account managed by your workspace.</small>
+                  <strong>{t("systemAccount")}</strong>
+                  <small>{t("systemAccountHint")}</small>
                 </span>
                 <span className="switch-platform-redesign__mode-arrow">→</span></button>
               <button
@@ -292,8 +294,8 @@ const FacebookLoginMode: React.FC = () => {
               >
                 <span className="switch-platform-redesign__mode-icon">↗</span>
                 <span className="switch-platform-redesign__mode-copy">
-                  <strong>Personal account</strong>
-                  <small>Sign in manually using your own credentials.</small>
+                  <strong>{t("personalAccount")}</strong>
+                  <small>{t("personalAccountHint")}</small>
                 </span>
                 <span className="switch-platform-redesign__mode-arrow">→</span>
               </button>
@@ -302,8 +304,8 @@ const FacebookLoginMode: React.FC = () => {
           :
           <section className="switch-platform-redesign__section">
             <div className="switch-platform-redesign__section-heading">
-              <span>AVAILABLE NETWORKS</span>
-              <span>Select a platform ↓</span>
+              <span>{t("availableNetworks")}</span>
+              <span>{t("selectPlatform")} ↓</span>
             </div>
             <PlatformSelect
               busyId={null}
