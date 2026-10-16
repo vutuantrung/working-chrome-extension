@@ -1,3 +1,4 @@
+import { useTranslation } from "../../helpers/i18n";
 import type { Persona } from "../../types/types";
 import Avatar from "./Avatar";
 import GenderDot from "./GenderDot";
@@ -12,7 +13,8 @@ interface PersonaCardProps {
 }
 
 const PersonaCard = ({ persona, selected, onSelect }: PersonaCardProps) => {
-    const fullName = [persona.first_name, persona.last_name].filter(Boolean).join(" ").trim() || "Unnamed persona";
+  const { t } = useTranslation();
+    const fullName = [persona.first_name, persona.last_name].filter(Boolean).join(" ").trim() || t("unnamedPersona");
     const hasJob = Boolean(persona.job && persona.job !== "string");
 
     return (
@@ -20,7 +22,7 @@ const PersonaCard = ({ persona, selected, onSelect }: PersonaCardProps) => {
             type="button"
             onClick={onSelect}
             aria-pressed={selected}
-            aria-label={`${selected ? "Deselect" : "Select"} ${fullName}`}
+            aria-label={`${selected ? t("deselect") : t("select")} ${fullName}`}
             className={`persona-card ${selected ? "persona-card--selected" : ""}`}
         >
             <span className="persona-card__avatar"><Avatar persona={persona} size={46} /></span>
