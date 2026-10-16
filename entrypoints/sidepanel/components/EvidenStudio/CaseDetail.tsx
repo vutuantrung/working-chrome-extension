@@ -1,3 +1,4 @@
+import { useTranslation } from "../../helpers/i18n";
 import "../../assets/css/components/CaseDetail.css";
 import "../../assets/css/features/eviden-studio.css";
 import { useState, useEffect, useRef } from "react";
@@ -29,6 +30,7 @@ function CaseDetail({
   onOpenSidebar,
   onSaved
 }: CaseDetailProps) {
+  const { t } = useTranslation();
   const [detailItem, setDetailItem] = useState<ImageItem | null>(null);
 
   const platform = PLATFORMS.find((p) => p.id === selectedCase.platform);
@@ -61,23 +63,23 @@ function CaseDetail({
     <div className="case-detail custom-scroll">
 
       {!sidebarOpen && (
-        <div className="case-detail__toolbar" aria-label="Case navigation">
-          <button onClick={onOpenSidebar} aria-label="Open cases sidebar" title="Open cases sidebar" className="case-detail__open-sidebar-button">
+        <div className="case-detail__toolbar" aria-label={t("caseNavigation")}>
+          <button onClick={onOpenSidebar} aria-label={t("openCaseSidebar")} title={t("openCaseSidebar")} className="case-detail__open-sidebar-button">
             <LuPanelLeftOpen size={18} />
           </button>
         </div>
       )}
 
-      <section className="case-detail__information" aria-label="Case information">
+      <section className="case-detail__information" aria-label={t("caseInformation")}>
         <div className="case-detail__form">
           <div className="case-detail__form-field case-detail__form-field--name">
-            <label className="case-detail__field-label" htmlFor="case-name">Case name <span className="case-detail__required">*</span></label>
+            <label className="case-detail__field-label" htmlFor="case-name">{t("caseName")} <span className="case-detail__required">*</span></label>
             <div className="case-detail__input-shell case-detail__input-shell--identity">
               {platform?.icon && <span className="case-detail__platform-icon" aria-hidden="true">{platform.icon}</span>}
               <input
                 id="case-name"
                 value={caseFields.name}
-                placeholder="Enter a descriptive case name"
+                placeholder={t("caseNameHint")}
                 className={`case-detail__name-input ${caseFields.name === "" ? "case-detail__name-input--invalid" : ""}`}
                 onChange={(e) => {
                   handleCaseFieldChange({ name: e.target.value });
@@ -122,11 +124,11 @@ function CaseDetail({
           </div>
 
           <div className="case-detail__form-field case-detail__form-field--description">
-            <label className="case-detail__field-label" htmlFor="case-description">Description <span className="case-detail__optional">Optional</span></label>
+            <label className="case-detail__field-label" htmlFor="case-description">{t("description")} <span className="case-detail__optional">{t("optional")}</span></label>
             <textarea
               id="case-description"
               value={caseFields.description}
-              placeholder="Add context or notes about this case…" rows={3}
+              placeholder={t("caseDescriptionHint")} rows={3}
               className="case-detail__description-input"
               onChange={(e) => {
                 handleCaseFieldChange({ description: e.target.value });
@@ -139,8 +141,8 @@ function CaseDetail({
         {(selectedCase.created_time || selectedCase.updated_time) ? (
           <div className="case-detail__meta-footer">
             <FiClock size={13} />
-            {selectedCase.created_time ? <span>Created {new Date(selectedCase.created_time).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric", hour: "2-digit", minute: "2-digit" })}</span> : null}
-            {selectedCase.updated_time ? <span>Updated {new Date(selectedCase.updated_time).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric", hour: "2-digit", minute: "2-digit" })}</span> : null}
+            {selectedCase.created_time ? <span>{t("created")} {new Date(selectedCase.created_time).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric", hour: "2-digit", minute: "2-digit" })}</span> : null}
+            {selectedCase.updated_time ? <span>{t("updated")} {new Date(selectedCase.updated_time).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric", hour: "2-digit", minute: "2-digit" })}</span> : null}
           </div>
         ) : null}
       </section>
@@ -151,14 +153,14 @@ function CaseDetail({
           <span className="case-detail__error-icon">⚠️</span>
           <span>{error}</span>
           <button onClick={dismissError}
-            className="case-detail__error-dismiss" aria-label="Dismiss error">✕</button>
+            className="case-detail__error-dismiss" aria-label={t("dismissError")}>✕</button>
         </div>
       )}
 
       {/* ── Screenshot grid ── */}
-      <section className="case-detail__gallery" aria-label="Screenshots">
+      <section className="case-detail__gallery" aria-label={t("caseScreenshots")}>
         <div className="case-detail__gallery-heading">
-          <div className="case-detail__gallery-heading-copy"><h2 className="case-detail__gallery-title">Screenshots <span className="case-detail__gallery-count">{items.length}</span></h2><p className="case-detail__gallery-subtitle">Manage the evidence collected for this case</p></div>
+          <div className="case-detail__gallery-heading-copy"><h2 className="case-detail__gallery-title">{t("caseScreenshots")} <span className="case-detail__gallery-count">{items.length}</span></h2><p className="case-detail__gallery-subtitle">{t("screenshotsHint")}</p></div>
           <button onClick={handleAddScreenshot} disabled={capturing || saving} className="case-detail__gallery-add">
             <FiPlusCircle size={16} /> {capturing ? "Opening…" : "Add screenshot"}
           </button>
@@ -180,14 +182,14 @@ function CaseDetail({
           {items.length === 0 && (
             <div className="case-detail__empty-gallery">
               <FiImage size={24} />
-              <span>No screenshots yet</span>
-              <small>Add a screenshot to start collecting evidence.</small>
+              <span>{t("noScreenshots")}</span>
+              <small>{t("addScreenshot")}</small>
             </div>
           )}
         </div>
       </section>
 
-      <div className="case-detail__footer" aria-label="Case save status">
+      <div className="case-detail__footer" aria-label={t("caseSaveStatus")}>
         <div className="case-detail__save-bar">
           {(hasChanges || isNewCase) ? (
             <button
