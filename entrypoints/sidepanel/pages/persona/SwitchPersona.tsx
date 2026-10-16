@@ -8,12 +8,14 @@ import { Persona, ViewState } from "../../types/types";
 import ConfirmModal from "../../components/modal/ConfirmModal";
 import StatusScreen from "../../components/Persona/StatusScreen";
 import PersonaCard from "../../components/Persona/PersonaCard";
+import { useTranslation } from "../../helpers/i18n";
 
 interface SwitchPersonaProps {
   onSwitched: () => void;
 }
 
 const SwitchPersona: React.FC<SwitchPersonaProps> = ({ onSwitched }) => {
+  const { t } = useTranslation();
   const { user, canSwitchPersona, switchPersona } = useAuth();
 
   const [viewState, setViewState] = useState<ViewState>("initializing");
@@ -31,8 +33,8 @@ const SwitchPersona: React.FC<SwitchPersonaProps> = ({ onSwitched }) => {
       .join(" ")
       .trim() ||
     selectedPersona.nickname ||
-    "this persona"
-    : "this persona";
+    t("thisPersona")
+    : t("thisPersona");
 
   useEffect(() => {
     if (!canSwitchPersona) {
@@ -118,7 +120,7 @@ const SwitchPersona: React.FC<SwitchPersonaProps> = ({ onSwitched }) => {
   if (viewState === "initializing") {
     return (
       <div className="persona-page">
-        <StatusScreen icon="⏳" title="Loading personas…" />
+        <StatusScreen icon="⏳" title={t("loadingPersonas")} />
       </div>
     );
   }
@@ -128,7 +130,7 @@ const SwitchPersona: React.FC<SwitchPersonaProps> = ({ onSwitched }) => {
       <div className="persona-page">
         <StatusScreen
           icon="🔄"
-          title="Switching persona…"
+          title={t("switchingPersona")}
           subtitle={statusDetail ?? undefined}
         />
       </div>
@@ -140,8 +142,8 @@ const SwitchPersona: React.FC<SwitchPersonaProps> = ({ onSwitched }) => {
       <div className="persona-page">
         <div className="persona-panel">
           <div className="persona-panel__header">
-            <h2 className="persona-panel__title">Switch Persona</h2>
-            <p className="persona-panel__subtitle">No other personas to switch to</p>
+            <h2 className="persona-panel__title">{t("switchPersonaTitle")}</h2>
+            <p className="persona-panel__subtitle">{t("noOtherPersonas")}</p>
           </div>
           <div className="persona-no-options">
             <span className="persona-no-options__icon">👤</span>
@@ -158,8 +160,8 @@ const SwitchPersona: React.FC<SwitchPersonaProps> = ({ onSwitched }) => {
     <div className="persona-page">
       <div className="persona-panel">
         <div className="persona-panel__header">
-          <h2 className="persona-panel__title">Switch Persona</h2>
-          <p className="persona-panel__subtitle">Select a persona to switch to</p>
+          <h2 className="persona-panel__title">{t("switchPersonaTitle")}</h2>
+          <p className="persona-panel__subtitle">{t("switchPersonaHint")}</p>
         </div>
 
         {errorMsg && (
@@ -187,14 +189,14 @@ const SwitchPersona: React.FC<SwitchPersonaProps> = ({ onSwitched }) => {
             disabled={!selectedId || confirming}
             className="persona-primary-btn"
           >
-            {confirming ? "Switching…" : "Switch →"}
+            {confirming ? t("switching") : `${t("switch")} →`}
           </button>
         </div>
       </div>
 
       <ConfirmModal
         open={showConfirm}
-        title="Switch persona?"
+        title={t("switchConfirm")}
         busy={confirming}
         message={
           <>
@@ -212,8 +214,8 @@ const SwitchPersona: React.FC<SwitchPersonaProps> = ({ onSwitched }) => {
             </p>
           </>
         }
-        confirmLabel="Yes, switch"
-        cancelLabel="Cancel"
+        confirmLabel={t("yesSwitch")}
+        cancelLabel={t("cancel")}
         onCancel={() => !confirming && setShowConfirm(false)}
         onConfirm={() => {
           if (!confirming) void handleSwitch();
