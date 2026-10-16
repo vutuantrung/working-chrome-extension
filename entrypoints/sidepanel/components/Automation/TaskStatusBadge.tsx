@@ -1,3 +1,4 @@
+import { useTranslation } from "../../helpers/i18n";
 import { FaCheckCircle } from "../../assets/constants/icons";
 import { FaClock, FaSpinner } from "../../assets/constants/icons";
 import { TASK_STATES } from "../../helpers/constants";
@@ -49,6 +50,7 @@ export default function TaskStatusBadge({
   label,
   className = "",
 }: TaskStatusBadgeProps) {
+  const { t } = useTranslation();
   const config = getStatusConfig(status);
 
   return (
@@ -56,7 +58,7 @@ export default function TaskStatusBadge({
       className={`task-status-badge task-status-badge--${config.variant} ${className}`.trim()}
     >
       {config.icon}
-      <span>{label ?? config.label}</span>
+      <span>{label ?? (config.variant === "running" ? t("running") : config.variant === "pending" ? t("pending") : config.variant === "finished" ? t("taskFinished") : config.variant === "canceled" ? t("canceled") : config.label)}</span>
     </span>
   );
 }
