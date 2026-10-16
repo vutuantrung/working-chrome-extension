@@ -1,6 +1,14 @@
 import { http } from "../../helpers/helpers-http";
 
-export const getMemberSourcesGroup = async () => {
+export const getMemberSourcesGroup = async (
+    id: string,
+    status?: string,
+    search?: string,
+    offset?: number,
+    limit?: number,
+    platform?: string[],
+    type?: string[],
+) => {
     const sampleData = [
         {
             "group_id": "598381425115485",
@@ -15,7 +23,7 @@ export const getMemberSourcesGroup = async () => {
                 "not_joined"
             ],
             "crawler_system": "extension",
-            "type": "private_group"
+            "type": "fanpage"
         },
         {
             "group_id": "284247790559697",
@@ -29,7 +37,7 @@ export const getMemberSourcesGroup = async () => {
             "status": [
                 "joined"
             ],
-            "type": "private_group",
+            "type": "profile",
             "crawler_system": "extension",
             "created_time ": 1785258000000,
             "updated_time ": 1785258000000
@@ -62,12 +70,12 @@ export const getMemberSourcesGroup = async () => {
                 "requested"
             ],
             "crawler_system": "extension",
-            "type": "private_group"
+            "type": "group"
         },
         {
             "group_id": "460376280661443",
             "name": "Hội trao đổi buôn bán các bà mẹ thành phố Bắc Giang",
-            "channel_name": "facebook",
+            "channel_name": "tiktok",
             "url": "https://www.facebook.com/groups/hoitraodoimuabancacbamethanhphobacgiang",
             "crawled_time": 1785254593223,
             "created_time": 1785254593223,
@@ -79,7 +87,20 @@ export const getMemberSourcesGroup = async () => {
             "crawler_system": "extension",
             "type": "private_group"
         }
-    ]
+    ];
+
+    const filter: Record<string, any> = {
+        limit: limit ?? 10,
+        offset: offset ?? 0,
+    };
+
+    console.log("id", id)
+
+    const sampleId = "pbuZqJ8ByrjHYfKrOsq3"
+    //const sampleUrl = 'https://services-delivery-api.atintel.org/social-account/pbuZqJ8ByrjHYfKrOsq3/groups?filter={%22limit%22%3A10%2C%22offset%22%3A0}&apikey=will'
+    const response = await http.get(`/social-account/${sampleId}/groups?filter=${encodeURIComponent(JSON.stringify(filter))}`, filter);
+
+    console.log('[response]', response)
 
     return {
         data: sampleData,

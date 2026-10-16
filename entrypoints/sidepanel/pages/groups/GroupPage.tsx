@@ -4,16 +4,23 @@ import { FaChevronLeft, FaChevronRight } from "../../assets/constants/icons";
 
 import { appStorage } from "../../../../entrypoints/sidepanel/application/services/SidepanelServices";
 import { useAuth } from "../../contexts/AuthContext";
-import { GroupProfile, User } from "../../types/types";
+import { User } from "../../types/types";
 
 import { TYPE_OPTIONS, PLATFORM_OPTIONS } from "../../helpers/constants";
 import { MultiSelectFilter, SearchInput } from "../../components/ui";
 import { getPageNumbers } from "../../helpers/helpers";
 import AssignItem, { getInfiltrationStatus, infiltrationLabels, type InfiltrationStatus } from "./AssignItem";
-import { getMemberSourcesApi, getMemberSourcesGroup } from "../../infrastructure/api/source-member.api";
+import { getMemberSourcesGroup } from "../../infrastructure/api/source-member.api";
 
 
 const PAGE_SIZE = 10;
+
+const JOINED_STATUS = [
+  { id: 'all', label: 'Tất cả' },
+  { id: 'joined', label: "Đã thâm nhập" },
+  { id: 'not_joined', label: "Chưa thâm nhập" },
+  { id: 'requested', label: "Đã gửi yêu cầu" },
+]
 
 // ─── Component ───────────────────────────────────────────────────────────────
 export type GroupPageDataSource = typeof getMemberSourcesGroup;
@@ -47,6 +54,7 @@ function GroupPage({ dataSource = getMemberSourcesGroup }: GroupPageProps = {}) 
         assigneeId = storedUser?.id;
       }
 
+      const id = "some_id";
       const limit = PAGE_SIZE;
       const offset = (page - 1) * PAGE_SIZE;
 
@@ -60,10 +68,20 @@ function GroupPage({ dataSource = getMemberSourcesGroup }: GroupPageProps = {}) 
       //   selectedTypes.length > 0 ? selectedTypes : undefined,
       // );
 
-      const res = await dataSource();
+      const res = await dataSource(
+        id,
+        undefined,
+        debouncedSearch || undefined,
+        offset,
+        limit,
+        selectedPlatforms.length > 0 ? selectedPlatforms : undefined,
+        selectedTypes.length > 0 ? selectedTypes : undefined
+      );
       const dataList = res?.data || (Array.isArray(res) ? res : []);
       const count = typeof res?.total === "number" ? res.total : dataList.length;
+
       console.log("Fetched profiles:", dataList, "Total count:", count);
+      
       setProfiles(dataList);
       setTotalCount(count);
     } catch (err: any) {
@@ -134,12 +152,7 @@ function GroupPage({ dataSource = getMemberSourcesGroup }: GroupPageProps = {}) 
       </div>
 
       <nav className="group-page__status-tabs" aria-label="Lọc trạng thái nhiệm vụ">
-        {[
-          { id: 'all', label: 'Tất cả' },
-          { id: 'NOT_EXIST', label: "not existed" },
-          { id: 'UNASSIGNED', label: "unassigned" },
-          { id: 'ASSIGNED', label: "assigned" },
-        ].map((item) => (
+        {JOINED_STATUS.map((item) => (
           <button key={item.id} type="button"
             className={`group-page__status-tab ${statusFilter === item.id ? 'is-active' : ''}`}
             onClick={() => handleStatusFilter(item.id)}

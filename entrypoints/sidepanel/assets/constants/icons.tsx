@@ -68,6 +68,7 @@ export { LuUserRound as IoPersonOutline } from "react-icons/lu";
 export { LuPanelLeftOpen as LuPanelLeftOpen } from "react-icons/lu";
 export { LuCircleAlert as MdErrorOutline } from "react-icons/lu";
 export { LuImages as MdOutlineCollections } from "react-icons/lu";
+export { LuKey as FiKey } from "react-icons/lu";
 
 const FacebookIcon = () => (
     <svg data-preserve-color="true" style={{ color: "#1877F2" }} viewBox="0 0 24 24" fill="currentColor" width="32" height="32">

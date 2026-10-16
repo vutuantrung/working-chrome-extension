@@ -141,7 +141,6 @@
 button {
   border-radius: 8px;
   border: 1px solid transparent;
-  padding: 0.6em 1.2em;
   font-size: var(--font-size-lg);
   font-weight: 500;
   background-color: #1a1a1a;
@@ -151,11 +150,6 @@ button {
 
 button:hover {
   border-color: var(--color-primary);
-}
-
-button:focus,
-button:focus-visible {
-  /* outline: 4px auto -webkit-focus-ring-color; */
 }
 
 .app-containers {
