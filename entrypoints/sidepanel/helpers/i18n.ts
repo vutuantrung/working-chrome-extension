@@ -24,6 +24,7 @@ export function setLanguage(language: AppLanguage) {
 
 const dictionary = {
   en: {
+    navDashboard:"Dashboard", navAutomation:"Automation", navGroup:"Groups", navEviden:"Evidence", navigation:"Main navigation",
     back:"Back", settings:"Settings", preferences:"PREFERENCES", settingsHint:"Customize your workspace and how the interface behaves.",
     platform:"Platform", platformHint:"Choose a social network and manage its connection.",
     appearance:"Appearance", appearanceHint:"Choose a comfortable layout for your workflow.",
@@ -46,6 +47,7 @@ const dictionary = {
     justUpdated:"just now", inFuture:"in the future"
   },
   vi: {
+    navDashboard:"Tổng quan", navAutomation:"Tự động hóa", navGroup:"Hội nhóm", navEviden:"Bằng chứng", navigation:"Điều hướng chính",
     back:"Quay lại", settings:"Cài đặt", preferences:"TÙY CHỌN", settingsHint:"Tùy chỉnh không gian làm việc và giao diện ứng dụng.",
     platform:"Nền tảng", platformHint:"Chọn mạng xã hội và quản lý kết nối.",
     appearance:"Giao diện", appearanceHint:"Chọn cách hiển thị phù hợp với bạn.",
