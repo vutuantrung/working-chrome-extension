@@ -1,3 +1,4 @@
+import { useTranslation } from "../../helpers/i18n";
 import "../../assets/css/components/TaskMonitorTab.css";
 import { useState, useEffect } from "react";
 import { FaTasks, FaCheckCircle, FaClock, FaTimesCircle, FaPlay, FaHistory, FaChevronDown } from "../../assets/constants/icons";
@@ -12,6 +13,7 @@ import {
 } from "../../application/services/SidepanelServices";
 
 function TaskMonitorTab() {
+  const { t } = useTranslation();
   const [taskList, setTaskList] = useState<Task[]>([]);
   const [expandedTasks, setExpandedTasks] = useState<Set<string>>(new Set());
   const [autoRefresh, setAutoRefresh] = useState(true);
@@ -95,38 +97,38 @@ function TaskMonitorTab() {
             checked={autoRefresh}
             onChange={(e) => setAutoRefresh(e.target.checked)}
           />
-          <label htmlFor="autoRefresh">Auto-refresh</label>
+          <label htmlFor="autoRefresh">{t("autoRefresh")}</label>
         </div>
       </div>
 
-      <div className="stats-grid" aria-label="Task summary">
+      <div className="stats-grid" aria-label={t("tasks")}>
         <div className="stat-card stat-card--running">
           <div className="stat-value stat-value--running">
             <FaPlay className="stat-icon" aria-hidden="true" />
             <span>{runningTasks.length}</span>
           </div>
-          <div className="stat-label">Running</div>
+          <div className="stat-label">{t("running")}</div>
         </div>
         <div className="stat-card stat-card--pending">
           <div className="stat-value stat-value--pending">
             <FaClock className="stat-icon" aria-hidden="true" />
             <span>{pendingTasks.length}</span>
           </div>
-          <div className="stat-label">Pending</div>
+          <div className="stat-label">{t("pending")}</div>
         </div>
         <div className="stat-card stat-card--completed">
           <div className="stat-value stat-value--completed">
             <FaCheckCircle className="stat-icon" aria-hidden="true" />
             <span>{completedTasks.length}</span>
           </div>
-          <div className="stat-label">Completed</div>
+          <div className="stat-label">{t("completed")}</div>
         </div>
         <div className="stat-card stat-card--total">
           <div className="stat-value stat-value--history">
             <FaHistory className="stat-icon" aria-hidden="true" />
             <span>{taskList.length}</span>
           </div>
-          <div className="stat-label">Total</div>
+          <div className="stat-label">{t("total")}</div>
         </div>
       </div>
 
@@ -164,7 +166,7 @@ function TaskMonitorTab() {
                       e.stopPropagation();
                       stopTask(task.taskId);
                     }}
-                    title="Stop this running task"
+                    title={t("stopRunning")}
                   >
                     <FaTimesCircle />
                     Stop
@@ -178,15 +180,15 @@ function TaskMonitorTab() {
               {expandedTasks.has(task.taskId) && (
                 <div className="task-details">
                   <div className="detail-row">
-                    <span className="detail-label">Task ID:</span>
+                    <span className="detail-label">{t("taskId")}:</span>
                     <span className="detail-value">{task.taskId}</span>
                   </div>
                   <div className="detail-row">
-                    <span className="detail-label">Tab ID:</span>
+                    <span className="detail-label">{t("tabId")}:</span>
                     <span className="detail-value">{task.tabId ?? "-"}</span>
                   </div>
                   <div className="detail-row">
-                    <span className="detail-label">Activity ID:</span>
+                    <span className="detail-label">{t("activityId")}:</span>
                     <span className="detail-value">{task.activityId}</span>
                   </div>
                   <div className="detail-row">
@@ -233,7 +235,7 @@ function TaskMonitorTab() {
                       e.stopPropagation();
                       stopTask(task.taskId);
                     }}
-                    title="Stop this pending task"
+                    title={t("stopPending")}
                   >
                     <FaTimesCircle />
                     Stop
@@ -247,15 +249,15 @@ function TaskMonitorTab() {
               {expandedTasks.has(task.taskId) && (
                 <div className="task-details">
                   <div className="detail-row">
-                    <span className="detail-label">Task ID:</span>
+                    <span className="detail-label">{t("taskId")}:</span>
                     <span className="detail-value">{task.taskId}</span>
                   </div>
                   <div className="detail-row">
-                    <span className="detail-label">Tab ID:</span>
+                    <span className="detail-label">{t("tabId")}:</span>
                     <span className="detail-value">{task.tabId ?? "-"}</span>
                   </div>
                   <div className="detail-row">
-                    <span className="detail-label">Activity ID:</span>
+                    <span className="detail-label">{t("activityId")}:</span>
                     <span className="detail-value">{task.activityId}</span>
                   </div>
                 </div>
@@ -304,15 +306,15 @@ function TaskMonitorTab() {
               {expandedTasks.has(task.taskId) && (
                 <div className="task-details">
                   <div className="detail-row">
-                    <span className="detail-label">Task ID:</span>
+                    <span className="detail-label">{t("taskId")}:</span>
                     <span className="detail-value">{task.taskId}</span>
                   </div>
                   <div className="detail-row">
-                    <span className="detail-label">Tab ID:</span>
+                    <span className="detail-label">{t("tabId")}:</span>
                     <span className="detail-value">{task.tabId ?? "-"}</span>
                   </div>
                   <div className="detail-row">
-                    <span className="detail-label">Activity ID:</span>
+                    <span className="detail-label">{t("activityId")}:</span>
                     <span className="detail-value">{task.activityId}</span>
                   </div>
                   <div className="detail-row">
@@ -331,7 +333,7 @@ function TaskMonitorTab() {
                   )}
                   {task.result && (
                     <div className="task-result">
-                      <strong>Result:</strong>{" "}
+                      <strong>{t("result")}:</strong>{" "}
                       {typeof task.result === "object" &&
                         (task.result?.groupIds || task.result?.groupLinks) ? (
                         <>
@@ -386,7 +388,7 @@ function TaskMonitorTab() {
           <div className="empty-icon">
             <FaTasks />
           </div>
-          <p>No tasks yet</p>
+          <p>{t("noTasks")}</p>
           <p>
             Tasks will appear here when automation is running
           </p>
