@@ -62,7 +62,7 @@ const SwitchPersona: React.FC<SwitchPersonaProps> = ({ onSwitched }) => {
         setViewState("ready");
       } catch (err) {
         console.error("[SwitchPersona] getPersonas error:", err);
-        setErrorMsg("Failed to load personas. Please try again.");
+        setErrorMsg(t("personaLoadError"));
         setViewState("ready");
       }
     };
@@ -90,7 +90,7 @@ const SwitchPersona: React.FC<SwitchPersonaProps> = ({ onSwitched }) => {
       onSwitched();
     } catch (err) {
       console.error("[SwitchPersona] handleSwitch error:", err);
-      setErrorMsg("Failed to switch persona. Please try again.");
+      setErrorMsg(t("personaSwitchError"));
       setViewState("ready");
     } finally {
       setConfirming(false);
@@ -103,14 +103,13 @@ const SwitchPersona: React.FC<SwitchPersonaProps> = ({ onSwitched }) => {
       <div className="persona-page">
         <div className="persona-panel persona-unavailable">
           <p className="persona-unavailable__title">
-            Switch persona unavailable
+            {t("switchPersonaUnavailable")}
           </p>
           <p className="persona-unavailable__text">
-            Your session uses extension config. Persona switching only applies
-            when extension config is not assigned.
+            {t("switchPersonaUnavailableHint")}
           </p>
           <button type="button" onClick={onSwitched} className="persona-back-btn">
-            ← Back
+            ← {t("back")}
           </button>
         </div>
       </div>
