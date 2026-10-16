@@ -78,7 +78,7 @@ function AssignItem(profile: any) {
     };
 
     return (
-        <article className="group-task-card">
+        <article className={`group-task-card${activity === "inactive" ? " group-task-card--inactive" : ""}`}>
             <div className="group-task-card__main">
                 <div className="group-task-card__avatar" aria-label={typeLabels[type] ?? type}>
                     <TypeIcon aria-hidden="true" />
