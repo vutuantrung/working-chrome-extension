@@ -13,7 +13,7 @@ import {
 } from "../../../sidepanel/application/services/SidepanelServices";
 import { AutomationSubTab } from "../../types/types";
 import TopTabs from "../../components/TopTabs";
-import { AUTOMATION_TABS } from "../../helpers/constants";
+import { AUTOMATION_TABS , localizeOptions, AUTOMATION_TAB_KEYS } from "../../helpers/constants";
 
 interface AutomationPageProps {
   activeView: AutomationSubTab;
@@ -231,7 +231,7 @@ function AutomationPage({ activeView, setActiveSubTab }: AutomationPageProps) {
       )}
 
       <TopTabs
-        tabs={AUTOMATION_TABS}
+        tabs={localizeOptions(AUTOMATION_TABS, AUTOMATION_TAB_KEYS, t)}
         activeTab={activeView}
         onTabChange={setActiveSubTab}
       />
