@@ -127,7 +127,7 @@ function AssignItem(profile: any) {
                     </button>
                 </div>
                 <div>
-                    {validUpdatedDate && <time className="group-task-card__updated" dateTime={validUpdatedDate.toISOString()} title={validUpdatedDate.toLocaleString("vi-VN")}>Cập nhật: {formatTimeSince(updatedTime)}</time>}
+                    {validUpdatedDate && <time className="group-task-card__updated" dateTime={validUpdatedDate.toISOString()} title={validUpdatedDate.toLocaleString("vi-VN")}>Cập nhật: {validUpdatedDate.toLocaleDateString("vi-VN", { day: "2-digit", month: "2-digit", year: "numeric" })} ({formatTimeSince(updatedTime)})</time>}
                 </div>
             </div>
         </article>
