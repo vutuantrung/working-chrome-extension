@@ -24,6 +24,7 @@ export function setLanguage(language: AppLanguage) {
 
 const dictionary = {
   en: {
+    scheduledTasks:"Scheduled Tasks", success:"Success!", failedNotice:"Failed!", every:"Every", unnamedTask:"Unnamed Task",
     confirm:"Confirm", applying:"Applying…", close:"Close", current:"CURRENT", currentPlatform:"current platform", items:"items", subNavigation:"Sub navigation",
     priorityUrgent:"Urgent", priorityHigh:"High", priorityMedium:"Medium", priorityLow:"Low", unknown:"Unknown", taskFinished:"Finished", select:"Select", deselect:"Deselect", unnamedPersona:"Unnamed persona",
     loading:"Loading…",
@@ -62,6 +63,7 @@ const dictionary = {
     justUpdated: "just now", inFuture: "in the future"
   },
   vi: {
+    scheduledTasks:"Tác vụ đã lên lịch", success:"Thành công!", failedNotice:"Thất bại!", every:"Mỗi", unnamedTask:"Tác vụ chưa có tên",
     confirm:"Xác nhận", applying:"Đang áp dụng…", close:"Đóng", current:"HIỆN TẠI", currentPlatform:"nền tảng hiện tại", items:"mục", subNavigation:"Điều hướng phụ",
     priorityUrgent:"Khẩn cấp", priorityHigh:"Cao", priorityMedium:"Trung bình", priorityLow:"Thấp", unknown:"Không rõ", taskFinished:"Đã hoàn thành", select:"Chọn", deselect:"Bỏ chọn", unnamedPersona:"Nhân dạng chưa có tên",
     loading:"Đang tải…",
