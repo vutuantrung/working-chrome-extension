@@ -843,6 +843,11 @@ html[data-color-mode="dark"] .group-task-card__meta .group-task-card__state--joi
     color: #8ce5b1;
 }
 
+html[data-color-mode="dark"] .group-page .group-task-card {
+    background: #4b4f5829;
+    border-color: #3c4858;
+}
+
 /* Visually de-emphasize inactive groups without muting content or actions. */
 .group-page .group-task-card--inactive {
     background: #e9ebec;

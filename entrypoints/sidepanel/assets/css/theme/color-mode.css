@@ -48,7 +48,7 @@ html[data-color-mode="dark"] :is(.settings-page, .group-page, .dashboard-page, .
 
 html[data-color-mode="dark"] :is(.settings-page__section, .settings-page__back, .settings-page__reset,
   .settings-page__segmented button.selected,
-  .group-task-card, .group-page__filter-icon, .group-page .multi-select-filter__trigger,
+  .group-page__filter-icon, .group-page .multi-select-filter__trigger,
   .group-page .multi-select-filter__dropdown, .group-pagination__btn,
   .group-page__search, .group-task-card__account,
   .case-detail, .case-sidebar, .case-sidebar-item,

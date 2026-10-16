@@ -1,4 +1,3 @@
-import { useTranslation } from "../../helpers/i18n";
 import { useState, useEffect, useMemo, useRef } from "react";
 import { User } from "../types/types";
 import {
@@ -8,6 +7,7 @@ import {
 import { FaClock, FaPlayCircle, FaCheckCircle, FaSpinner } from "../assets/constants/icons";
 import { isTimeValid } from "../helpers/helpers";
 import "../assets/css/components/AutomationTab.css";
+import { useTranslation } from "../helpers/i18n";
 
 interface AutomationTabProps {
   settings: any;
