@@ -1,3 +1,4 @@
+import { useTranslation } from "../helpers/i18n";
 import { useState, useEffect } from "react";
 import "../assets/css/components/JsonEditor.css";
 
@@ -12,6 +13,7 @@ function JsonEditor({
   onSave,
   onClose
 }: JsonEditorProps) {
+  const { t } = useTranslation();
   const [jsonValue, setJsonValue] = useState("");
 
   useEffect(() => {
@@ -24,7 +26,7 @@ function JsonEditor({
       onSave(data);
     } catch (error) {
       console.error("Invalid JSON:", error);
-      alert("Invalid JSON format");
+      alert(t("invalidJson"));
     }
   };
 
@@ -34,7 +36,7 @@ function JsonEditor({
         <textarea
           rows={10}
           cols={47}
-          placeholder="Paste your JSON here..."
+          placeholder={t("jsonPlaceholder")}
           className="json-editor__textarea"
           value={jsonValue}
           onChange={(e) => setJsonValue(e.target.value)}
