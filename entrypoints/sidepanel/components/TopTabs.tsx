@@ -1,3 +1,4 @@
+import { useTranslation } from "../helpers/i18n";
 import { Tab } from "../types/types";
 
 interface TopTabsProps<T extends string> {
@@ -11,8 +12,9 @@ function TopTabs<T extends string>({
   activeTab,
   onTabChange,
 }: TopTabsProps<T>) {
+  const { t } = useTranslation();
   return (
-    <div className="top-tabs" role="tablist" aria-label="Sub navigation">
+    <div className="top-tabs" role="tablist" aria-label={t("subNavigation")}>
       {tabs.map((tab) => (
         <button
           key={tab.id}
@@ -25,7 +27,7 @@ function TopTabs<T extends string>({
           {tab.icon && <span className="top-tabs__tab-icon">{tab.icon}</span>}
           <span className="top-tabs__tab-label">{tab.label}</span>
           {typeof tab.count === "number" && (
-            <span className="top-tabs__tab-count" aria-label={`${tab.count} items`}>
+            <span className="top-tabs__tab-count" aria-label={`${tab.count} ${t("items")}`}>
               {tab.count}
             </span>
           )}
