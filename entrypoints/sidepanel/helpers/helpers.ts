@@ -7,6 +7,7 @@ import {
     SELECTED_PLATFORM_KEY
 } from "./constants";
 import { useState, useEffect } from "react";
+import { AppLanguage, translate } from "./i18n";
 
 export function formatTime(timestamp: number) {
     const date = new Date(timestamp);
@@ -248,3 +249,28 @@ export const getPageNumbers = (current: number, total: number): (number | string
     }
     return pages;
 };
+
+
+
+
+/** Format elapsed time from an API timestamp in milliseconds. */
+export function formatTimeSince(timestamp: number, language: AppLanguage): string {
+    const elapsed = Date.now() - timestamp;
+    if (!Number.isFinite(elapsed)) return "";
+    if (elapsed < 0) return translate(language, "inFuture");
+    const minutes = Math.floor(elapsed / 60000);
+    if (minutes < 1) return translate(language, "justUpdated");
+    const units: [number, Intl.RelativeTimeFormatUnit][] = [
+        [365 * 24 * 60, "year"],
+        [30 * 24 * 60, "month"],
+        [7 * 24 * 60, "week"],
+        [24 * 60, "day"],
+        [60, "hour"],
+        [1, "minute"],
+    ];
+    const formatter = new Intl.RelativeTimeFormat(language === "vi" ? "vi-VN" : "en-US", { numeric: "always" });
+    for (const [size, unit] of units) {
+        if (minutes >= size) return formatter.format(-Math.floor(minutes / size), unit);
+    }
+    return translate(language, "justUpdated");
+}

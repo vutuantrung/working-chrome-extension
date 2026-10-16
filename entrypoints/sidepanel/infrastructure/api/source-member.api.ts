@@ -11,6 +11,7 @@ export const getMemberSourcesGroup = async (
 ) => {
     const sampleData = [
         {
+            "active": true,
             "group_id": "598381425115485",
             "name": "TỔNG TRANG GÀ M99-F88-W855 M99-F88-WA855",
             "channel_name": "facebook",
@@ -26,6 +27,7 @@ export const getMemberSourcesGroup = async (
             "type": "fanpage"
         },
         {
+            "active": true,
             "group_id": "284247790559697",
             "name": "Cộng đồng game casino sodo, kubet, f88, thabet,.....",
             "channel_name": "facebook",
@@ -43,6 +45,7 @@ export const getMemberSourcesGroup = async (
             "updated_time ": 1785258000000
         },
         {
+            "active": false,
             "group_id": "292526197950612",
             "name": "Việc làm Bạc Liêu",
             "channel_name": "facebook",
@@ -58,6 +61,7 @@ export const getMemberSourcesGroup = async (
             "type": "private_group"
         },
         {
+            "active": true,
             "group_id": "460376280661443",
             "name": "Hội trao đổi buôn bán các bà mẹ thành phố Bắc Giang",
             "channel_name": "facebook",
@@ -73,6 +77,7 @@ export const getMemberSourcesGroup = async (
             "type": "group"
         },
         {
+            "active": false,
             "group_id": "460376280661443",
             "name": "Hội trao đổi buôn bán các bà mẹ thành phố Bắc Giang",
             "channel_name": "tiktok",

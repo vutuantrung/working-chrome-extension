@@ -765,12 +765,43 @@ html[data-color-mode="dark"] .group-task-card__updated {
 }
 
 /* Activity status is separate from membership status (requested/joined/not_joined). */
-.group-task-card__activity { display:inline-flex; align-items:center; gap:5px; flex:none; border-radius:5px; padding:3px 7px; font-size:11px; font-weight:600; }
-.group-task-card__activity i { width:6px; height:6px; border-radius:50%; background:currentColor; }
-.group-task-card__activity--active { background:#e6f8ec; color:#168747; }
-.group-task-card__activity--inactive { background:#edf0f3; color:#687280; }
-html[data-color-mode="dark"] .group-task-card__activity--active { background:#193b2e; color:#8ce5b1; }
-html[data-color-mode="dark"] .group-task-card__activity--inactive { background:#303946; color:#cad2df; }
+.group-task-card__activity {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    flex: none;
+    border-radius: 5px;
+    padding: 3px 7px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.group-task-card__activity i {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+.group-task-card__activity--active {
+    background: #e6f8ec;
+    color: #168747;
+}
+
+.group-task-card__activity--inactive {
+    background: #edf0f3;
+    color: #687280;
+}
+
+html[data-color-mode="dark"] .group-task-card__activity--active {
+    background: #193b2e;
+    color: #8ce5b1;
+}
+
+html[data-color-mode="dark"] .group-task-card__activity--inactive {
+    background: #303946;
+    color: #cad2df;
+}
 
 
 /* Membership badges are outlined tags, visually distinct from the filled activity pills. */
@@ -787,13 +818,38 @@ html[data-color-mode="dark"] .group-task-card__activity--inactive { background:#
     line-height: 1.35;
     letter-spacing: .035em;
 }
-.group-task-card__meta .group-task-card__state--requested { color: #237bc4; }
-.group-task-card__meta .group-task-card__state--not_joined { color: #687280; }
-.group-task-card__meta .group-task-card__state--joined { color: #168747; }
-html[data-color-mode="dark"] .group-task-card__meta .group-task-card__state--requested { color: #9bd3ff; }
-html[data-color-mode="dark"] .group-task-card__meta .group-task-card__state--not_joined { color: #cad2df; }
-html[data-color-mode="dark"] .group-task-card__meta .group-task-card__state--joined { color: #8ce5b1; }
+
+.group-task-card__meta .group-task-card__state--requested {
+    color: #237bc4;
+}
+
+.group-task-card__meta .group-task-card__state--not_joined {
+    color: #687280;
+}
+
+.group-task-card__meta .group-task-card__state--joined {
+    color: #168747;
+}
+
+html[data-color-mode="dark"] .group-task-card__meta .group-task-card__state--requested {
+    color: #9bd3ff;
+}
+
+html[data-color-mode="dark"] .group-task-card__meta .group-task-card__state--not_joined {
+    color: #cad2df;
+}
+
+html[data-color-mode="dark"] .group-task-card__meta .group-task-card__state--joined {
+    color: #8ce5b1;
+}
 
 /* Visually de-emphasize inactive groups without muting content or actions. */
-.group-page .group-task-card--inactive { background: #f2f4f6; border-color: #dce1e6; }
-html[data-color-mode="dark"] .group-page .group-task-card--inactive { background: #252d39; border-color: #3c4858; }
+.group-page .group-task-card--inactive {
+    background: #e9ebec;
+    border-color: #fff;
+}
+
+html[data-color-mode="dark"] .group-page .group-task-card--inactive {
+    background: #33363c;
+    border-color: #3c4858;
+}

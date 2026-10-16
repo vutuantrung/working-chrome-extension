@@ -2,6 +2,7 @@ import { FiUsers, FiUser, FiExternalLink, FiCopy, FiLock, FaFolder, FaGlobe, FiK
 import { getChannelIcon } from "../../helpers/helpers-ui";
 import type { GroupProfile } from "../../types/types";
 import { useTranslation, type AppLanguage, translate } from "../../helpers/i18n";
+import { formatTimeSince } from "../../helpers/helpers";
 
 /** Membership states returned by the profiles API. Do not infer a status when absent. */
 export const infiltrationLabels = {
@@ -31,43 +32,29 @@ const typeIcons = {
     fanpage: FaGlobe,
 }
 
-/** Format elapsed time from an API timestamp in milliseconds. */
-function formatTimeSince(timestamp: number, language: AppLanguage): string {
-    const elapsed = Date.now() - timestamp;
-    if (!Number.isFinite(elapsed)) return "";
-    if (elapsed < 0) return translate(language, "inFuture");
-    const minutes = Math.floor(elapsed / 60000);
-    if (minutes < 1) return translate(language, "justUpdated");
-    const units: [number, Intl.RelativeTimeFormatUnit][] = [
-        [365 * 24 * 60, "year"],
-        [30 * 24 * 60, "month"],
-        [7 * 24 * 60, "week"],
-        [24 * 60, "day"],
-        [60, "hour"],
-        [1, "minute"],
-    ];
-    const formatter = new Intl.RelativeTimeFormat(language === "vi" ? "vi-VN" : "en-US", { numeric: "always" });
-    for (const [size, unit] of units) {
-        if (minutes >= size) return formatter.format(-Math.floor(minutes / size), unit);
-    }
-    return "Vừa cập nhật";
-}
-
 function AssignItem(profile: any) {
     const { t, language } = useTranslation();
     const status = getInfiltrationStatus(profile);
-    const activity = profile.active === true || profile.active === "active" || profile.activity_status === "active"
-        ? "active"
-        : profile.active === false || profile.active === "inactive" || profile.activity_status === "inactive"
-            ? "inactive"
-            : null;
+
+    let activity = "active";
+    if (profile.active === true || profile.active === "active" || profile.activity_status === "active")
+        activity = "active"
+    if (profile.active === false || profile.active === "inactive" || profile.activity_status === "inactive")
+        activity = "inactive"
+
     const type = profile.type;
     const url = profile.url;
     const name = profile.name || t("unknownName");
     const id = profile.group_id;
-    const updatedTime = typeof profile.updated_time === "number" ? profile.updated_time : Number(profile.updated_time);
-    const updatedDate = Number.isFinite(updatedTime) && updatedTime > 0 ? new Date(updatedTime) : null;
-    const validUpdatedDate = updatedDate && !Number.isNaN(updatedDate.getTime()) ? updatedDate : null;
+    const updatedTime = typeof profile.updated_time === "number"
+        ? profile.updated_time
+        : Number(profile.updated_time);
+    const updatedDate = Number.isFinite(updatedTime) && updatedTime > 0
+        ? new Date(updatedTime)
+        : null;
+    const validUpdatedDate = updatedDate && !Number.isNaN(updatedDate.getTime())
+        ? updatedDate
+        : null;
     const TypeIcon = typeIcons[type as keyof typeof typeIcons] ?? FaFolder;
     const copyId = async () => {
         if (!id) return;
@@ -85,13 +72,12 @@ function AssignItem(profile: any) {
                 <div className="group-task-card__avatar" aria-label={typeLabels[type] ?? type}>
                     <TypeIcon aria-hidden="true" />
                     <span className="group-task-card__channel" title={profile.channel_name || "Unknown channel"}>
-
                         {getChannelIcon(profile.channel_name)}
                     </span>
                 </div>
                 <div className="group-task-card__content">
                     <div className="group-task-card__title">
-                    <TypeIcon aria-hidden="true" />
+                        <TypeIcon aria-hidden="true" />
                         <strong title={name}>{name}</strong>
                     </div>
                     <div className="group-task-card__meta">
