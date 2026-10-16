@@ -57,14 +57,14 @@ function CaseSidebar({
       <header className="case-sidebar__header">
 
         <div className="case-sidebar__heading">
-          <p className="case-sidebar__title">Case library
+          <p className="case-sidebar__title">{t("caseLibrary")}
             <span className="case-sidebar__count">{profileCases?.meta.total_count ?? 0}</span>
           </p>
         </div>
 
         <IconButton
           onClick={onToggle}
-          ariaLabel="Collapse sidebar"
+          ariaLabel={t("collapseSidebar")}
           className="case-sidebar__icon-button"
           icon={<FaChevronLeft />}
         />
@@ -92,7 +92,7 @@ function CaseSidebar({
 
       <div className="case-sidebar__section-heading">
         <span>{t("yourCases")}</span>
-        <span className="case-sidebar__section-count">{profileCases?.meta.total_count ?? 0} total</span>
+        <span className="case-sidebar__section-count">{profileCases?.meta.total_count ?? 0} {t("totalCases")}</span>
       </div>
 
       <ul className="case-sidebar__list custom-scroll">
@@ -119,7 +119,7 @@ function CaseSidebar({
           <IconButton
             onClick={() => handlePageChange(page - 1)}
             disabled={page === 1}
-            ariaLabel="Previous page"
+            ariaLabel={t("previous")}
             className="case-sidebar__pagination-button"
             icon={<FaChevronLeft size={11} />}
           />
@@ -127,7 +127,7 @@ function CaseSidebar({
           <IconButton
             onClick={() => handlePageChange(page + 1)}
             disabled={page === totalPages}
-            ariaLabel="Next page"
+            ariaLabel={t("next")}
             className="case-sidebar__pagination-button"
             icon={<FaChevronRight size={11} />}
           />
