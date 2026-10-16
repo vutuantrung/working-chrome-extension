@@ -194,7 +194,7 @@ function AutomationPage({ activeView, setActiveSubTab }: AutomationPageProps) {
           }
 
           return {
-            taskName: task.name || "Unnamed Task",
+            taskName: task.name || t("unnamedTask"),
             scheduleTime: `${hours}:${minutes}:${seconds}`,
             nextRun: scheduleDate,
             count: 1, // Each scheduled time runs once per day
@@ -226,7 +226,7 @@ function AutomationPage({ activeView, setActiveSubTab }: AutomationPageProps) {
             : "notification-failed"
             }`}
         >
-          {notification === "success" ? "Success!" : "Failed!"}
+          {notification === "success" ? t("success") : t("failedNotice")}
         </div>
       )}
 
@@ -242,7 +242,7 @@ function AutomationPage({ activeView, setActiveSubTab }: AutomationPageProps) {
             <>
               {scheduleInfo && scheduleInfo.length > 0 && (
                 <div className="schedule-info-banner">
-                  <div className="schedule-info-title">Scheduled Tasks</div>
+                  <div className="schedule-info-title">{t("scheduledTasks")}</div>
                   <div className="schedule-items">
                     {scheduleInfo.map((info: any, idx: number) => (
                       <div key={idx} className="schedule-item">
@@ -254,7 +254,7 @@ function AutomationPage({ activeView, setActiveSubTab }: AutomationPageProps) {
                             {info.scheduleTime}
                           </span>
                           <span className="schedule-count">
-                            Every {info.frequency}
+                            {t("every")} {info.frequency}
                           </span>
                         </div>
                       </div>
