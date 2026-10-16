@@ -1,3 +1,4 @@
+import { useTranslation } from "../../helpers/i18n";
 import "../../assets/css/components/ImageDetailModal.css";
 import { formatBytes } from "../../helpers/helpers";
 import { ImageItem, ImageMeta } from "../../types/types";
@@ -17,6 +18,7 @@ function ImageDetailModal({
   onMetaChange,
   onClose,
 }: ImageDetailModalProps) {
+  const { t } = useTranslation();
   const src = item.kind === "saved" ? item.image.url : item.dataUrl;
   const key = itemKey(item);
 
@@ -32,37 +34,37 @@ function ImageDetailModal({
         <IconButton
           onClick={onClose}
           className="image-detail-modal__close"
-          ariaLabel="Close image details"
+          ariaLabel={t("imageClose")}
           icon={<>✕</>}
         />
 
         <div className="image-detail-modal__preview">
-          <img src={src} alt="Screenshot" className="image-detail-modal__image" />
+          <img src={src} alt={t("screenshot")} className="image-detail-modal__image" />
         </div>
 
         <div className="image-detail-modal__body">
           <FormField
-            label="Name"
+            label={t("imageName")}
             className="image-detail-modal__field"
             labelClassName="image-detail-modal__label"
           >
             <input
               value={meta.name}
               onChange={(e) => onMetaChange(key, { name: e.target.value })}
-              placeholder="Enter image name…"
+              placeholder={t("imageNamePlaceholder")}
               className="image-detail-modal__input"
             />
           </FormField>
 
           <FormField
-            label="Description"
+            label={t("imageDescription")}
             className="image-detail-modal__field"
             labelClassName="image-detail-modal__label"
           >
             <textarea
               value={meta.description}
               onChange={(e) => onMetaChange(key, { description: e.target.value })}
-              placeholder="Add a description…"
+              placeholder={t("imageDescriptionPlaceholder")}
               rows={3}
               className="image-detail-modal__textarea"
             />
