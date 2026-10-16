@@ -1,3 +1,4 @@
+import type { TranslationKey } from "./i18n";
 import { AutomationSubTab, PlatformId, Tab } from "../types/types";
 
 export const SELECTED_PLATFORM_KEY = "selectedPlatform";
@@ -102,3 +103,36 @@ export const DEFAULT_CASE_ID = 'new';
 export const DEFAULT_PAGE_SIZE = 10;
 
 export const PLATFORM_CHANGED_EVENT = "hydra:login-success-redirectplatform-changed";
+/** Translate display labels at render time; keep IDs and API values unchanged. */
+export const TYPE_OPTION_KEYS: Record<string, TranslationKey> = {
+  group: "group",
+  private_group: "private_group",
+  profile: "profile",
+  fanpage: "fanpage",
+};
+export const STATUS_FILTER_KEYS: Record<string, TranslationKey> = {
+  all: "all",
+  "da-ra-soat": "reviewedStatus",
+  "da-phan-cong": "assignedStatus",
+};
+export const AUTOMATION_TAB_KEYS: Record<AutomationSubTab, TranslationKey> = {
+  config: "configTab",
+  monitor: "monitorTab",
+};
+export const PRIORITY_KEYS: Record<number, TranslationKey> = {
+  3: "priorityUrgent",
+  2: "priorityHigh",
+  1: "priorityMedium",
+  0: "priorityLow",
+};
+
+export function localizeOptions<T extends { id: string; label: string }>(
+  options: T[],
+  keys: Record<string, TranslationKey>,
+  t: (key: TranslationKey) => string,
+): T[] {
+  return options.map(option => ({
+    ...option,
+    label: keys[option.id] ? t(keys[option.id]) : option.label,
+  }));
+}
