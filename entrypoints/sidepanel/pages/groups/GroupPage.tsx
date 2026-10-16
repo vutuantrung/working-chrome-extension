@@ -11,6 +11,7 @@ import { MultiSelectFilter, SearchInput } from "../../components/ui";
 import { getPageNumbers } from "../../helpers/helpers";
 import AssignItem, { getInfiltrationStatus, infiltrationLabels, type InfiltrationStatus } from "./AssignItem";
 import { getMemberSourcesGroup } from "../../infrastructure/api/source-member.api";
+import { useTranslation } from "../../helpers/i18n";
 
 
 const PAGE_SIZE = 10;
@@ -31,6 +32,7 @@ export interface GroupPageProps {
 
 function GroupPage({ dataSource = getMemberSourcesGroup }: GroupPageProps = {}) {
   const { user, loading: authLoading } = useAuth();
+  const { t, language } = useTranslation();
   const [profiles, setProfiles] = useState<any>([]);
   const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -86,7 +88,7 @@ function GroupPage({ dataSource = getMemberSourcesGroup }: GroupPageProps = {}) 
       setTotalCount(count);
     } catch (err: any) {
       console.error("Lỗi khi tải danh sách hội nhóm:", err);
-      setError("Không thể tải danh sách hội nhóm từ máy chủ.");
+      setError("fetch_failed");
       setProfiles([]);
       setTotalCount(0);
     } finally {
@@ -125,34 +127,41 @@ function GroupPage({ dataSource = getMemberSourcesGroup }: GroupPageProps = {}) 
   };
   const visibleProfiles = statusFilter === "all" ? profiles : profiles.filter((item) => getInfiltrationStatus(item) === statusFilter);
 
+  const translatedStatusTabs = [
+    { id: "all", label: t("all") },
+    { id: "joined", label: t("joinedFilter") },
+    { id: "not_joined", label: t("notJoinedFilter") },
+    { id: "requested", label: t("requestedFilter") },
+  ];
+
   const handleSearch = (v: string) => { setSearch(v); setPage(1); };
   const handleStatusFilter = (s: any) => { setStatusFilter(s); };
 
   return (
     <div className="group-page">
       <header className="group-page__header">
-        <h1>Danh sách nhiệm vụ</h1>
+        <h1>{t("tasksTitle")}</h1>
       </header>
 
       <div className="group-page__toolbar">
         <SearchInput
           id="group-search" value={search} onChange={handleSearch}
-          placeholder="Tìm kiếm tên nhóm, ID..."
+          placeholder={t("searchGroups")}
           wrapperClassName="group-page__search-wrapper"
           iconClassName="group-page__search-icon"
           inputClassName="group-page__search"
         />
         <div className="group-page__filter-row">
           <div className="group-page__advanced-filters">
-            <MultiSelectFilter label="Kênh" leftIcon={<FiLayers />} options={PLATFORM_OPTIONS} selectedValues={selectedPlatforms} onChange={(values) => { setSelectedPlatforms(values); setPage(1); }} />
-            <MultiSelectFilter label="Loại nhóm" leftIcon={<FiList />} options={TYPE_OPTIONS} selectedValues={selectedTypes} onChange={(values) => { setSelectedTypes(values); setPage(1); }} />
+            <MultiSelectFilter label={t("channel")} leftIcon={<FiLayers />} options={PLATFORM_OPTIONS} selectedValues={selectedPlatforms} onChange={(values) => { setSelectedPlatforms(values); setPage(1); }} />
+            <MultiSelectFilter label={t("groupType")} leftIcon={<FiList />} options={TYPE_OPTIONS} selectedValues={selectedTypes} onChange={(values) => { setSelectedTypes(values); setPage(1); }} />
           </div>
-          <button className="group-page__filter-icon" type="button" title="Xóa các bộ lọc" aria-label="Xóa các bộ lọc" onClick={() => { setSelectedPlatforms([]); setSelectedTypes([]); setStatusFilter("all"); setPage(1); }}><FiFilter /><span className="group-page__filter-dot" aria-hidden="true">{selectedPlatforms.length + selectedTypes.length + (statusFilter === 'all' ? 0 : 1) || ''}</span></button>
+          <button className="group-page__filter-icon" type="button" title={t("clearFilters")} aria-label={t("clearFilters")} onClick={() => { setSelectedPlatforms([]); setSelectedTypes([]); setStatusFilter("all"); setPage(1); }}><FiFilter /><span className="group-page__filter-dot" aria-hidden="true">{selectedPlatforms.length + selectedTypes.length + (statusFilter === 'all' ? 0 : 1) || ''}</span></button>
         </div>
       </div>
 
-      <nav className="group-page__status-tabs" aria-label="Lọc trạng thái nhiệm vụ">
-        {JOINED_STATUS.map((item) => (
+      <nav className="group-page__status-tabs" aria-label={t("filterStatus")}>
+        {translatedStatusTabs.map((item) => (
           <button key={item.id} type="button"
             className={`group-page__status-tab ${statusFilter === item.id ? 'is-active' : ''}`}
             onClick={() => handleStatusFilter(item.id)}
@@ -162,16 +171,16 @@ function GroupPage({ dataSource = getMemberSourcesGroup }: GroupPageProps = {}) 
         ))}
       </nav>
 
-      <section className="group-page__results" aria-label="Danh sách nhóm">
+      <section className="group-page__results" aria-label={t("groupsList")}>
         <div className="group-page__results-header">
-          <h2>Nhiệm vụ <span>({totalCount.toLocaleString('vi-VN')} nhiệm vụ)</span></h2>
-          <button type="button" onClick={() => fetchProfiles()} disabled={loading} className="group-page__refresh"><FiRefreshCw aria-hidden="true" /> Làm mới dữ liệu</button>
+          <h2>{t("tasks")} <span>({totalCount.toLocaleString(language === "vi" ? "vi-VN" : "en-US")})</span></h2>
+          <button type="button" onClick={() => fetchProfiles()} disabled={loading} className="group-page__refresh"><FiRefreshCw aria-hidden="true" /> {t("refresh")}</button>
         </div>
         <div className="group-table-body">
           {loading ? (
-            <div className="group-empty"><FiRefreshCw className="group-empty__icon group-empty__icon--spin" /><strong>Đang tải danh sách...</strong></div>
+            <div className="group-empty"><FiRefreshCw className="group-empty__icon group-empty__icon--spin" /><strong>{t("loadingGroups")}</strong></div>
           ) : error || visibleProfiles.length === 0 ? (
-            <div className="group-empty"><FiAlertCircle className="group-empty__icon" /><strong>{error ? 'Không thể tải danh sách' : 'Không tìm thấy hội nhóm'}</strong><span>{error ?? 'Thử thay đổi từ khóa hoặc bộ lọc.'}</span>{error && <button type="button" onClick={() => fetchProfiles()}>Thử lại</button>}</div>
+            <div className="group-empty"><FiAlertCircle className="group-empty__icon" /><strong>{error ? t("failedGroups") : t("noGroups")}</strong><span>{error ? t("failedGroupsHint") : t("retryHint")}</span>{error && <button type="button" onClick={() => fetchProfiles()}>{t("retry")}</button>}</div>
           ) : visibleProfiles.map((profile) => <AssignItem key={profile.id} {...profile} />)}
         </div>
       </section>
@@ -183,7 +192,7 @@ function GroupPage({ dataSource = getMemberSourcesGroup }: GroupPageProps = {}) 
             className="group-pagination__btn"
             onClick={() => setPage((p) => Math.max(1, p - 1))}
             disabled={page === 1}
-            aria-label="Trang trước"
+            aria-label={t("previous")}
           >
             <FaChevronLeft />
           </button>
@@ -213,7 +222,7 @@ function GroupPage({ dataSource = getMemberSourcesGroup }: GroupPageProps = {}) 
             className="group-pagination__btn"
             onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
             disabled={page === totalPages}
-            aria-label="Trang sau"
+            aria-label={t("next")}
           >
             <FaChevronRight />
           </button>
