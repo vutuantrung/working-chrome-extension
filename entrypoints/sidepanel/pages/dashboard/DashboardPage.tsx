@@ -89,10 +89,10 @@ export default function DashboardPage() {
         <div className="dashboard-panel-heading">
           <div>
             <div className="dashboard-section-kicker"><FaChartLine /> CONTENT ACTIVITY</div>
-            <h2 id="dashboard-post-title">Post Count</h2>
-            <p>Changes in the total number of posts over time.</p>
+            <h2 id="dashboard-post-title">{t("postCount")}</h2>
+            <p>{t("postCountHint")}</p>
           </div>
-          <div className="dashboard-range" role="group" aria-label="Post count timeframe">
+          <div className="dashboard-range" role="group" aria-label={t("timeframe")}>
             <button type="button" className={range === "24h" ? "selected" : ""} aria-pressed={range === "24h"} onClick={() => setRange("24h")}>24 hours</button>
             <button type="button" className={range === "7d" ? "selected" : ""} aria-pressed={range === "7d"} onClick={() => setRange("7d")}>7 days</button>
           </div>
@@ -100,27 +100,27 @@ export default function DashboardPage() {
         <div className="dashboard-post-summary">
           <span className="dashboard-primary-number">{formatted(current)}</span>
           <span className="dashboard-growth"><FaArrowTrendUp /> +{formatted(difference)} ({delta}%)</span>
-          <span className="dashboard-muted">vs. beginning of period</span>
+          <span className="dashboard-muted">{t("versusPeriod")}</span>
         </div>
         <PostChart data={points} />
       </section>
 
       <section className="dashboard-tasks" aria-labelledby="dashboard-tasks-title">
-        <div className="dashboard-section-header"><div><h2 id="dashboard-tasks-title">Task activity</h2><p>Tasks performed in the last 24 hours</p></div><span className="dashboard-period"><FaClockRotateLeft /> Last 24h</span></div>
+        <div className="dashboard-section-header"><div><h2 id="dashboard-tasks-title">{t("taskActivity")}</h2><p>{t("taskActivityHint")}</p></div><span className="dashboard-period"><FaClockRotateLeft /> Last 24h</span></div>
         <div className="dashboard-stat-grid">
 
           <article className="dashboard-stat-card">
             <div className="dashboard-stat-head">
-              <span>Total tasks</span>
+              <span>{t("totalTasks")}</span>
               <span className="dashboard-stat-icon neutral"><FaListCheck /></span>
             </div>
             <strong>{formatted(total)}</strong>
-            <span className="dashboard-stat-foot">All executions</span>
+            <span className="dashboard-stat-foot">{t("allExecutions")}</span>
           </article>
 
           <article className="dashboard-stat-card">
             <div className="dashboard-stat-head">
-              <span>Completed</span>
+              <span>{t("completed")}</span>
               <span className="dashboard-stat-icon success"><FaCheck /></span>
             </div>
             <strong>{formatted(taskStats.completed)}</strong>
@@ -129,26 +129,26 @@ export default function DashboardPage() {
 
           <article className="dashboard-stat-card">
             <div className="dashboard-stat-head">
-              <span>Failed</span>
+              <span>{t("failed")}</span>
               <span className="dashboard-stat-icon danger"><FaCircleExclamation /></span>
             </div>
             <strong>{formatted(taskStats.failed)}</strong>
-            <span className="dashboard-stat-foot">Unsuccessful tasks</span>
+            <span className="dashboard-stat-foot">{t("failedTasks")}</span>
           </article>
 
           <article className="dashboard-stat-card">
             <div className="dashboard-stat-head">
-              <span>Canceled</span>
+              <span>{t("canceled")}</span>
               <span className="dashboard-stat-icon gray"><FaBan /></span>
             </div>
             <strong>{formatted(taskStats.canceled)}</strong>
-            <span className="dashboard-stat-foot">Stopped executions</span>
+            <span className="dashboard-stat-foot">{t("stoppedTasks")}</span>
           </article>
         </div>
         
         <div className="dashboard-completion">
           <div>
-            <span>Task distribution</span>
+            <span>{t("taskDistribution")}</span>
             <strong>{completionRate}% completed</strong>
           </div>
           <div className="dashboard-progress-track" role="img" aria-label={`${completionRate}% completed, ${taskStats.failed} failed, ${taskStats.canceled} canceled`}>
@@ -169,8 +169,8 @@ export default function DashboardPage() {
         <div className="dashboard-panel-heading">
           <div>
             <div className="dashboard-section-kicker"><FaCircleExclamation /> ISSUE TRACKING</div>
-            <h2 id="dashboard-errors-title">Recent errors</h2>
-            <p>Most recent problems encountered during execution.</p></div>
+            <h2 id="dashboard-errors-title">{t("recentErrors")}</h2>
+            <p>{t("recentErrorsHint")}</p></div>
           <span className="dashboard-error-count">{recentErrors.length} recent</span>
         </div>
 
@@ -190,7 +190,7 @@ export default function DashboardPage() {
           )}
         </div>
       </section>
-      <p className="dashboard-disclaimer">All metrics shown are illustrative mock data and are not connected to your account or activity logs.</p>
+      <p className="dashboard-disclaimer">{t("mockDisclaimer")}</p>
     </main>
   );
 }
