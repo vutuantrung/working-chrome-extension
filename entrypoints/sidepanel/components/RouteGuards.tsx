@@ -1,5 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import { useTranslation } from "../helpers/i18n";
 
 interface RouteGuardProps {
   children: React.ReactNode;
@@ -8,11 +9,12 @@ interface RouteGuardProps {
 // Protected Route - only accessible when logged in
 export function ProtectedRoute({ children }: RouteGuardProps) {
   const { isAuthenticated, loading } = useAuth();
+  const { t } = useTranslation();
   if (loading) {
     return (
       <div className="loading-container">
         <div className="spinner"></div>
-        <p>Loading...</p>
+        <p>{t("loading")}</p>
       </div>
     );
   }
@@ -32,7 +34,7 @@ export function PublicRoute({ children }: RouteGuardProps) {
     return (
       <div className="loading-container">
         <div className="spinner"></div>
-        <p>Loading...</p>
+        <p>{t("loading")}</p>
       </div>
     );
   }
