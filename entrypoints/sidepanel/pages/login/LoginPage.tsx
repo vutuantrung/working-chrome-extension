@@ -6,6 +6,7 @@ import { hasExtensionConfigId } from "../../../../entrypoints/sidepanel/utils/re
 import { FaArrowRight, FaEye, FaEyeSlash, FaLock, FaShieldAlt, FaUser } from "../../assets/constants/icons";
 import { User } from "../../types/types";
 import "../../assets/css/pages/Login.css";
+import { useTranslation } from "../../helpers/i18n";
 
 type RememberedCredentials = {
   username: string;
@@ -19,6 +20,7 @@ const REMEMBER_ME_KEY = "local:rememberedCredentials";
 const SESSION_KEY = "local:draftCredentials"; // auto-save, not persistent
 
 function Login() {
+  const { t } = useTranslation();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -130,22 +132,22 @@ function Login() {
         <div className="login-brand-mark"><span className="login-brand-symbol">H</span><span>LERNA LAKES<small>Powered by Hydra</small></span></div>
         <div className="login-brand-story">
           <div className="login-brand-eyebrow"><span className="login-status-dot" /> YOUR WORKSPACE, CONNECTED</div>
-          <h2>One space.<br /><em>Every workflow.</em></h2>
-          <p>Manage your workspace, stay organized, and get back to what matters.</p>
+          <h2>{t("loginTagline")}<br /><em>{t("loginWorkflow")}</em></h2>
+          <p>{t("loginBrandCopy")}</p>
           <div className="login-brand-lines"><span /><span /><span /></div>
         </div>
         <div className="login-brand-bottom"><FaShieldAlt /> Secure workspace access</div>
       </div>
       <div className="login-form-panel"><div className="modern-login-container">
         <div className="login-mobile-brand"><span className="login-brand-symbol">H</span> LERNA LAKES</div>
-        <h1 className="modern-login-title">Welcome back</h1>
+        <h1 className="modern-login-title">{t("loginWelcome")}</h1>
         <p className="login-subtitle">
           Enter your account details to access your workspace.
         </p>
 
         <form onSubmit={handleSubmit} className="modern-login-form">
           <div className="modern-form-group">
-            <label htmlFor="login-username">Username</label>
+            <label htmlFor="login-username">{t("loginUser")}</label>
             <div className="modern-input-wrapper">
               <FaUser className="input-icon" />
               <input
@@ -153,14 +155,14 @@ function Login() {
                 autoComplete="username"
                 value={username}
                 onChange={handleUsernameChange}
-                placeholder="Enter your username"
+                placeholder={t("loginEnterUser")}
                 required
                 disabled={loading}
               />
             </div>
           </div>
           <div className="modern-form-group">
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">{t("loginPassword")}</label>
             <div className="modern-input-wrapper modern-input-wrapper--password">
               <FaLock className="input-icon" />
               <input
@@ -169,14 +171,14 @@ function Login() {
                 autoComplete="current-password"
                 value={password}
                 onChange={handlePasswordChange}
-                placeholder="Enter your password"
+                placeholder={t("loginEnterPassword")}
                 required
                 disabled={loading}
               />
               <button
                 type="button"
                 className="eye-icon"
-                aria-label={showPassword ? "Hide password" : "Show password"}
+                aria-label={showPassword ? t("hidePassword") : t("showPassword")}
                 aria-pressed={showPassword}
                 onClick={() => setShowPassword((prev) => !prev)}
               >
@@ -204,14 +206,14 @@ function Login() {
               <button
                 type="button"
                 onClick={clearError}
-                aria-label="Close error"
+                aria-label={t("closeError")}
               >
                 ×
               </button>
             </div>
           )}
           <button type="submit" disabled={loading} className="modern-login-btn">
-            {loading ? "Signing in..." : <>Sign in <FaArrowRight aria-hidden="true" /></>}
+            {loading ? t("loginSigning") : <>{t("loginSubmit")} <FaArrowRight aria-hidden="true" /></>}
           </button>
         </form>
         <div className="login-secure-note"><FaLock aria-hidden="true" /> Protected sign-in</div>
