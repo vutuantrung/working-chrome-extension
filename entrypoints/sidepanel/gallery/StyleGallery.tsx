@@ -41,7 +41,7 @@ import type { MainTab } from "../helpers/constants";
 import "../assets/css/gallery.css";
 import "../assets/css/pages/settings.css";
 import GroupPage, { type GroupPageDataSource } from "../pages/groups/GroupPage";
-import AssignItem from "../pages/groups/AssignItem";
+import AssignItem, { infiltrationLabels, type InfiltrationStatus } from "../pages/groups/AssignItem";
 import DashboardPage from "../pages/dashboard/DashboardPage";
 import WorkspacePageHeader from "../components/WorkspacePageHeader";
 import { MultiSelectFilter, SearchInput } from "../components/ui";
@@ -144,6 +144,7 @@ const entries = [
   "SearchInput",
   "MultiSelectFilter",
   "AssignItem",
+  "Group Status Badges",
   "Login",
   "FacebookLoginMode",
   "PlatformSelect",
@@ -743,6 +744,18 @@ export default function StyleGallery() {
         <Preview id="taskstatusbadges" title="Task Status Badges" file="components/Automation/TaskStatusBadge.tsx"><TaskStatusBadgesDemo /></Preview>
         <Preview id="searchinput" title="SearchInput (real component)" file="components/ui/SearchInput.tsx"><GalleryFiltersDemo /></Preview>
         <Preview id="multiselectfilter" title="MultiSelectFilter (real component)" file="components/ui/MultiSelectFilter.tsx"><GalleryFiltersDemo /></Preview>
+        <Preview id="groupstatusbadges" title="GroupPage — Membership Status Badges" file="assets/css/features/groups.css">
+          <div className="gallery-group-status-badges">
+            {(["requested", "not_joined", "joined"] as InfiltrationStatus[]).map((status) => (
+              <div className="gallery-group-status-badges__item" key={status}>
+                <code>{status}</code>
+                <span className={`group-task-card__state group-task-card__state--${status}`}>
+                  {infiltrationLabels[status]}
+                </span>
+              </div>
+            ))}
+          </div>
+        </Preview>
         <Preview id="assignitem" title="AssignItem (real group row)" file="pages/groups/AssignItem.tsx"><div className="group-table-wrapper"><AssignItem {...demoGroupProfiles[0]} /><AssignItem {...demoGroupProfiles[2]} /></div></Preview>
         <Preview id="jsoneditor" title="JsonEditor" file="assets/css/components/JsonEditor.css"><JsonEditor settings={{ enabled: true, delay: 5, platform: "facebook" }} onSave={() => { }} onClose={() => { }} /></Preview>
 
