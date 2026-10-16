@@ -45,7 +45,7 @@ import AssignItem, { infiltrationLabels, type InfiltrationStatus } from "../page
 import DashboardPage from "../pages/dashboard/DashboardPage";
 import WorkspacePageHeader from "../components/WorkspacePageHeader";
 import { MultiSelectFilter, SearchInput } from "../components/ui";
-import { PLATFORM_OPTIONS, TYPE_OPTIONS } from "../helpers/constants";
+import { PLATFORM_OPTIONS, TYPE_OPTIONS , localizeOptions, TYPE_OPTION_KEYS } from "../helpers/constants";
 import { demoGroupProfiles } from "./groupSamples";
 import { AuthContext } from "../contexts/AuthContext";
 import PlatformSelect from "../components/PlatformSelect";
@@ -438,11 +438,12 @@ function SettingsPreview() {
 }
 
 function GalleryFiltersDemo() {
+  const { t } = useTranslation();
   const [query, setQuery] = useState("");
   const [platforms, setPlatforms] = useState<string[]>([]);
   const [types, setTypes] = useState<string[]>([]);
   return <div className="gallery-stack"><SearchInput id="gallery-group-search" value={query} onChange={setQuery} placeholder="Tìm tên hoặc ID nhóm..." />
-    <div className="gallery-inline"><MultiSelectFilter label="Nền tảng" options={PLATFORM_OPTIONS} selectedValues={platforms} onChange={setPlatforms} /><MultiSelectFilter label="Loại" options={TYPE_OPTIONS} selectedValues={types} onChange={setTypes} /></div>
+    <div className="gallery-inline"><MultiSelectFilter label="Nền tảng" options={PLATFORM_OPTIONS} selectedValues={platforms} onChange={setPlatforms} /><MultiSelectFilter label="Loại" options={localizeOptions(TYPE_OPTIONS, TYPE_OPTION_KEYS, t)} selectedValues={types} onChange={setTypes} /></div>
     <small>Search: {query || "(empty)"} · Platforms: {platforms.join(", ") || "all"} · Types: {types.join(", ") || "all"}</small>
   </div>;
 }
