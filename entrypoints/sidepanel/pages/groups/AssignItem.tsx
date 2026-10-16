@@ -32,6 +32,11 @@ const typeIcons = {
 
 function AssignItem(profile: any) {
     const status = getInfiltrationStatus(profile);
+    const activity = profile.active === true || profile.active === "active" || profile.activity_status === "active"
+        ? "active"
+        : profile.active === false || profile.active === "inactive" || profile.activity_status === "inactive"
+            ? "inactive"
+            : null;
     const type = profile.type;
     const url = profile.url;
     const name = profile.name || "Không có tên";
@@ -67,6 +72,7 @@ function AssignItem(profile: any) {
                         {/* <span className="group-task-card__type">
                             <TypeIcon aria-hidden="true" />{typeLabels[type] ?? type}
                         </span> */}
+                        {activity && <span className={`group-task-card__activity group-task-card__activity--${activity}`}><i aria-hidden="true" />{activity === "active" ? "Đang hoạt động" : "Không hoạt động"}</span>}
                         {status && <span className={`group-task-card__state group-task-card__state--${status}`}>{infiltrationLabels[status]}</span>}
                     </div>
                 </div>
