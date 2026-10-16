@@ -5,6 +5,7 @@ import api from "../../infrastructure/api";
 import { parseList } from "../../helpers/helpers";
 import StatusScreen from "../../components/Persona/StatusScreen";
 import PersonaCard from "../../components/Persona/PersonaCard";
+import { useTranslation } from "../../helpers/i18n";
 import type { Persona } from "../../types/types";
 import "../../assets/css/pages/PersonaPage.css";
 
@@ -15,6 +16,7 @@ import "../../assets/css/pages/PersonaPage.css";
  *  ≥2 personas → show selection UI → activePersonaSession → navigate
  */
 const SelectPersona: React.FC = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { user, applyPersonaOnSelect } = useAuth();
 
@@ -164,7 +166,7 @@ const SelectPersona: React.FC = () => {
   if (viewState === "initializing") {
     return (
       <div className="persona-page">
-        <StatusScreen icon="⏳" title="Loading personas…" />
+        <StatusScreen icon="⏳" title={t("loadingPersonas")} />
       </div>
     );
   }
@@ -174,8 +176,8 @@ const SelectPersona: React.FC = () => {
       <div className="persona-page">
         <StatusScreen
           icon="✨"
-          title="Setting up your persona…"
-          subtitle="This only takes a moment"
+          title={t("creatingPersona")}
+          subtitle={t("justMoment")}
         />
       </div>
     );
@@ -184,7 +186,7 @@ const SelectPersona: React.FC = () => {
   if (viewState === "activating") {
     return (
       <div className="persona-page">
-        <StatusScreen icon="🔄" title="Activating persona…" />
+        <StatusScreen icon="🔄" title={t("activatingPersona")} />
       </div>
     );
   }
@@ -197,7 +199,7 @@ const SelectPersona: React.FC = () => {
             Select Persona
           </h2>
           <p className="persona-panel__subtitle">
-            Choose the persona you want to operate as
+            {t("selectPersonaHint")}
           </p>
         </div>
 
@@ -211,7 +213,7 @@ const SelectPersona: React.FC = () => {
         <div className="persona-panel__list">
           {personas.length === 0 ? (
             <div className="persona-panel__empty">
-              No personas available.
+              {t("noPersonas")}
             </div>
           ) : (
             personas.map((p) => (
@@ -233,7 +235,7 @@ const SelectPersona: React.FC = () => {
             disabled={!selectedId || confirming}
             className="persona-primary-btn"
           >
-            {confirming ? "Activating…" : "Continue →"}
+            {confirming ? t("activating") : `${t("continue")} →`}
           </button>
         </div>
       </div>
