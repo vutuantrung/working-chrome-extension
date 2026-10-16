@@ -77,13 +77,13 @@ const SwitchPersona: React.FC<SwitchPersonaProps> = ({ onSwitched }) => {
     setConfirming(true);
     setViewState("activating");
     setErrorMsg(null);
-    setStatusDetail("Activating persona…");
+    setStatusDetail(t("activatingPersona"));
 
     try {
-      setStatusDetail("Loading persona info…");
+      setStatusDetail(t("personaInfoLoading"));
       const result = await switchPersona(selectedId);
       if (!result.success) {
-        setErrorMsg(result.error ?? "Failed to switch persona.");
+        setErrorMsg(result.error ?? t("personaSwitchError"));
         setViewState("ready");
         return;
       }
@@ -147,7 +147,7 @@ const SwitchPersona: React.FC<SwitchPersonaProps> = ({ onSwitched }) => {
           <div className="persona-no-options">
             <span className="persona-no-options__icon">👤</span>
             <p className="persona-no-options__text">
-              No other personas available
+              {t("noOtherPersonas")}
             </p>
           </div>
         </div>
@@ -200,17 +200,9 @@ const SwitchPersona: React.FC<SwitchPersonaProps> = ({ onSwitched }) => {
         message={
           <>
             <p className="confirm-copy__lead">
-              You are about to switch to <strong>{personaDisplayName}</strong>.
+              {t("personaSwitchLead")} <strong>{personaDisplayName}</strong>.
             </p>
-            <p className="confirm-copy__body">
-              This will apply <strong>proxy</strong> for the new persona. If you
-              use <strong>system account</strong> login, the extension will sign
-              in with that persona&apos;s account for the current platform. If
-              you use <strong>your own account</strong>, cookies for that
-              platform will be cleared immediately so your session is not mixed
-              with the previous persona — you can log in again afterward.
-              Security checkpoints may occur.
-            </p>
+            <p className="confirm-copy__body">{t("personaSwitchBody")}</p>
           </>
         }
         confirmLabel={t("yesSwitch")}
