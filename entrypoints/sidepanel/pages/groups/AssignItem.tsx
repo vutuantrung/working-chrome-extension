@@ -30,6 +30,28 @@ const typeIcons = {
     fanpage: FaGlobe,
 }
 
+/** Format elapsed time from an API timestamp in milliseconds. */
+function formatTimeSince(timestamp: number): string {
+    const elapsed = Date.now() - timestamp;
+    if (!Number.isFinite(elapsed)) return "";
+    if (elapsed < 0) return "Trong tương lai";
+    const minutes = Math.floor(elapsed / 60000);
+    if (minutes < 1) return "Vừa cập nhật";
+    const units: [number, Intl.RelativeTimeFormatUnit][] = [
+        [365 * 24 * 60, "year"],
+        [30 * 24 * 60, "month"],
+        [7 * 24 * 60, "week"],
+        [24 * 60, "day"],
+        [60, "hour"],
+        [1, "minute"],
+    ];
+    const formatter = new Intl.RelativeTimeFormat("vi-VN", { numeric: "always" });
+    for (const [size, unit] of units) {
+        if (minutes >= size) return formatter.format(-Math.floor(minutes / size), unit);
+    }
+    return "Vừa cập nhật";
+}
+
 function AssignItem(profile: any) {
     const status = getInfiltrationStatus(profile);
     const activity = profile.active === true || profile.active === "active" || profile.activity_status === "active"
@@ -41,7 +63,9 @@ function AssignItem(profile: any) {
     const url = profile.url;
     const name = profile.name || "Không có tên";
     const id = profile.group_id;
-    const crawledTime = profile.crawled_time;
+    const updatedTime = typeof profile.updated_time === "number" ? profile.updated_time : Number(profile.updated_time);
+    const updatedDate = Number.isFinite(updatedTime) && updatedTime > 0 ? new Date(updatedTime) : null;
+    const validUpdatedDate = updatedDate && !Number.isNaN(updatedDate.getTime()) ? updatedDate : null;
     const TypeIcon = typeIcons[type as keyof typeof typeIcons] ?? FaFolder;
     const copyId = async () => {
         if (!id) return;
@@ -103,7 +127,7 @@ function AssignItem(profile: any) {
                     </button>
                 </div>
                 <div>
-                    {crawledTime != null && <time className="group-task-card__updated" dateTime={new Date(crawledTime).toISOString()}>Thu thập: {new Date(crawledTime).toLocaleDateString("vi-VN")}</time>}
+                    {validUpdatedDate && <time className="group-task-card__updated" dateTime={validUpdatedDate.toISOString()} title={validUpdatedDate.toLocaleString("vi-VN")}>Cập nhật: {formatTimeSince(updatedTime)}</time>}
                 </div>
             </div>
         </article>
