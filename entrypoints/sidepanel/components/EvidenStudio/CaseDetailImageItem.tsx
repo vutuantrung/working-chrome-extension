@@ -1,9 +1,11 @@
+import { useTranslation } from "../../helpers/i18n";
 import { itemKey } from "../../helpers/helpers";
 import { ImageItem, ImageMeta } from "../../types/types";
 import { useState, useEffect, useRef } from "react";
 
 
 function InlineName({
+  const { t } = useTranslation();
     value,
     onChange,
 }: {
@@ -26,16 +28,16 @@ function InlineName({
                 onBlur={() => setEditing(false)}
                 onKeyDown={(e) => e.key === "Enter" && setEditing(false)}
                 className="case-detail__inline-name-input"
-                placeholder="Add name…"
+                placeholder={t("imageAddName")}
             />
         );
     }
 
     return (
         <p className="case-detail__inline-name-text"
-            title="Click to edit name"
+            title={t("imageEditName")}
             onClick={(e) => { e.stopPropagation(); setEditing(true); }}>
-            {value || <span className="case-detail__inline-name-placeholder">Add name…</span>}
+            {value || <span className="case-detail__inline-name-placeholder">{t("imageAddName")}</span>}
         </p>
     );
 }
@@ -59,6 +61,7 @@ const CaseDetailImageItem = ({
     handleToggleDelete,
     handleMetaChange,
 }: CaseDetailImageItemProps) => {
+    const { t } = useTranslation();
     const k = itemKey(item);
     const src = item.kind === "saved" ? item.image.url : item.dataUrl;
     const isDeleting = item.kind === "saved" && deletedIds.has(item.image.id);
@@ -94,7 +97,7 @@ const CaseDetailImageItem = ({
                                 handleDeletePending(item.timestamp);
                             }}
                             className="case-detail__thumbnail-action case-detail__thumbnail-action--danger"
-                            title="Discard"
+                            title={t("imageDiscard")}
                         >✕</button>
                     ) : isDeleting ? (
                         <button
@@ -102,8 +105,8 @@ const CaseDetailImageItem = ({
                                 e.stopPropagation();
                                 handleToggleDelete(item.image.id);
                             }}
-                            className="case-detail__thumbnail-action case-detail__thumbnail-action--undo" title="Undo removal"
-                        >Undo</button>
+                            className="case-detail__thumbnail-action case-detail__thumbnail-action--undo" title={t("imageUndoRemoval")}
+                        >{t("undo")}</button>
                     ) : (
                         <button
                             onClick={(e) => {
@@ -111,7 +114,7 @@ const CaseDetailImageItem = ({
                                 handleToggleDelete(item.image.id);
                             }}
                             className="case-detail__thumbnail-action case-detail__thumbnail-action--danger"
-                            title="Remove"
+                            title={t("remove")}
                         >✕</button>
                     )}
                 </div>
