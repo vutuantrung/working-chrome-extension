@@ -24,6 +24,7 @@ export function setLanguage(language: AppLanguage) {
 
 const dictionary = {
   en: {
+    caseLibrary:"Case library", totalCases:"total", creatingCase:"Creating…", savingCase:"Saving…", createCaseAction:"Create case", saveChanges:"Save changes", caseSaved:"Saved", addScreenshotAction:"Add screenshot",
     personaSwitchLead:"You are about to switch to", personaSwitchBody:"This will apply proxy settings for the new persona. With system-account login, the extension will sign in using that persona’s account for the current platform. With your own account, the platform cookies will be cleared to avoid mixing sessions, and you can sign in again. Security checkpoints may occur.", personaInfoLoading:"Loading persona info…",
     scheduledTasks:"Scheduled Tasks", success:"Success!", failedNotice:"Failed!", every:"Every", unnamedTask:"Unnamed Task",
     confirm:"Confirm", applying:"Applying…", close:"Close", current:"CURRENT", currentPlatform:"current platform", items:"items", subNavigation:"Sub navigation",
@@ -64,6 +65,7 @@ const dictionary = {
     justUpdated: "just now", inFuture: "in the future"
   },
   vi: {
+    caseLibrary:"Thư viện hồ sơ", totalCases:"tổng", creatingCase:"Đang tạo…", savingCase:"Đang lưu…", createCaseAction:"Tạo hồ sơ", saveChanges:"Lưu thay đổi", caseSaved:"Đã lưu", addScreenshotAction:"Thêm ảnh chụp",
     personaSwitchLead:"Bạn sắp chuyển sang", personaSwitchBody:"Thao tác này sẽ áp dụng proxy của nhân dạng mới. Nếu đăng nhập bằng tài khoản hệ thống, extension sẽ đăng nhập bằng tài khoản của nhân dạng đó trên nền tảng hiện tại. Nếu dùng tài khoản cá nhân, cookie của nền tảng sẽ được xóa để tránh trộn lẫn phiên đăng nhập; bạn có thể đăng nhập lại sau đó. Có thể xuất hiện bước xác minh bảo mật.", personaInfoLoading:"Đang tải thông tin nhân dạng…",
     scheduledTasks:"Tác vụ đã lên lịch", success:"Thành công!", failedNotice:"Thất bại!", every:"Mỗi", unnamedTask:"Tác vụ chưa có tên",
     confirm:"Xác nhận", applying:"Đang áp dụng…", close:"Đóng", current:"HIỆN TẠI", currentPlatform:"nền tảng hiện tại", items:"mục", subNavigation:"Điều hướng phụ",
