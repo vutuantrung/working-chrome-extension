@@ -24,7 +24,7 @@ export function setLanguage(language: AppLanguage) {
 
 const dictionary = {
   en: {
-    navDashboard:"Dashboard", navAutomation:"Automation", navGroup:"Groups", navEviden:"Evidence", navigation:"Main navigation",
+    navDashboard:"Dashboard", navAutomation:"Automation", navGroup:"Groups", navEviden:"Evidence", navigation:"Main navigation", monitoring:"Monitoring", evidenceCollection:"Evidence collection", evidenceStudio:"Evidence studio", switchPlatform:"Switch platform", switchPersona:"Switch persona", expandSidebar:"Expand sidebar", collapseSidebar:"Collapse sidebar", collapse:"Collapse",
     back:"Back", settings:"Settings", preferences:"PREFERENCES", settingsHint:"Customize your workspace and how the interface behaves.",
     platform:"Platform", platformHint:"Choose a social network and manage its connection.",
     appearance:"Appearance", appearanceHint:"Choose a comfortable layout for your workflow.",
@@ -47,7 +47,7 @@ const dictionary = {
     justUpdated:"just now", inFuture:"in the future"
   },
   vi: {
-    navDashboard:"Tổng quan", navAutomation:"Tự động hóa", navGroup:"Hội nhóm", navEviden:"Bằng chứng", navigation:"Điều hướng chính",
+    navDashboard:"Tổng quan", navAutomation:"Tự động hóa", navGroup:"Hội nhóm", navEviden:"Bằng chứng", navigation:"Điều hướng chính", monitoring:"Giám sát", evidenceCollection:"Bộ sưu tập bằng chứng", evidenceStudio:"Studio bằng chứng", switchPlatform:"Chuyển nền tảng", switchPersona:"Chuyển nhân dạng", expandSidebar:"Mở rộng menu", collapseSidebar:"Thu gọn menu", collapse:"Thu gọn",
     back:"Quay lại", settings:"Cài đặt", preferences:"TÙY CHỌN", settingsHint:"Tùy chỉnh không gian làm việc và giao diện ứng dụng.",
     platform:"Nền tảng", platformHint:"Chọn mạng xã hội và quản lý kết nối.",
     appearance:"Giao diện", appearanceHint:"Chọn cách hiển thị phù hợp với bạn.",
