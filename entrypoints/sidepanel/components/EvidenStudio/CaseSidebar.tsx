@@ -1,3 +1,4 @@
+import { useTranslation } from "../../helpers/i18n";
 import { FaChevronLeft, FaChevronRight, FaFolderOpen, FaPlus } from "../../assets/constants/icons";
 import SidebarItem from "./CaseSidebarItem";
 import { useState, useEffect } from "react";
@@ -27,6 +28,7 @@ function CaseSidebar({
   onToggle,
   setFilter,
 }: CaseSidebarProps) {
+  const { t } = useTranslation();
   const [searchText, setSearchText] = useState("");
   const debouncedSearchText = useDebounce(searchText, 500);
   const [page, setPage] = useState(1);
@@ -72,7 +74,7 @@ function CaseSidebar({
         <SearchInput
           value={searchText}
           onChange={setSearchText}
-          placeholder="Search cases..."
+          placeholder={t("caseSearch")}
           wrapperClassName="case-sidebar__search-field"
           iconClassName="case-sidebar__search-icon"
           inputClassName="case-sidebar__search-input"
@@ -81,15 +83,15 @@ function CaseSidebar({
           type="button"
           className={`case-sidebar__create-button${selectedCase.id === defaultCase.id ? " case-sidebar__create-button--active" : ""}`}
           onClick={() => onSelect(defaultCase)}
-          title="Create a new case"
-          aria-label="Create a new case"
+          title={t("createCase")}
+          aria-label={t("createCase")}
         >
           <FaPlus aria-hidden="true" />
         </button>
       </div>
 
       <div className="case-sidebar__section-heading">
-        <span>YOUR CASES</span>
+        <span>{t("yourCases")}</span>
         <span className="case-sidebar__section-count">{profileCases?.meta.total_count ?? 0} total</span>
       </div>
 
@@ -97,8 +99,8 @@ function CaseSidebar({
         {profileCases?.data?.length === 0 && (debouncedSearchText || page > 1) && (
           <li className="case-sidebar__empty">
             <FaFolderOpen aria-hidden="true" />
-            <span>No matching cases</span>
-            <small>Try a different search term.</small>
+            <span>{t("noCaseMatch")}</span>
+            <small>{t("tryOtherSearch")}</small>
           </li>
         )}
         {profileCases?.data.map((c) => (
