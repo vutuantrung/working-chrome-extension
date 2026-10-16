@@ -24,6 +24,7 @@ export function setLanguage(language: AppLanguage) {
 
 const dictionary = {
   en: {
+    priorityUrgent:"Urgent", priorityHigh:"High", priorityMedium:"Medium", priorityLow:"Low", unknown:"Unknown", taskFinished:"Finished", select:"Select", deselect:"Deselect", unnamedPersona:"Unnamed persona",
     loading:"Loading…",
  imageName:"Name", imageDescription:"Description", imageNamePlaceholder:"Enter image name…", imageDescriptionPlaceholder:"Add a description…", imageClose:"Close image details", screenshot:"Screenshot", imageAddName:"Add name…", imageEditName:"Click to edit name", imageDiscard:"Discard", imageUndoRemoval:"Undo removal", undo:"Undo", remove:"Remove", jsonPlaceholder:"Paste your JSON here...", invalidJson:"Invalid JSON format", save:"Save", editText:"Edit Text", tab:"Tab", groupsScrolled:"Groups scrolled", feedsScrolled:"Feeds scrolled",
     evidenceEyebrow:"WORKSPACE / EVIDENCE", evidenceTitle:"Eviden Studio", evidenceDescription:"Organize evidence, manage cases, and review captured content.",
@@ -60,6 +61,7 @@ const dictionary = {
     justUpdated: "just now", inFuture: "in the future"
   },
   vi: {
+    priorityUrgent:"Khẩn cấp", priorityHigh:"Cao", priorityMedium:"Trung bình", priorityLow:"Thấp", unknown:"Không rõ", taskFinished:"Đã hoàn thành", select:"Chọn", deselect:"Bỏ chọn", unnamedPersona:"Nhân dạng chưa có tên",
     loading:"Đang tải…",
  imageName:"Tên", imageDescription:"Mô tả", imageNamePlaceholder:"Nhập tên ảnh…", imageDescriptionPlaceholder:"Thêm mô tả…", imageClose:"Đóng chi tiết ảnh", screenshot:"Ảnh chụp", imageAddName:"Thêm tên…", imageEditName:"Nhấn để sửa tên", imageDiscard:"Bỏ thay đổi", imageUndoRemoval:"Hoàn tác xóa", undo:"Hoàn tác", remove:"Xóa", jsonPlaceholder:"Dán JSON vào đây...", invalidJson:"Định dạng JSON không hợp lệ", save:"Lưu", editText:"Sửa văn bản", tab:"Tab", groupsScrolled:"Nhóm đã cuộn", feedsScrolled:"Bảng tin đã cuộn",
     evidenceEyebrow:"KHÔNG GIAN / BẰNG CHỨNG", evidenceTitle:"Studio bằng chứng", evidenceDescription:"Sắp xếp bằng chứng, quản lý hồ sơ và xem lại nội dung đã thu thập.",
