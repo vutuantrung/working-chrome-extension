@@ -136,7 +136,7 @@ function Login() {
           <p>{t("loginBrandCopy")}</p>
           <div className="login-brand-lines"><span /><span /><span /></div>
         </div>
-        <div className="login-brand-bottom"><FaShieldAlt /> Secure workspace access</div>
+        <div className="login-brand-bottom"><FaShieldAlt /> {t("loginSecure")}</div>
       </div>
       <div className="login-form-panel"><div className="modern-login-container">
         <div className="login-mobile-brand"><span className="login-brand-symbol">H</span> LERNA LAKES</div>
@@ -196,7 +196,7 @@ function Login() {
                 disabled={loading}
                 className="remember-checkbox"
               />
-              Remember me
+              {t("loginRemember")}
             </label>
           </div>
 
