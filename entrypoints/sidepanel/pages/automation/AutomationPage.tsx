@@ -1,5 +1,6 @@
 import "../../assets/css/features/automation.css";
 import WorkspacePageHeader from "../../components/WorkspacePageHeader";
+import { useTranslation } from "../../helpers/i18n";
 import { useState, useEffect } from "react";
 import AutomationTab from "../../components/AutomationTab";
 import JsonEditor from "../../components/JsonEditor";
@@ -20,6 +21,7 @@ interface AutomationPageProps {
 }
 
 function AutomationPage({ activeView, setActiveSubTab }: AutomationPageProps) {
+  const { t } = useTranslation();
   const [showJsonEditor, setShowJsonEditor] = useState(false);
   const [settings, setSettings] = useState<any>(null);
   const [taskList, setTaskList] = useState<any[]>([]);
@@ -212,9 +214,9 @@ function AutomationPage({ activeView, setActiveSubTab }: AutomationPageProps) {
   return (
     <div className="automation-page">
       <WorkspacePageHeader
-        eyebrow="WORKSPACE / AUTOMATION"
-        title="Automation"
-        description="Monitor execution progress, statuses, and task activity."
+        eyebrow={t("automationEyebrow")}
+        title={t("navAutomation")}
+        description={t("automationDescription")}
       />
 
       {notification && (
