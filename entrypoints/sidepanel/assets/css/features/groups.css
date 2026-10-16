@@ -763,3 +763,11 @@ html[data-color-mode="dark"] .group-task-card__source,
 html[data-color-mode="dark"] .group-task-card__updated {
     color: #aab6c9;
 }
+
+/* Activity status is separate from membership status (requested/joined/not_joined). */
+.group-task-card__activity { display:inline-flex; align-items:center; gap:5px; flex:none; border-radius:5px; padding:3px 7px; font-size:11px; font-weight:600; }
+.group-task-card__activity i { width:6px; height:6px; border-radius:50%; background:currentColor; }
+.group-task-card__activity--active { background:#e6f8ec; color:#168747; }
+.group-task-card__activity--inactive { background:#edf0f3; color:#687280; }
+html[data-color-mode="dark"] .group-task-card__activity--active { background:#193b2e; color:#8ce5b1; }
+html[data-color-mode="dark"] .group-task-card__activity--inactive { background:#303946; color:#cad2df; }
