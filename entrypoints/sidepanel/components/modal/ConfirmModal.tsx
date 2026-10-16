@@ -1,3 +1,4 @@
+import { useTranslation } from "../../helpers/i18n";
 import type { ReactNode } from "react";
 import { FaTimes } from "../../assets/constants/icons";
 import { Button, IconButton } from "../ui";
@@ -23,6 +24,7 @@ function ConfirmModal({
   onConfirm,
   onCancel,
 }: ConfirmModalProps) {
+  const { t } = useTranslation();
   if (!open) return null;
 
   return (
@@ -41,7 +43,7 @@ function ConfirmModal({
           <IconButton
             className="confirm-modal__close"
             onClick={onCancel}
-            ariaLabel="Close"
+            ariaLabel={t("close")}
             disabled={busy}
             icon={<FaTimes />}
           />
@@ -53,15 +55,15 @@ function ConfirmModal({
             onClick={onCancel}
             disabled={busy}
           >
-            {cancelLabel}
+            {cancelLabel === "Cancel" ? t("cancel") : cancelLabel}
           </Button>
           <Button
             className="confirm-modal__btn confirm-modal__btn--confirm"
             onClick={onConfirm}
             loading={busy}
-            loadingLabel="Applying…"
+            loadingLabel={t("applying")}
           >
-            {confirmLabel}
+            {confirmLabel === "Confirm" ? t("confirm") : confirmLabel}
           </Button>
         </div>
       </div>
