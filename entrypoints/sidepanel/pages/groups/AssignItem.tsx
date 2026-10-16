@@ -40,7 +40,12 @@ function AssignItem(profile: any) {
     const TypeIcon = typeIcons[type as keyof typeof typeIcons] ?? FaFolder;
     const copyId = async () => {
         if (!id) return;
-        try { await navigator.clipboard.writeText(id); } catch { /* Clipboard unavailable */ }
+        try {
+            await navigator.clipboard.writeText(id);
+        }
+        catch {
+            /* Clipboard unavailable */
+        }
     };
 
     return (
@@ -49,18 +54,23 @@ function AssignItem(profile: any) {
                 <div className="group-task-card__avatar" aria-label={typeLabels[type] ?? type}>
                     <TypeIcon aria-hidden="true" />
                     <span className="group-task-card__channel" title={profile.channel_name || "Unknown channel"}>
+
                         {getChannelIcon(profile.channel_name)}
                     </span>
                 </div>
                 <div className="group-task-card__content">
-                    <div className="group-task-card__title"><strong title={name}>{name}</strong></div>
+                    <div className="group-task-card__title">
+                    <TypeIcon aria-hidden="true" />
+                        <strong title={name}>{name}</strong>
+                    </div>
                     <div className="group-task-card__meta">
-                        <span className="group-task-card__type"><TypeIcon aria-hidden="true" />{typeLabels[type] ?? type}</span>
+                        {/* <span className="group-task-card__type">
+                            <TypeIcon aria-hidden="true" />{typeLabels[type] ?? type}
+                        </span> */}
                         {status && <span className={`group-task-card__state group-task-card__state--${status}`}>{infiltrationLabels[status]}</span>}
                     </div>
                 </div>
                 <div className="group-task-card__actions">
-
                     <a href={url || undefined}
                         target="_blank"
                         rel="noopener noreferrer"

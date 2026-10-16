@@ -70,7 +70,7 @@ function GroupPage({ dataSource = getMemberSourcesGroup }: GroupPageProps = {}) 
 
       const res = await dataSource(
         id,
-        undefined,
+        statusFilter,
         debouncedSearch || undefined,
         offset,
         limit,
