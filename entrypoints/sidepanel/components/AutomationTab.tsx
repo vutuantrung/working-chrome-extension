@@ -1,3 +1,4 @@
+import { useTranslation } from "../../helpers/i18n";
 import { useState, useEffect, useMemo, useRef } from "react";
 import { User } from "../types/types";
 import {
@@ -31,6 +32,7 @@ function AutomationTab({
   onSave,
   onEditJson,
 }: AutomationTabProps) {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     activatingAutomation: false,
     scheduleStartTime: "",
@@ -278,8 +280,8 @@ function AutomationTab({
           <section className="automation-panel automation-unavailable" aria-label="Automation availability">
             <div className="automation-panel-icon"><FaPlayCircle /></div>
             <div>
-              <h3>Automation is not available</h3>
-              <p>Automation has not been enabled for this session. Once available, execution controls and scheduling will appear here.</p>
+              <h3>{t("automationUnavailable")}</h3>
+              <p>{t("automationUnavailableHint")}</p>
             </div>
           </section>
         ) : (
@@ -288,8 +290,8 @@ function AutomationTab({
               <div className="automation-panel-top">
                 <div className="automation-panel-icon"><FaPlayCircle /></div>
                 <div className="automation-panel-copy">
-                  <h3 id="automation-control-title">Automation control</h3>
-                  <p>Choose whether automated activities can run for this account.</p>
+                  <h3 id="automation-control-title">{t("automationControl")}</h3>
+                  <p>{t("automationControlHint")}</p>
                 </div>
                 <span className={`automation-state-chip ${formData.userActivatingAutomation ? "is-on" : "is-off"}`}>
                   {formData.userActivatingAutomation ? "On" : "Off"}
@@ -297,7 +299,7 @@ function AutomationTab({
               </div>
               <div className="automation-setting-row">
                 <div>
-                  <label className="automation-setting-name" htmlFor="userActivatingAutomation">Enable automation</label>
+                  <label className="automation-setting-name" htmlFor="userActivatingAutomation">{t("enableAutomation")}</label>
                   <p>{formData.userActivatingAutomation ? "Automation is allowed to run during the configured schedule." : "Automation is paused until you enable it again."}</p>
                 </div>
                 <label className="automation-switch">
@@ -311,18 +313,18 @@ function AutomationTab({
               <div className="automation-panel-top">
                 <div className="automation-panel-icon"><FaClock /></div>
                 <div className="automation-panel-copy">
-                  <h3 id="automation-schedule-title">Schedule</h3>
-                  <p>Set an optional daily time window using 24-hour time.</p>
+                  <h3 id="automation-schedule-title">{t("schedule")}</h3>
+                  <p>{t("scheduleHint")}</p>
                 </div>
               </div>
               <div className="automation-time-grid">
                 <div className="automation-time-field">
-                  <label htmlFor="scheduleStartTime">Start time</label>
+                  <label htmlFor="scheduleStartTime">{t("startTime")}</label>
                   <input type="text" id="scheduleStartTime" name="scheduleStartTime" inputMode="numeric" placeholder="HH:MM:SS" autoComplete="off" value={formData.scheduleStartTime} onChange={handleInputChange} onBlur={onBlur} aria-invalid={Boolean(errors.scheduleStartTime)} aria-describedby={errors.scheduleStartTime ? "automation-start-error" : undefined} />
                   {errors.scheduleStartTime && <span id="automation-start-error" className="automation-field-error">{errors.scheduleStartTime}</span>}
                 </div>
                 <div className="automation-time-field">
-                  <label htmlFor="scheduleEndTime">End time</label>
+                  <label htmlFor="scheduleEndTime">{t("endTime")}</label>
                   <input type="text" id="scheduleEndTime" name="scheduleEndTime" inputMode="numeric" placeholder="HH:MM:SS" autoComplete="off" value={formData.scheduleEndTime} onChange={handleInputChange} onBlur={onBlur} aria-invalid={Boolean(errors.scheduleEndTime)} aria-describedby={errors.scheduleEndTime ? "automation-end-error" : undefined} />
                   {errors.scheduleEndTime && <span id="automation-end-error" className="automation-field-error">{errors.scheduleEndTime}</span>}
                 </div>
