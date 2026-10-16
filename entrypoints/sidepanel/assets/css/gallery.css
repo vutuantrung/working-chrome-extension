@@ -23,3 +23,18 @@
 .gallery-group-status-badges__item code { font-size:11px; color:#64748b; }
 html[data-color-mode="dark"] .gallery-group-status-badges__item { border-color:#354255; }
 html[data-color-mode="dark"] .gallery-group-status-badges__item code { color:#aab6c9; }
+
+
+/* Global preview preferences in the gallery sidebar. */
+.gallery-preferences { display:grid; gap:14px; margin:16px 0; padding:13px; border:1px solid #435066; border-radius:10px; background:rgba(255,255,255,.06); }
+.gallery-preferences__group { display:grid; gap:7px; min-width:0; }
+.gallery-preferences__label { font-size:11px; font-weight:700; letter-spacing:.04em; color:#d5dce8; }
+.gallery-preferences__options { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:5px; }
+.gallery-preferences__options button { min-width:0; border:1px solid #566174; background:transparent; color:#e5eaf3; border-radius:7px; padding:7px 4px; cursor:pointer; font-size:11px; }
+.gallery-preferences__options button.is-active { background:#b90b2f; border-color:#d43d59; color:#fff; font-weight:700; }
+.gallery-preferences__options button:focus-visible { outline:2px solid #fff; outline-offset:2px; }
+html[data-color-mode="dark"] .style-gallery { background:#10151f; color:#f0f3f9; }
+html[data-color-mode="dark"] .style-gallery__main .gallery-preview-card { background:#1b2331; border-color:#354255; }
+html[data-color-mode="dark"] .style-gallery__main .gallery-preview-card__head { background:#252f3e; border-color:#354255; color:#f0f3f9; }
+html[data-color-mode="dark"] .style-gallery__header p { color:#b8c3d4; }
+html[data-color-mode="dark"] .style-gallery__header code { background:#283344; color:#e7edf6; }
