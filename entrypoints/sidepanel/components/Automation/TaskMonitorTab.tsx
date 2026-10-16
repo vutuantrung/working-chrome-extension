@@ -150,10 +150,10 @@ function TaskMonitorTab() {
                     <TaskStatusBadge status={task.state} />
                     <TaskPriorityBadge priority={task.priority} />
                     <span className="platform-badge">{task.platform}</span>
-                    <span>Tab: {task.tabId ?? "-"}</span>
-                    <span>Started: {formatTime(task.createdTime)}</span>
+                    <span>{t("tab")}: {task.tabId ?? "-"}</span>
+                    <span>{t("started")}: {formatTime(task.createdTime)}</span>
                     {task.startTime && (
-                      <span>Duration: {formatDuration(task.startTime)}</span>
+                      <span>{t("duration")}: {formatDuration(task.startTime)}</span>
                     )}
                   </div>
                 </div>
@@ -192,7 +192,7 @@ function TaskMonitorTab() {
                     <span className="detail-value">{task.activityId}</span>
                   </div>
                   <div className="detail-row">
-                    <span className="detail-label">Created:</span>
+                    <span className="detail-label">{t("created")}:</span>
                     <span className="detail-value">
                       {new Date(task.createdTime).toLocaleString()}
                     </span>
@@ -222,8 +222,8 @@ function TaskMonitorTab() {
                     <TaskStatusBadge status={task.state} />
                     <TaskPriorityBadge priority={task.priority} />
                     <span className="platform-badge">{task.platform}</span>
-                    <span>Tab: {task.tabId ?? "-"}</span>
-                    <span>Queued: {formatTime(task.createdTime)}</span>
+                    <span>{t("tab")}: {task.tabId ?? "-"}</span>
+                    <span>{t("queued")}: {formatTime(task.createdTime)}</span>
                   </div>
                 </div>
                 <div className="task-actions">
@@ -285,9 +285,9 @@ function TaskMonitorTab() {
                     <TaskStatusBadge status={task.state} />
                     <TaskPriorityBadge priority={task.priority} />
                     <span className="platform-badge">{task.platform}</span>
-                    <span>Tab: {task.tabId ?? "-"}</span>
+                    <span>{t("tab")}: {task.tabId ?? "-"}</span>
                     {task.endTime && (
-                      <span>Finished: {formatTime(task.endTime)}</span>
+                      <span>{t("finished")}: {formatTime(task.endTime)}</span>
                     )}
                     {task.startTime && task.endTime && (
                       <span>
@@ -318,14 +318,14 @@ function TaskMonitorTab() {
                     <span className="detail-value">{task.activityId}</span>
                   </div>
                   <div className="detail-row">
-                    <span className="detail-label">Created:</span>
+                    <span className="detail-label">{t("created")}:</span>
                     <span className="detail-value">
                       {new Date(task.createdTime).toLocaleString()}
                     </span>
                   </div>
                   {task.endTime && (
                     <div className="detail-row">
-                      <span className="detail-label">Finished:</span>
+                      <span className="detail-label">{t("finished")}:</span>
                       <span className="detail-value">
                         {new Date(task.endTime).toLocaleString()}
                       </span>
@@ -342,9 +342,9 @@ function TaskMonitorTab() {
                               {task.result.groupLinks &&
                                 task.result.groupLinks.length > 0 ? (
                                 <>
-                                  <span>Groups scrolled: {task?.result?.groupLinks?.length}</span>
+                                  <span>{t("groupsScrolled")}: {task?.result?.groupLinks?.length}</span>
                                   <span> | </span>
-                                  <span>Feeds scrolled: {scrollFeedsNumber}</span>
+                                  <span>{t("feedsScrolled")}: {scrollFeedsNumber}</span>
                                   <ul className="task-result-links">
                                     {task.result.groupLinks.map(
                                       (link: string, idx: number) => (
@@ -363,9 +363,9 @@ function TaskMonitorTab() {
                                 </>
                               ) : (
                                 <>
-                                  <span>Groups scrolled: {task?.result?.groupIds?.length}</span>
+                                  <span>{t("groupsScrolled")}: {task?.result?.groupIds?.length}</span>
                                   <span> | </span>
-                                  <span>Feeds scrolled: {scrollFeedsNumber}</span>
+                                  <span>{t("feedsScrolled")}: {scrollFeedsNumber}</span>
                                 </>
                               )}
                             </span>
