@@ -1,3 +1,4 @@
+import { useTranslation } from "../helpers/i18n";
 import React from "react";
 import { PLATFORMS } from "../helpers/helpers-ui";
 import type { PlatformId, PlatformObject } from "../types/types";
@@ -15,6 +16,7 @@ const PlatformSelect = ({
   variant,
   currentPlatformId,
 }: PlatformSelectProps) => {
+  const { t } = useTranslation();
   return (
     <div className={`platform-select ${variant === "switch" ? "platform-select--switch" : ""}`}>
       <div className="platform-select__grid">
@@ -25,7 +27,7 @@ const PlatformSelect = ({
               key={platform.id}
               type="button"
               disabled={isDisabled}
-              aria-label={`${platform.label}${platform.disabled ? ", coming soon" : currentPlatformId === platform.id && variant === "switch" ? ", current platform" : ""}`}
+              aria-label={`${platform.label}${platform.disabled ? `, ${t("comingSoon")}` : currentPlatformId === platform.id && variant === "switch" ? `, ${t("currentPlatform")}` : ""}`}
               className={`platform-select__card ${isDisabled ? "platform-select__card--disabled" : ""} ${currentPlatformId === platform.id && variant === "switch" ? "platform-select__card--current" : ""}`}
               style={
                 {
@@ -37,7 +39,7 @@ const PlatformSelect = ({
             >
               {platform.disabled && (
                 <span className="platform-select__coming-soon">
-                  Coming soon
+                  {t("comingSoon")}
                 </span>
               )}
               {busyId === platform.id && (
@@ -49,7 +51,7 @@ const PlatformSelect = ({
               <span className="platform-select__label">
                 {platform.label}
               </span>
-              {variant === "switch" && !platform.disabled && <span className="platform-select__action">{currentPlatformId === platform.id ? "CURRENT" : "↗"}</span>}
+              {variant === "switch" && !platform.disabled && <span className="platform-select__action">{currentPlatformId === platform.id ? t("current") : "↗"}</span>}
             </button>
           );
         })}
