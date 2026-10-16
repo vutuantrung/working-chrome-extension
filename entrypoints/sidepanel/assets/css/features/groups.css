@@ -793,3 +793,7 @@ html[data-color-mode="dark"] .group-task-card__activity--inactive { background:#
 html[data-color-mode="dark"] .group-task-card__meta .group-task-card__state--requested { color: #9bd3ff; }
 html[data-color-mode="dark"] .group-task-card__meta .group-task-card__state--not_joined { color: #cad2df; }
 html[data-color-mode="dark"] .group-task-card__meta .group-task-card__state--joined { color: #8ce5b1; }
+
+/* Visually de-emphasize inactive groups without muting content or actions. */
+.group-page .group-task-card--inactive { background: #f2f4f6; border-color: #dce1e6; }
+html[data-color-mode="dark"] .group-page .group-task-card--inactive { background: #252d39; border-color: #3c4858; }
