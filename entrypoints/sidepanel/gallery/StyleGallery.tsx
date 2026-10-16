@@ -49,6 +49,7 @@ import { PLATFORM_OPTIONS, TYPE_OPTIONS } from "../helpers/constants";
 import { demoGroupProfiles } from "./groupSamples";
 import { AuthContext } from "../contexts/AuthContext";
 import PlatformSelect from "../components/PlatformSelect";
+import { setLanguage, useTranslation, type AppLanguage } from "../helpers/i18n";
 
 const persona: Persona = {
   id: "demo-persona",
@@ -662,6 +663,18 @@ function ConfirmModalDemo() {
 }
 
 export default function StyleGallery() {
+  const { language } = useTranslation();
+  const [galleryTheme, setGalleryTheme] = useState<"light" | "dark">(() => document.documentElement.dataset.colorMode === "dark" ? "dark" : "light");
+  const chooseTheme = (theme: "light" | "dark") => {
+    setGalleryTheme(theme);
+    document.documentElement.dataset.colorMode = theme;
+    document.documentElement.style.colorScheme = theme;
+    try {
+      const current = JSON.parse(localStorage.getItem("hydra:ui-preferences") || "{}");
+      localStorage.setItem("hydra:ui-preferences", JSON.stringify({ ...current, theme }));
+    } catch { /* Preview remains usable when storage is unavailable. */ }
+  };
+  const chooseLanguage = (value: AppLanguage) => setLanguage(value);
   const [activeTab, setActiveTab] = useState("config");
   const [selectedPersona, setSelectedPersona] = useState(false);
   const [query, setQuery] = useState("");
@@ -679,6 +692,22 @@ export default function StyleGallery() {
     <div className="style-gallery">
       <aside className="style-gallery__sidebar">
         <div className="style-gallery__brand">UI Style Gallery</div>
+        <div className="gallery-preferences" aria-label="Gallery preferences">
+          <div className="gallery-preferences__group">
+            <span className="gallery-preferences__label">Mode</span>
+            <div className="gallery-preferences__options" role="group" aria-label="Gallery color mode">
+              <button type="button" className={galleryTheme === "light" ? "is-active" : ""} aria-pressed={galleryTheme === "light"} onClick={() => chooseTheme("light")}>☀ Light</button>
+              <button type="button" className={galleryTheme === "dark" ? "is-active" : ""} aria-pressed={galleryTheme === "dark"} onClick={() => chooseTheme("dark")}>☾ Dark</button>
+            </div>
+          </div>
+          <div className="gallery-preferences__group">
+            <span className="gallery-preferences__label">Language</span>
+            <div className="gallery-preferences__options" role="group" aria-label="Gallery language">
+              <button type="button" lang="en" className={language === "en" ? "is-active" : ""} aria-pressed={language === "en"} onClick={() => chooseLanguage("en")}>English</button>
+              <button type="button" lang="vi" className={language === "vi" ? "is-active" : ""} aria-pressed={language === "vi"} onClick={() => chooseLanguage("vi")}>Tiếng Việt</button>
+            </div>
+          </div>
+        </div>
         <p className="style-gallery__hint">Edit files under <code>entrypoints/sidepanel/css</code>. Vite updates this page instantly.</p>
         <input className="style-gallery__search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Find page/component..." />
         <nav className="style-gallery__nav">
