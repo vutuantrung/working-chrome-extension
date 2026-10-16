@@ -43,7 +43,7 @@ function JsonEditor({
         />
       </div>
       <button className="button" onClick={handleSave}>
-        Save
+        {t("save")}
       </button>
       <div className="edit-data">
         <a
@@ -53,7 +53,7 @@ function JsonEditor({
             onClose();
           }}
         >
-          Edit Text
+          {t("editText")}
         </a>
       </div>
     </div>

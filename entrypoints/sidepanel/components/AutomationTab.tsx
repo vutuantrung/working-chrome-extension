@@ -300,7 +300,9 @@ function AutomationTab({
               <div className="automation-setting-row">
                 <div>
                   <label className="automation-setting-name" htmlFor="userActivatingAutomation">{t("enableAutomation")}</label>
-                  <p>{formData.userActivatingAutomation ? "Automation is allowed to run during the configured schedule." : "Automation is paused until you enable it again."}</p>
+                  <p>{formData.userActivatingAutomation
+                    ? t("autoTaskAnnounce1")
+                    : t("autoTaskAnnounce2")}</p>
                 </div>
                 <label className="automation-switch">
                   <input type="checkbox" id="userActivatingAutomation" name="userActivatingAutomation" checked={formData.userActivatingAutomation} onChange={handleInputChange} />
@@ -329,14 +331,14 @@ function AutomationTab({
                   {errors.scheduleEndTime && <span id="automation-end-error" className="automation-field-error">{errors.scheduleEndTime}</span>}
                 </div>
               </div>
-              <p className="automation-hint"><FaClock aria-hidden="true" /> Leave a field blank to use the existing default behavior.</p>
+              <p className="automation-hint"><FaClock aria-hidden="true" /> {t("fillLeaveBlank")}</p>
             </section>
 
             <div className="automation-footer">
               {submitError && <div className="automation-submit-error" role="alert">{submitError}</div>}
               <button type="button" onClick={handleSubmit} className="automation-save-button" disabled={isSubmitting}>
                 {isSubmitting ? <FaSpinner className="status-icon-spin" /> : <FaCheckCircle />}
-                {isSubmitting ? "Saving…" : "Save settings"}
+                {isSubmitting ? t("saveSetting") : t("saving")}
               </button>
             </div>
           </>

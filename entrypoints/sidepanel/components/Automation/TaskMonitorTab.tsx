@@ -169,7 +169,7 @@ function TaskMonitorTab() {
                     title={t("stopRunning")}
                   >
                     <FaTimesCircle />
-                    Stop
+                    {t("stop")}
                   </button>
                   <FaChevronDown
                     className={`expand-icon ${expandedTasks.has(task.taskId) ? "expanded" : ""
@@ -238,7 +238,7 @@ function TaskMonitorTab() {
                     title={t("stopPending")}
                   >
                     <FaTimesCircle />
-                    Stop
+                    {t("stop")}
                   </button>
                   <FaChevronDown
                     className={`expand-icon ${expandedTasks.has(task.taskId) ? "expanded" : ""
@@ -271,7 +271,7 @@ function TaskMonitorTab() {
         <div className="task-section">
           <div className="section-header">
             <FaHistory className="task-section-icon--history" />
-            Recent History
+            {t("recentHistory")}
           </div>
           {completedTasks.slice(0, 5).map((task: Task) => (
             <div key={task.taskId} className="task-card">
@@ -291,7 +291,7 @@ function TaskMonitorTab() {
                     )}
                     {task.startTime && task.endTime && (
                       <span>
-                        Duration: {formatDuration(task.startTime, task.endTime)}
+                        {t("duration")}: {formatDuration(task.startTime, task.endTime)}
                       </span>
                     )}
                   </div>

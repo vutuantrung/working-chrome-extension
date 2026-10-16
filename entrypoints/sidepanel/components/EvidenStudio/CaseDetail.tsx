@@ -90,7 +90,7 @@ function CaseDetail({
           </div>
 
           <div className="case-detail__form-field">
-            <label className="case-detail__field-label" htmlFor="case-profile-url">Profile URL <span className="case-detail__required">*</span></label>
+            <label className="case-detail__field-label" htmlFor="case-profile-url">{t("caseUrl")} <span className="case-detail__required">*</span></label>
             <div className="case-detail__url-row">
               <IoPersonOutline className={`case-detail__url-icon ${caseFields.profile_url === "" ? "case-detail__url-icon--invalid" : ""}`} />
               <input
@@ -107,7 +107,7 @@ function CaseDetail({
           </div>
 
           <div className="case-detail__form-field">
-            <label className="case-detail__field-label" htmlFor="case-origin-url">Origin URL <span className="case-detail__required">*</span></label>
+            <label className="case-detail__field-label" htmlFor="case-origin-url">{t("caseOrgURL")} <span className="case-detail__required">*</span></label>
             <div className="case-detail__url-row">
               <IoIosLink className={`case-detail__url-icon ${caseFields.origin_url === "" ? "case-detail__url-icon--invalid" : ""}`} />
               <input

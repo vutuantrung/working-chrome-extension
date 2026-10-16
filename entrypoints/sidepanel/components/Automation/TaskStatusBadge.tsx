@@ -52,13 +52,19 @@ export default function TaskStatusBadge({
 }: TaskStatusBadgeProps) {
   const { t } = useTranslation();
   const config = getStatusConfig(status);
-
+  const translatTaskStatus = (variant: string) => {
+    if (variant === "running") return t("running");
+    if (variant === "pending") return t("pending");
+    if (variant === "finished") return t("taskFinished");
+    if (variant === "canceled") return t("canceled");
+    return config.label;
+  }
   return (
     <span
       className={`task-status-badge task-status-badge--${config.variant} ${className}`.trim()}
     >
       {config.icon}
-      <span>{label ?? (config.variant === "running" ? t("running") : config.variant === "pending" ? t("pending") : config.variant === "finished" ? t("taskFinished") : config.variant === "canceled" ? t("canceled") : config.label)}</span>
+      <span>{label ?? (translatTaskStatus(config.variant))}</span>
     </span>
   );
 }
