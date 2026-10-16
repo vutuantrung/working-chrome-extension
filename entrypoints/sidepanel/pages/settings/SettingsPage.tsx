@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaArrowLeft, FaCheckCircle, FaCog, FaPalette, FaGlobe, FaSlidersH, FaUndo } from "../../assets/constants/icons";
 import SwitchPlatform from "../platformPage/PlatformPage";
-import { getLanguage, setLanguage, useTranslation, type AppLanguage } from "../../helpers/i18n";
+import { setLanguage, useTranslation, type AppLanguage } from "../../helpers/i18n";
 
 const STORAGE_KEY = "hydra:ui-preferences";
 
@@ -139,7 +139,7 @@ export default function SettingsPage() {
       </section>
 
       <footer className="settings-page__footer">
-        <span className="settings-page__save-state" role="status">{saved ? <><FaCheckCircle /> Preferences saved automatically</> : t("saveFailed")}</span>
+        <span className="settings-page__save-state" role="status">{saved ? <><FaCheckCircle /> {t("saved")}</> : t("saveFailed")}</span>
         <button type="button" className="settings-page__reset" onClick={() => setPreferences({ ...DEFAULTS })}><FaUndo />{t("restore")}</button>
       </footer>
     </main>
