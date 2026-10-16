@@ -56,8 +56,8 @@ function CaseDetail({
 
   const saveCreateButtonDisable = saving || !caseFields.name || !caseFields.profile_url || !caseFields.origin_url;
   const saveCreateButtonCaption = saving
-    ? (isNewCase ? "Creating…" : "Saving…")
-    : (isNewCase ? "Create case" : "Save changes");
+    ? (isNewCase ? t("creatingCase") : t("savingCase"))
+    : (isNewCase ? t("createCaseAction") : t("saveChanges"));
 
   return (
     <div className="case-detail custom-scroll">
@@ -162,7 +162,7 @@ function CaseDetail({
         <div className="case-detail__gallery-heading">
           <div className="case-detail__gallery-heading-copy"><h2 className="case-detail__gallery-title">{t("caseScreenshots")} <span className="case-detail__gallery-count">{items.length}</span></h2><p className="case-detail__gallery-subtitle">{t("screenshotsHint")}</p></div>
           <button onClick={handleAddScreenshot} disabled={capturing || saving} className="case-detail__gallery-add">
-            <FiPlusCircle size={16} /> {capturing ? "Opening…" : "Add screenshot"}
+            <FiPlusCircle size={16} /> {capturing ? t("opening") : t("addScreenshotAction")}
           </button>
         </div>
         <div className="case-detail__grid">
@@ -199,7 +199,7 @@ function CaseDetail({
               {saveCreateButtonCaption}
             </button>
           ) : (
-            <span className="case-detail__saved-badge" role="status"><FaCheckCircle /> Saved</span>
+            <span className="case-detail__saved-badge" role="status"><FaCheckCircle /> {t("caseSaved")}</span>
           )}
         </div>
       </div>
