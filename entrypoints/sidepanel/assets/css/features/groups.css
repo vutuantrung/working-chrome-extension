@@ -771,3 +771,25 @@ html[data-color-mode="dark"] .group-task-card__updated {
 .group-task-card__activity--inactive { background:#edf0f3; color:#687280; }
 html[data-color-mode="dark"] .group-task-card__activity--active { background:#193b2e; color:#8ce5b1; }
 html[data-color-mode="dark"] .group-task-card__activity--inactive { background:#303946; color:#cad2df; }
+
+
+/* Membership badges are outlined tags, visually distinct from the filled activity pills. */
+.group-task-card__meta .group-task-card__state {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    padding: 3px 8px;
+    border: 1px solid currentColor;
+    border-radius: 4px;
+    background: transparent;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1.35;
+    letter-spacing: .035em;
+}
+.group-task-card__meta .group-task-card__state--requested { color: #237bc4; }
+.group-task-card__meta .group-task-card__state--not_joined { color: #687280; }
+.group-task-card__meta .group-task-card__state--joined { color: #168747; }
+html[data-color-mode="dark"] .group-task-card__meta .group-task-card__state--requested { color: #9bd3ff; }
+html[data-color-mode="dark"] .group-task-card__meta .group-task-card__state--not_joined { color: #cad2df; }
+html[data-color-mode="dark"] .group-task-card__meta .group-task-card__state--joined { color: #8ce5b1; }
