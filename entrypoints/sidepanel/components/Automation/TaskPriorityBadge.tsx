@@ -1,3 +1,4 @@
+import { useTranslation } from "../../helpers/i18n";
 import { PRIORITY_LABELS } from "../../helpers/constants";
 import "../../assets/css/components/TaskPriorityBadge.css";
 
@@ -31,8 +32,9 @@ export default function TaskPriorityBadge({
   label,
   className = "",
 }: TaskPriorityBadgeProps) {
+  const { t } = useTranslation();
   const variant = getPriorityVariant(priority);
-  const text = label ?? getPriorityLabel(priority);
+  const text = label ?? ([t("priorityLow"), t("priorityMedium"), t("priorityHigh"), t("priorityUrgent")][priority] || t("unknown"));
 
   return (
     <span
