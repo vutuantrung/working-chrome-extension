@@ -13,6 +13,7 @@ import {
 } from "../../helpers/helpers";
 import { PlatformId, PlatformObject } from "../../types/types";
 import PlatformSelect from "../../components/PlatformSelect";
+import { useTranslation } from "../../helpers/i18n";
 
 const chromeStorageKey = (id: PlatformId) => id === "facebook" ? "fbLoginMode" : `${id}LoginMode`;
 const localStorageKey = (id: PlatformId) => id === "facebook" ? "local:fbLoginMode" : `local:${id}LoginMode`;
@@ -25,6 +26,7 @@ const LOGIN_ERROR_MESSAGES: Record<string, string> = {
 };
 
 const SwitchPlatform: React.FC = () => {
+  const { t } = useTranslation();
   const { loginWithMode } = useAuth();
   const navigate = useNavigate();
 
@@ -97,18 +99,18 @@ const SwitchPlatform: React.FC = () => {
     <div className="fb-login-mode-container switch-platform-page switch-platform-redesign">
       <div className="switch-platform-redesign__shell">
         <div className="switch-platform-redesign__eyebrow">
-          <span className="switch-platform-redesign__step">STEP {step === "platform" ? "01" : "02"} / 02</span>
+          <span className="switch-platform-redesign__step">{t("step")} {step === "platform" ? "01" : "02"} / 02</span>
         </div>
         <div className="switch-platform-redesign__heading">
           <div className="switch-platform-redesign__heading-icon">{step === "platform" ? "↗" : "✓"}</div>
-          <div><h1>{step === "platform" ? "Switch platform" : "Choose how to connect"}</h1><p>{step === "platform" ? "Choose a network to manage in your workspace." : `Connect to ${selectedPlatform?.label ?? "your platform"} using your preferred sign-in method.`}</p></div>
+          <div><h1>{step === "platform" ? t("switchPlatform") : t("chooseConnect")}</h1><p>{step === "platform" ? t("chooseNetwork") : t("chooseMethod").replace("{platform}", selectedPlatform?.label ?? t("platform"))}</p></div>
         </div>
         <div className="switch-platform-redesign__progress" aria-label={`Step ${step === "platform" ? 1 : 2} of 2`}><span className="is-complete" /><span className={step === "loginMode" ? "is-complete" : ""} /></div>
         {step === "platform" ? (
           <section className="switch-platform-redesign__section">
             <div className="switch-platform-redesign__section-heading">
-              <span>AVAILABLE NETWORKS</span>
-              <span>Select a platform <span aria-hidden="true">↓</span></span>
+              <span>{t("availableNetworks")}</span>
+              <span>{t("selectPlatform")} <span aria-hidden="true">↓</span></span>
             </div>
             <PlatformSelect
               onSelectPlatform={(p) => void handleSelectPlatform(p)}
@@ -116,16 +118,16 @@ const SwitchPlatform: React.FC = () => {
               variant="switch"
               currentPlatformId={currentPlatformId}
             />
-            <p className="switch-platform-redesign__hint">Your current workspace and data will remain available when switching networks.</p>
+            <p className="switch-platform-redesign__hint">{t("platformHintSafe")}</p>
           </section>
         ) : (
           <section className="switch-platform-redesign__section">
-            <button type="button" onClick={() => { setStep("platform"); setErrorMessage(null); if (currentPlatformId) { setSelectedPlatformId(currentPlatformId); } }} className="switch-platform-redesign__back">← All platforms</button>
-            {selectedPlatform && <div className="switch-platform-redesign__selected"><span className="switch-platform-redesign__selected-icon">{selectedPlatform.icon}</span><span><strong>{selectedPlatform.label}</strong><small>Selected network</small></span><span className="switch-platform-redesign__selected-check">✓</span></div>}
-            <div className="switch-platform-redesign__section-heading"><span>SIGN-IN METHOD</span><span>Choose one option</span></div>
+            <button type="button" onClick={() => { setStep("platform"); setErrorMessage(null); if (currentPlatformId) { setSelectedPlatformId(currentPlatformId); } }} className="switch-platform-redesign__back">← {t("allPlatforms")}</button>
+            {selectedPlatform && <div className="switch-platform-redesign__selected"><span className="switch-platform-redesign__selected-icon">{selectedPlatform.icon}</span><span><strong>{selectedPlatform.label}</strong><small>{t("selectedNetwork")}</small></span><span className="switch-platform-redesign__selected-check">✓</span></div>}
+            <div className="switch-platform-redesign__section-heading"><span>{t("signInMethod")}</span><span>{t("chooseOne")}</span></div>
             <div className="switch-platform-redesign__mode-list">
-              <button type="button" className="switch-platform-redesign__mode" disabled={isModeBusy} onClick={() => void handleLoginMode("auto")}><span className="switch-platform-redesign__mode-icon">⚡</span><span className="switch-platform-redesign__mode-copy"><strong>{isAutoLoading ? "Connecting…" : "System account"}</strong><small>Continue with the account managed by your workspace.</small></span>{isAutoLoading ? <span className="platform-flow-spinner inline" /> : <span className="switch-platform-redesign__mode-arrow">→</span>}</button>
-              <button type="button" className="switch-platform-redesign__mode" disabled={isModeBusy} onClick={() => void handleLoginMode("manual")}><span className="switch-platform-redesign__mode-icon">↗</span><span className="switch-platform-redesign__mode-copy"><strong>{isManualLoading ? "Opening…" : "Personal account"}</strong><small>Sign in manually using your own credentials.</small></span>{isManualLoading ? <span className="platform-flow-spinner inline manual" /> : <span className="switch-platform-redesign__mode-arrow">→</span>}</button>
+              <button type="button" className="switch-platform-redesign__mode" disabled={isModeBusy} onClick={() => void handleLoginMode("auto")}><span className="switch-platform-redesign__mode-icon">⚡</span><span className="switch-platform-redesign__mode-copy"><strong>{isAutoLoading ? t("connecting") : t("systemAccount")}</strong><small>{t("systemAccountHint")}</small></span>{isAutoLoading ? <span className="platform-flow-spinner inline" /> : <span className="switch-platform-redesign__mode-arrow">→</span>}</button>
+              <button type="button" className="switch-platform-redesign__mode" disabled={isModeBusy} onClick={() => void handleLoginMode("manual")}><span className="switch-platform-redesign__mode-icon">↗</span><span className="switch-platform-redesign__mode-copy"><strong>{isManualLoading ? t("opening") : t("personalAccount")}</strong><small>{t("personalAccountHint")}</small></span>{isManualLoading ? <span className="platform-flow-spinner inline manual" /> : <span className="switch-platform-redesign__mode-arrow">→</span>}</button>
             </div>
           </section>
         )}
