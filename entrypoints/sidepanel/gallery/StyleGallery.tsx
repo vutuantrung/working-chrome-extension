@@ -442,8 +442,8 @@ function GalleryFiltersDemo() {
   const [query, setQuery] = useState("");
   const [platforms, setPlatforms] = useState<string[]>([]);
   const [types, setTypes] = useState<string[]>([]);
-  return <div className="gallery-stack"><SearchInput id="gallery-group-search" value={query} onChange={setQuery} placeholder="Tìm tên hoặc ID nhóm..." />
-    <div className="gallery-inline"><MultiSelectFilter label="Nền tảng" options={PLATFORM_OPTIONS} selectedValues={platforms} onChange={setPlatforms} /><MultiSelectFilter label="Loại" options={localizeOptions(TYPE_OPTIONS, TYPE_OPTION_KEYS, t)} selectedValues={types} onChange={setTypes} /></div>
+  return <div className="gallery-stack"><SearchInput id="gallery-group-search" value={query} onChange={setQuery} placeholder={t("searchGroups")} />
+    <div className="gallery-inline"><MultiSelectFilter label={t("platform")} options={PLATFORM_OPTIONS} selectedValues={platforms} onChange={setPlatforms} /><MultiSelectFilter label={t("groupType")} options={localizeOptions(TYPE_OPTIONS, TYPE_OPTION_KEYS, t)} selectedValues={types} onChange={setTypes} /></div>
     <small>Search: {query || "(empty)"} · Platforms: {platforms.join(", ") || "all"} · Types: {types.join(", ") || "all"}</small>
   </div>;
 }
