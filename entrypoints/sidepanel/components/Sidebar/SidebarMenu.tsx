@@ -4,6 +4,7 @@ import { FaChartLine, FaExchangeAlt, FaGlobe, FaCog, FaChevronDown, FaChevronUp,
 import SidebarItem from "./SidebarItem";
 import SidebarChildItem from "./SidebarChildItem";
 import { PlatformId } from "../../types/types";
+import { useTranslation } from "../../helpers/i18n";
 
 interface SidebarGroupProps {
     icon: React.ReactNode;
@@ -81,6 +82,7 @@ export function SidebarMenu({
     platform
 }: SidebarMenuProps) {
     const [collapsed, setCollapsed] = useState(false);
+    const { t } = useTranslation();
     const toggleCollapse = () => setCollapsed((prev) => !prev);
 
     const sidebarOpen = isOpen ? "sidebar-overlay--open" : ""
@@ -112,7 +114,7 @@ export function SidebarMenu({
                     {showMonitor && (
                         <SidebarItem
                             icon={<FaChartLine />}
-                            label="Monitoring"
+                            label={t("monitoring")}
                             active={activePage === "monitor"}
                             onClick={() => { onNavigate("monitor"); onClose(); }}
                             sidebarCollapsed={collapsed}
@@ -123,14 +125,14 @@ export function SidebarMenu({
                     {platform === 'facebook' ? (
                         <SidebarGroup
                             icon={<FaRobot />}
-                            label="Automation"
+                            label={t("navAutomation")}
                             active={activePage === "config"}
                             collapsed={collapsed}
                             onExpand={() => { setCollapsed(false) }}
                         >
                             <SidebarChildItem
                                 icon={<FaCog />}
-                                label="Settings"
+                                label={t("settings")}
                                 active={activePage === "config"}
                                 onClick={() => { onNavigate("config"); onClose(); }}
                             />
@@ -138,7 +140,7 @@ export function SidebarMenu({
                     ) : (
                         <SidebarItem
                             icon={<FaRobot />}
-                            label="Automation"
+                            label={t("navAutomation")}
                             active={activePage === "config"}
                             onClick={() => { onNavigate("config"); onClose(); }}
                             sidebarCollapsed={collapsed}
@@ -149,14 +151,14 @@ export function SidebarMenu({
                     {platform ? (
                         <SidebarGroup
                             icon={<MdOutlineCollections />}
-                            label="Eviden collection"
+                            label={t("evidenceCollection")}
                             active={activePage === "eviden-studio"}
                             collapsed={collapsed}
                             onExpand={() => { setCollapsed(false) }}
                         >
                             <SidebarChildItem
                                 icon={<FaFolder />}
-                                label="Eviden studio"
+                                label={t("evidenceStudio")}
                                 active={activePage === "eviden-studio"}
                                 onClick={() => { onNavigate("eviden-studio"); onClose(); }}
                             />
@@ -164,7 +166,7 @@ export function SidebarMenu({
                     ) : (
                         <SidebarItem
                             icon={<MdOutlineCollections />}
-                            label="Eviden collection"
+                            label={t("evidenceCollection")}
                             active={activePage === "eviden-studio"}
                             onClick={() => { onNavigate("eviden-studio"); onClose(); }}
                             sidebarCollapsed={collapsed}
@@ -174,7 +176,7 @@ export function SidebarMenu({
                     {showSwitchPlatform && onSwitchPlatform && (
                         <SidebarItem
                             icon={<FaGlobe />}
-                            label="Switch platform"
+                            label={t("switchPlatform")}
                             active={activePage === "switch-platform"}
                             onClick={() => { onSwitchPlatform(); onClose(); }}
                             sidebarCollapsed={collapsed}
@@ -184,7 +186,7 @@ export function SidebarMenu({
                     {showSwitchPersona && (
                         <SidebarItem
                             icon={<FaExchangeAlt />}
-                            label="Switch persona"
+                            label={t("switchPersona")}
                             active={activePage === "switch-persona"}
                             onClick={() => { onNavigate("switch-persona"); onClose(); }}
                             sidebarCollapsed={collapsed}
@@ -197,13 +199,13 @@ export function SidebarMenu({
                     <button
                         className="sidebar-menu__collapse-btn"
                         onClick={toggleCollapse}
-                        aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+                        aria-label={collapsed ? t("expandSidebar") : t("collapseSidebar")}
                     >
                         <span className="sidebar-menu__collapse-btn-icon">
                             {collapsed ? <FaChevronRight /> : <FaChevronLeft />}
                         </span>
                         {!collapsed && (
-                            <span className="sidebar-menu__collapse-btn-label">Collapse</span>
+                            <span className="sidebar-menu__collapse-btn-label">{t("collapse")}</span>
                         )}
                     </button>
                 </div>
