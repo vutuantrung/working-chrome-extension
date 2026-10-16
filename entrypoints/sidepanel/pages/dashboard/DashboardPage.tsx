@@ -2,6 +2,7 @@ import { useId, useState } from "react";
 import { FaArrowTrendUp, FaCheck, FaCircleExclamation, FaClockRotateLeft, FaListCheck, FaBan, FaArrowRight, FaChartLine } from "../../assets/constants/icons";
 import "../../assets/css/pages/dashboard.css";
 import WorkspacePageHeader from "../../components/WorkspacePageHeader";
+import { useTranslation } from "../../helpers/i18n";
 
 type WindowRange = "24h" | "7d";
 type PostPoint = { label: string; count: number };
@@ -68,6 +69,7 @@ function PostChart({ data }: { data: PostPoint[] }) {
 }
 
 export default function DashboardPage() {
+  const { t } = useTranslation();
   const [range, setRange] = useState<WindowRange>("24h");
   const points = range === "24h" ? hourlyCounts : weeklyCounts;
   const first = points[0].count;
@@ -78,9 +80,9 @@ export default function DashboardPage() {
     <main className="dashboard-page">
 
       <WorkspacePageHeader
-        eyebrow="WORKSPACE / OVERVIEW"
-        title="Dashboard"
-        description="Track your content activity and recent automation performance."
+        eyebrow={t("dashboardEyebrow")}
+        title={t("navDashboard")}
+        description={t("dashboardDescription")}
       />
 
       <section className="dashboard-panel" aria-labelledby="dashboard-post-title">
