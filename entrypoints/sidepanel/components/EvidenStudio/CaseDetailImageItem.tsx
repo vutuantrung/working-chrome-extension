@@ -5,13 +5,13 @@ import { useState, useEffect, useRef } from "react";
 
 
 function InlineName({
-  const { t } = useTranslation();
     value,
     onChange,
 }: {
     value: string;
     onChange: (v: string) => void;
 }) {
+    const { t } = useTranslation();
     const [editing, setEditing] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
 
