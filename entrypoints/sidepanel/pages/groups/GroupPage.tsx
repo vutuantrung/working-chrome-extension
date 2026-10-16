@@ -6,7 +6,7 @@ import { appStorage } from "../../../../entrypoints/sidepanel/application/servic
 import { useAuth } from "../../contexts/AuthContext";
 import { User } from "../../types/types";
 
-import { TYPE_OPTIONS, PLATFORM_OPTIONS } from "../../helpers/constants";
+import { TYPE_OPTIONS, PLATFORM_OPTIONS , localizeOptions, TYPE_OPTION_KEYS } from "../../helpers/constants";
 import { MultiSelectFilter, SearchInput } from "../../components/ui";
 import { getPageNumbers } from "../../helpers/helpers";
 import AssignItem, { getInfiltrationStatus, type InfiltrationStatus } from "./AssignItem";
@@ -147,7 +147,7 @@ function GroupPage({ dataSource = getMemberSourcesGroup }: GroupPageProps = {}) 
         <div className="group-page__filter-row">
           <div className="group-page__advanced-filters">
             <MultiSelectFilter label={t("channel")} leftIcon={<FiLayers />} options={PLATFORM_OPTIONS} selectedValues={selectedPlatforms} onChange={(values) => { setSelectedPlatforms(values); setPage(1); }} />
-            <MultiSelectFilter label={t("groupType")} leftIcon={<FiList />} options={TYPE_OPTIONS} selectedValues={selectedTypes} onChange={(values) => { setSelectedTypes(values); setPage(1); }} />
+            <MultiSelectFilter label={t("groupType")} leftIcon={<FiList />} options={localizeOptions(TYPE_OPTIONS, TYPE_OPTION_KEYS, t)} selectedValues={selectedTypes} onChange={(values) => { setSelectedTypes(values); setPage(1); }} />
           </div>
           <button className="group-page__filter-icon" type="button" title={t("clearFilters")} aria-label={t("clearFilters")} onClick={() => { setSelectedPlatforms([]); setSelectedTypes([]); setStatusFilter("all"); setPage(1); }}><FiFilter /><span className="group-page__filter-dot" aria-hidden="true">{selectedPlatforms.length + selectedTypes.length + (statusFilter === 'all' ? 0 : 1) || ''}</span></button>
         </div>
