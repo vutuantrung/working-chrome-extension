@@ -9,19 +9,12 @@ import { User } from "../../types/types";
 import { TYPE_OPTIONS, PLATFORM_OPTIONS } from "../../helpers/constants";
 import { MultiSelectFilter, SearchInput } from "../../components/ui";
 import { getPageNumbers } from "../../helpers/helpers";
-import AssignItem, { getInfiltrationStatus, infiltrationLabels, type InfiltrationStatus } from "./AssignItem";
+import AssignItem, { getInfiltrationStatus, type InfiltrationStatus } from "./AssignItem";
 import { getMemberSourcesGroup } from "../../infrastructure/api/source-member.api";
 import { useTranslation } from "../../helpers/i18n";
 
 
 const PAGE_SIZE = 10;
-
-const JOINED_STATUS = [
-  { id: 'all', label: 'Tất cả' },
-  { id: 'joined', label: "Đã thâm nhập" },
-  { id: 'not_joined', label: "Chưa thâm nhập" },
-  { id: 'requested', label: "Đã gửi yêu cầu" },
-]
 
 // ─── Component ───────────────────────────────────────────────────────────────
 export type GroupPageDataSource = typeof getMemberSourcesGroup;
