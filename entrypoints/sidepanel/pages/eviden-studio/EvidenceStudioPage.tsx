@@ -10,12 +10,14 @@ import { CaseFilter, ProfileCase, GetProfileCasesResponse, PlatformId } from "..
 import CaseSidebar from "../../components/EvidenStudio/CaseSidebar";
 import CaseDetail from "../../components/EvidenStudio/CaseDetail";
 import { getProfileCases } from "../../helpers/helpers";
+import { useTranslation } from "../../helpers/i18n";
 
 interface EvidenStudioProps {
   platform: PlatformId
 }
 
 function EvidenStudio({ platform }: EvidenStudioProps) {
+  const { t } = useTranslation();
   const DEFAULT_CASE = {
     id: DEFAULT_CASE_ID,
     name: "- not set -",
@@ -110,9 +112,9 @@ function EvidenStudio({ platform }: EvidenStudioProps) {
     <div className="eviden-studio-page">
 
       <WorkspacePageHeader
-        eyebrow="WORKSPACE / EVIDENCE"
-        title="Eviden Studio"
-        description="Organize evidence, manage cases, and review captured content."
+        eyebrow={t("evidenceEyebrow")}
+        title={t("evidenceTitle")}
+        description={t("evidenceDescription")}
       />
 
       <div className="eviden-studio">
