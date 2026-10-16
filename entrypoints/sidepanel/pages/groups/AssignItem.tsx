@@ -1,6 +1,7 @@
 import { FiUsers, FiUser, FiExternalLink, FiCopy, FiLock, FaFolder, FaGlobe, FiKey } from "../../assets/constants/icons";
 import { getChannelIcon } from "../../helpers/helpers-ui";
 import type { GroupProfile } from "../../types/types";
+import { useTranslation, type AppLanguage, translate } from "../../helpers/i18n";
 
 /** Membership states returned by the profiles API. Do not infer a status when absent. */
 export const infiltrationLabels = {
@@ -31,12 +32,12 @@ const typeIcons = {
 }
 
 /** Format elapsed time from an API timestamp in milliseconds. */
-function formatTimeSince(timestamp: number): string {
+function formatTimeSince(timestamp: number, language: AppLanguage): string {
     const elapsed = Date.now() - timestamp;
     if (!Number.isFinite(elapsed)) return "";
-    if (elapsed < 0) return "Trong tương lai";
+    if (elapsed < 0) return translate(language, "inFuture");
     const minutes = Math.floor(elapsed / 60000);
-    if (minutes < 1) return "Vừa cập nhật";
+    if (minutes < 1) return translate(language, "justUpdated");
     const units: [number, Intl.RelativeTimeFormatUnit][] = [
         [365 * 24 * 60, "year"],
         [30 * 24 * 60, "month"],
@@ -45,7 +46,7 @@ function formatTimeSince(timestamp: number): string {
         [60, "hour"],
         [1, "minute"],
     ];
-    const formatter = new Intl.RelativeTimeFormat("vi-VN", { numeric: "always" });
+    const formatter = new Intl.RelativeTimeFormat(language === "vi" ? "vi-VN" : "en-US", { numeric: "always" });
     for (const [size, unit] of units) {
         if (minutes >= size) return formatter.format(-Math.floor(minutes / size), unit);
     }
@@ -53,6 +54,7 @@ function formatTimeSince(timestamp: number): string {
 }
 
 function AssignItem(profile: any) {
+    const { t, language } = useTranslation();
     const status = getInfiltrationStatus(profile);
     const activity = profile.active === true || profile.active === "active" || profile.activity_status === "active"
         ? "active"
@@ -61,7 +63,7 @@ function AssignItem(profile: any) {
             : null;
     const type = profile.type;
     const url = profile.url;
-    const name = profile.name || "Không có tên";
+    const name = profile.name || t("unknownName");
     const id = profile.group_id;
     const updatedTime = typeof profile.updated_time === "number" ? profile.updated_time : Number(profile.updated_time);
     const updatedDate = Number.isFinite(updatedTime) && updatedTime > 0 ? new Date(updatedTime) : null;
@@ -96,8 +98,8 @@ function AssignItem(profile: any) {
                         {/* <span className="group-task-card__type">
                             <TypeIcon aria-hidden="true" />{typeLabels[type] ?? type}
                         </span> */}
-                        {activity && <span className={`group-task-card__activity group-task-card__activity--${activity}`}><i aria-hidden="true" />{activity === "active" ? "Đang hoạt động" : "Không hoạt động"}</span>}
-                        {status && <span className={`group-task-card__state group-task-card__state--${status}`}>{infiltrationLabels[status]}</span>}
+                        {activity && <span className={`group-task-card__activity group-task-card__activity--${activity}`}><i aria-hidden="true" />{activity === "active" ? t("active") : t("inactive")}</span>}
+                        {status && <span className={`group-task-card__state group-task-card__state--${status}`}>{t(status)}</span>}
                     </div>
                 </div>
                 <div className="group-task-card__actions">
@@ -105,7 +107,7 @@ function AssignItem(profile: any) {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={`Mở ${name}`}
-                        title="Mở liên kết"
+                        title={t("openLink")}
                         className={!url ? "is-disabled" : ""}
                         onClick={!url ? (event) => event.preventDefault() : undefined}>
                         <FiExternalLink />
@@ -115,11 +117,11 @@ function AssignItem(profile: any) {
             <div className="group-task-card__footer">
                 <div className="group-task-card__footer-content">
                     <span className="group-task-card__source">
-                        <FiKey aria-hidden="true" /> {profile.group_id || "Unknown id"}
+                        <FiKey aria-hidden="true" /> {profile.group_id || t("unknownId")}
                     </span>
 
                     <button type="button"
-                        title="Sao chép ID"
+                        title={t("copyId")}
                         aria-label={`Sao chép ID ${name}`}
                         onClick={copyId}
                         disabled={!id}>
@@ -127,7 +129,7 @@ function AssignItem(profile: any) {
                     </button>
                 </div>
                 <div>
-                    {validUpdatedDate && <time className="group-task-card__updated" dateTime={validUpdatedDate.toISOString()} title={validUpdatedDate.toLocaleString("vi-VN")}>Cập nhật: {validUpdatedDate.toLocaleDateString("vi-VN", { day: "2-digit", month: "2-digit", year: "numeric" })} ({formatTimeSince(updatedTime)})</time>}
+                    {validUpdatedDate && <time className="group-task-card__updated" dateTime={validUpdatedDate.toISOString()} title={validUpdatedDate.toLocaleString("vi-VN")}>{t("updated")}: {validUpdatedDate.toLocaleDateString(language === "vi" ? "vi-VN" : "en-GB", { day: "2-digit", month: "2-digit", year: "numeric" })} ({formatTimeSince(updatedTime, language)})</time>}
                 </div>
             </div>
         </article>
