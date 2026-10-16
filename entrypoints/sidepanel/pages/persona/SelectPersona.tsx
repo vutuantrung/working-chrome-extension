@@ -98,7 +98,7 @@ const SelectPersona: React.FC = () => {
       navigate("/facebook-login-mode");
     } catch (err) {
       console.error("[SelectPersona] activateAndProceed error:", err);
-      setErrorMsg("Failed to activate persona. Please try again.");
+      setErrorMsg(t("personaActivateError"));
       setViewState("select");
     }
   };
@@ -117,7 +117,7 @@ const SelectPersona: React.FC = () => {
         console.log("[SelectPersona] parsed list:", list.length, list);
       } catch (err) {
         console.error("[SelectPersona] getPersonas error:", err);
-        setErrorMsg("Failed to load personas. Please try again.");
+        setErrorMsg(t("personaLoadError"));
         setViewState("select");
         return;
       }
@@ -132,7 +132,7 @@ const SelectPersona: React.FC = () => {
           await activateAndProceed(created);
         } catch (err) {
           console.error("[SelectPersona] createPersonas error:", err);
-          setErrorMsg("Failed to create a persona. Please try again.");
+          setErrorMsg(t("personaCreateError"));
           setViewState("select");
         }
         return;
@@ -196,7 +196,7 @@ const SelectPersona: React.FC = () => {
       <div className="persona-panel">
         <div className="persona-panel__header">
           <h2 className="persona-panel__title">
-            Select Persona
+            {t("selectPersona")}
           </h2>
           <p className="persona-panel__subtitle">
             {t("selectPersonaHint")}
