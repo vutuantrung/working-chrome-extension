@@ -24,6 +24,7 @@ export function setLanguage(language: AppLanguage) {
 
 const dictionary = {
   en: {
+    loading:"Loading…",
  imageName:"Name", imageDescription:"Description", imageNamePlaceholder:"Enter image name…", imageDescriptionPlaceholder:"Add a description…", imageClose:"Close image details", screenshot:"Screenshot", imageAddName:"Add name…", imageEditName:"Click to edit name", imageDiscard:"Discard", imageUndoRemoval:"Undo removal", undo:"Undo", remove:"Remove", jsonPlaceholder:"Paste your JSON here...", invalidJson:"Invalid JSON format", save:"Save", editText:"Edit Text", tab:"Tab", groupsScrolled:"Groups scrolled", feedsScrolled:"Feeds scrolled",
     evidenceEyebrow:"WORKSPACE / EVIDENCE", evidenceTitle:"Eviden Studio", evidenceDescription:"Organize evidence, manage cases, and review captured content.",
     postCount:"Post Count", postCountHint:"Changes in the total number of posts over time.", timeframe:"Post count timeframe", versusPeriod:"vs. beginning of period", taskActivity:"Task activity", taskActivityHint:"Tasks performed in the last 24 hours", last24h:"Last 24h", totalTasks:"Total tasks", allExecutions:"All executions", failed:"Failed", failedTasks:"Unsuccessful tasks", canceled:"Canceled", stoppedTasks:"Stopped executions", taskDistribution:"Task distribution", recentErrors:"Recent errors", recentErrorsHint:"Most recent problems encountered during execution.", mockDisclaimer:"All metrics shown are illustrative mock data and are not connected to your account or activity logs.",
@@ -59,6 +60,7 @@ const dictionary = {
     justUpdated: "just now", inFuture: "in the future"
   },
   vi: {
+    loading:"Đang tải…",
  imageName:"Tên", imageDescription:"Mô tả", imageNamePlaceholder:"Nhập tên ảnh…", imageDescriptionPlaceholder:"Thêm mô tả…", imageClose:"Đóng chi tiết ảnh", screenshot:"Ảnh chụp", imageAddName:"Thêm tên…", imageEditName:"Nhấn để sửa tên", imageDiscard:"Bỏ thay đổi", imageUndoRemoval:"Hoàn tác xóa", undo:"Hoàn tác", remove:"Xóa", jsonPlaceholder:"Dán JSON vào đây...", invalidJson:"Định dạng JSON không hợp lệ", save:"Lưu", editText:"Sửa văn bản", tab:"Tab", groupsScrolled:"Nhóm đã cuộn", feedsScrolled:"Bảng tin đã cuộn",
     evidenceEyebrow:"KHÔNG GIAN / BẰNG CHỨNG", evidenceTitle:"Studio bằng chứng", evidenceDescription:"Sắp xếp bằng chứng, quản lý hồ sơ và xem lại nội dung đã thu thập.",
     postCount:"Số lượng bài viết", postCountHint:"Thay đổi tổng số bài viết theo thời gian.", timeframe:"Khoảng thời gian thống kê bài viết", versusPeriod:"so với đầu kỳ", taskActivity:"Hoạt động tác vụ", taskActivityHint:"Các tác vụ trong 24 giờ qua", last24h:"24 giờ qua", totalTasks:"Tổng tác vụ", allExecutions:"Tất cả lượt chạy", failed:"Thất bại", failedTasks:"Tác vụ không thành công", canceled:"Đã hủy", stoppedTasks:"Các lượt chạy đã dừng", taskDistribution:"Phân bố tác vụ", recentErrors:"Lỗi gần đây", recentErrorsHint:"Các sự cố mới nhất trong quá trình thực thi.", mockDisclaimer:"Tất cả số liệu chỉ mang tính minh họa, chưa được kết nối với tài khoản hoặc nhật ký hoạt động của bạn.",
