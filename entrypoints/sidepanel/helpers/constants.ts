@@ -52,8 +52,8 @@ export const TYPE_OPTIONS = [
     { id: "fanpage", label_id: "fanpage" },
 ] satisfies LocalizedOption[];
 
-export const PLATFORM_LABELS: Record<PlatformId, TranslationKey> = {
-    facebook: "platformFacebook", tiktok: "platformTiktok", x: "platformX", threads: "platformThreads", youtube: "platformYoutube"
+export const PLATFORM_LABELS: Record<PlatformId, string> = {
+    facebook: "Facebook", tiktok: "TikTok", x: "X (Twitter)", threads: "Threads", youtube: "Youtube"
 };
 
 export const PLATFORM_URLS: Record<string, string> = {
