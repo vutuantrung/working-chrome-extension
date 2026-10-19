@@ -29,7 +29,7 @@ export function ProtectedRoute({ children }: RouteGuardProps) {
 // Public Route - only accessible when NOT logged in
 export function PublicRoute({ children }: RouteGuardProps) {
   const { isAuthenticated, loading } = useAuth();
-
+  const { t } = useTranslation();
   if (loading) {
     return (
       <div className="loading-container">

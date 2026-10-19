@@ -18,8 +18,8 @@ function ConfirmModal({
   open,
   title,
   message,
-  confirmLabel = "Confirm",
-  cancelLabel = "Cancel",
+  confirmLabel,
+  cancelLabel,
   busy = false,
   onConfirm,
   onCancel,
@@ -55,7 +55,7 @@ function ConfirmModal({
             onClick={onCancel}
             disabled={busy}
           >
-            {cancelLabel === "Cancel" ? t("cancel") : cancelLabel}
+            {cancelLabel}
           </Button>
           <Button
             className="confirm-modal__btn confirm-modal__btn--confirm"
@@ -63,7 +63,7 @@ function ConfirmModal({
             loading={busy}
             loadingLabel={t("applying")}
           >
-            {confirmLabel === "Confirm" ? t("confirm") : confirmLabel}
+            {confirmLabel}
           </Button>
         </div>
       </div>

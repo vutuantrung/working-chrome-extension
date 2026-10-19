@@ -14,16 +14,10 @@ import {
 import { PlatformId, PlatformObject } from "../../types/types";
 import PlatformSelect from "../../components/PlatformSelect";
 import { useTranslation } from "../../helpers/i18n";
+import { localizeOptions, LOGIN_ERROR_MESSAGES } from "../../helpers/constants";
 
 const chromeStorageKey = (id: PlatformId) => id === "facebook" ? "fbLoginMode" : `${id}LoginMode`;
 const localStorageKey = (id: PlatformId) => id === "facebook" ? "local:fbLoginMode" : `local:${id}LoginMode`;
-
-const LOGIN_ERROR_MESSAGES: Record<string, string> = {
-  no_accounts: "No account is linked. Please add an account first.",
-  no_cookies: "This account has no saved session. Please re-authenticate.",
-  cookies_invalid: "The session for this account has expired or is invalid. Please log in again.",
-  unknown: "Login failed. Please try again.",
-};
 
 const SwitchPlatform: React.FC = () => {
   const { t } = useTranslation();
@@ -81,8 +75,8 @@ const SwitchPlatform: React.FC = () => {
     } catch { }
 
     setErrorMessage(
-      LOGIN_ERROR_MESSAGES[result.reason ?? "unknown"] ??
-      LOGIN_ERROR_MESSAGES.unknown,
+      localizeOptions(LOGIN_ERROR_MESSAGES, t).find(opt => opt.id === (result.reason ?? "unknown"))?.label ??
+      localizeOptions(LOGIN_ERROR_MESSAGES, t).find(opt => opt.id === "unknown")?.label,
     );
   };
 

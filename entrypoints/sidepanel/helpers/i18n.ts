@@ -24,8 +24,8 @@ export function setLanguage(language: AppLanguage) {
 
 const dictionary = {
   en: {
-    platformFacebook:"Facebook", platformYoutube:"YouTube", platformTiktok:"TikTok", platformThreads:"Threads", platformTelegram:"Telegram", platformTwitter:"Twitter", platformDiscord:"Discord", platformX:"X (Twitter)",
-    configTab:"Configuration", monitorTab:"Monitor", reviewedStatus:"Reviewed", assignedStatus:"Assigned",
+    platformFacebook: "Facebook", platformYoutube: "YouTube", platformTiktok: "TikTok", platformThreads: "Threads", platformTelegram: "Telegram", platformTwitter: "Twitter", platformDiscord: "Discord", platformX: "X (Twitter)",
+    configTab: "Configuration", monitorTab: "Monitor", reviewedStatus: "Reviewed", assignedStatus: "Assigned",
     caseLibrary: "Case library", totalCases: "total", creatingCase: "Creating…", savingCase: "Saving…", createCaseAction: "Create case", saveChanges: "Save changes", caseSaved: "Saved", addScreenshotAction: "Add screenshot",
     personaSwitchLead: "You are about to switch to", personaSwitchBody: "This will apply proxy settings for the new persona. With system-account login, the extension will sign in using that persona’s account for the current platform. With your own account, the platform cookies will be cleared to avoid mixing sessions, and you can sign in again. Security checkpoints may occur.", personaInfoLoading: "Loading persona info…",
     scheduledTasks: "Scheduled Tasks", success: "Success!", failedNotice: "Failed!", every: "Every", unnamedTask: "Unnamed Task",
@@ -64,11 +64,15 @@ const dictionary = {
     joined: "Joined", not_joined: "Not joined", requested: "Requested", unknownName: "Unnamed",
     private_group: "Private group", group: "Public group", profile: "Profile", fanpage: "Fanpage",
     openLink: "Open link", copyId: "Copy ID", unknownId: "Unknown ID", updated: "Updated",
-    justUpdated: "just now", inFuture: "in the future", saveSetting: "Save settings", saving: "Saving", stop: "Stop", recentHistory: "Recent History", runningTasks: "Running Tasks", autoTaskAnnounce1: "Automation is allowed to run during the configured schedule.", autoTaskAnnounce2: "Automation is paused until you enable it again.", fillLeaveBlank: "Leave a field blank to use the existing default feature."
+    justUpdated: "just now", inFuture: "in the future", saveSetting: "Save settings", saving: "Saving", stop: "Stop", recentHistory: "Recent History", runningTasks: "Running Tasks", autoTaskAnnounce1: "Automation is allowed to run during the configured schedule.", autoTaskAnnounce2: "Automation is paused until you enable it again.", fillLeaveBlank: "Leave a field blank to use the existing default feature.", removing: "Removing", pendingSave: "Pending save", noOriginURL: "No origin URL", captured: "Captured", download: "Download", done: "Done", on: "On", off: "Off", logoutFailed: "Logout failed", restartFailed: "Restart failed", unknownChannel: "Unknown channel", open: "Open",
+    login_err_no_account: "No account is linked. Please add an account first.",
+    login_err_no_cookie: "This account has no saved session. Please re-authenticate.",
+    login_err_cookies_invalid: "The session for this account has expired or is invalid. Please log in again.",
+    login_err_unknown: "Login failed. Please contact support or try again.",
   },
   vi: {
-    platformFacebook:"Facebook", platformYoutube:"YouTube", platformTiktok:"TikTok", platformThreads:"Threads", platformTelegram:"Telegram", platformTwitter:"Twitter", platformDiscord:"Discord", platformX:"X (Twitter)",
-    configTab:"Cấu hình", monitorTab:"Giám sát", reviewedStatus:"Đã rà soát", assignedStatus:"Đã phân công",
+    platformFacebook: "Facebook", platformYoutube: "YouTube", platformTiktok: "TikTok", platformThreads: "Threads", platformTelegram: "Telegram", platformTwitter: "Twitter", platformDiscord: "Discord", platformX: "X (Twitter)",
+    configTab: "Cấu hình", monitorTab: "Giám sát", reviewedStatus: "Đã rà soát", assignedStatus: "Đã phân công",
     caseLibrary: "Thư viện hồ sơ", totalCases: "tổng", creatingCase: "Đang tạo…", savingCase: "Đang lưu…", createCaseAction: "Tạo hồ sơ", saveChanges: "Lưu thay đổi", caseSaved: "Đã lưu", addScreenshotAction: "Thêm ảnh chụp",
     personaSwitchLead: "Bạn sắp chuyển sang", personaSwitchBody: "Thao tác này sẽ áp dụng proxy của nhân dạng mới. Nếu đăng nhập bằng tài khoản hệ thống, extension sẽ đăng nhập bằng tài khoản của nhân dạng đó trên nền tảng hiện tại. Nếu dùng tài khoản cá nhân, cookie của nền tảng sẽ được xóa để tránh trộn lẫn phiên đăng nhập; bạn có thể đăng nhập lại sau đó. Có thể xuất hiện bước xác minh bảo mật.", personaInfoLoading: "Đang tải thông tin nhân dạng…",
     scheduledTasks: "Tác vụ đã lên lịch", success: "Thành công!", failedNotice: "Thất bại!", every: "Mỗi", unnamedTask: "Tác vụ chưa có tên",
@@ -104,10 +108,15 @@ const dictionary = {
     loadingGroups: "Đang tải danh sách...", failedGroups: "Không thể tải danh sách", noGroups: "Không tìm thấy hội nhóm",
     retry: "Thử lại", retryHint: "Thử thay đổi từ khóa hoặc bộ lọc.", failedGroupsHint: "Không thể tải danh sách hội nhóm từ máy chủ.",
     previous: "Trang trước", next: "Trang sau", active: "Đang hoạt động", inactive: "Không hoạt động",
-    joined: "Đã tham gia", not_joined: "Chưa tham gia", requested: "Đã gửi yêu cầu", unknownName: "Không có tên",
+    joined: "Đã thâm nhập", not_joined: "Chưa thâm nhập", requested: "Đã gửi yêu cầu", unknownName: "Không có tên",
     private_group: "Nhóm riêng tư", group: "Nhóm công khai", profile: "Trang cá nhân", fanpage: "Fanpage",
     openLink: "Mở liên kết", copyId: "Sao chép ID", unknownId: "Không rõ ID", updated: "Cập nhật",
-    justUpdated: "vừa cập nhật", inFuture: "trong tương lai", saveSetting: "Lưu cài đặt", saving: "Đang lưu", stop: "Dừng", recentHistory: "Lịch sử gần đây", runningTasks: "Tiến trình đang chạy", autoTaskAnnounce1: "Chu trình tự động hóa được cho phép trong thời gian được thiết lập.", autoTaskAnnounce2: "Chu trình tự động hóa đang bị tạm dừng cho đến khi được bật trở lại.", fillLeaveBlank: "Hãy để trống để sử dụng tính năng mặc định."
+    justUpdated: "vừa cập nhật", inFuture: "trong tương lai", saveSetting: "Lưu cài đặt", saving: "Đang lưu", stop: "Dừng", recentHistory: "Lịch sử gần đây", runningTasks: "Tiến trình đang chạy", autoTaskAnnounce1: "Chu trình tự động hóa được cho phép trong thời gian được thiết lập.", autoTaskAnnounce2: "Chu trình tự động hóa đang bị tạm dừng cho đến khi được bật trở lại.", fillLeaveBlank: "Hãy để trống để sử dụng tính năng mặc định.", removing: "Đang loại bỏ", pendingSave: "Đang chờ lưu", noOriginURL: "Không có URL gốc", captured: "Đã chụp", download: "Tải về", done: "Hoàn tất", on: "Bật", off: "Tắt", logoutFailed: "Đăng xuất thất bại", "restartFailed": "Khởi động lại thất bại", unknownChannel: "Không rõ kênh", open: "Mở",
+    login_err_no_account: "Không có tài khoản nào được liên kết. Vui lòng thêm tài khoản trước.",
+    login_err_no_cookie: "Tài khoản này không có phiên đăng nhập đã lưu. Vui lòng xác thực lại.",
+    login_err_cookies_invalid: "Phiên đăng nhập cho tài khoản này đã hết hạn hoặc không hợp lệ. Vui lòng đăng nhập lại.",
+    login_err_unknown: "Đăng nhập thất bại. Vui lòng liên hệ hỗ trợ hoặc thử lại.",
+
   }
 } as const;
 

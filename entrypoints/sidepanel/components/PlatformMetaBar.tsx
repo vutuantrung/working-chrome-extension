@@ -12,9 +12,7 @@ interface PlatformMetaBarProps {
   platformLabel?: string | null;
 }
 
-function PlatformMetaBar({
-  platformLabel
-}: PlatformMetaBarProps) {
+function PlatformMetaBar({ platformLabel }: PlatformMetaBarProps) {
   const [storedLabel, setStoredLabel] = useState(getSelectedPlatformLabel);
   const [storedId, setStoredId] = useState(getSelectedPlatformId);
 

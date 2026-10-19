@@ -34,8 +34,7 @@ function JsonEditor({
     <div id="json-input">
       <div className="json-editor__textarea-wrap">
         <textarea
-          rows={10}
-          cols={47}
+          rows={10} cols={47}
           placeholder={t("jsonPlaceholder")}
           className="json-editor__textarea"
           value={jsonValue}

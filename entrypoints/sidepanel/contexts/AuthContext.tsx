@@ -37,6 +37,7 @@ import { decryptCookieString } from "../../sidepanel/utils/cookieCipher";
 import { PLATFORM_URLS } from "../helpers/constants";
 import { AuthContextType, LoginResult, NonFacebookPlatform, SocialAccount, User } from "../types/types";
 import { normalizeSameSite, parseList, parsePersonaRecord } from "../helpers/helpers";
+import { useTranslation } from "../helpers/i18n";
 
 const MANUAL_PLATFORM_COOKIES_KEY = "local:manualPlatformCookies";
 const LEGACY_MANUAL_FB_COOKIES_KEY = "local:manualFacebookCookies";
@@ -243,6 +244,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // Used to hide the logout button for apikey-managed sessions.
   const [isApikeySession, setIsApikeySession] = useState(false);
   const navigate = useNavigate();
+
+  const { t } = useTranslation();
+
   const setActiveProxy = async (proxy: any) => {
     setExtensionProxy(proxy);
     await appStorage.setItem("local:activeProxy", proxy);
@@ -874,13 +878,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const resumeSocialPlatformAfterRelogin = async (platform: NonFacebookPlatform) => {
-    const homeUrl: Record<NonFacebookPlatform, string> = {
-      x: "https://x.com/",
-      tiktok: "https://www.tiktok.com/",
-      threads: "https://www.threads.com/",
-    };
     await applyConfigProxyAndManualCookieSnapshot();
-    await browserTabs.createTab(homeUrl[platform], true);
+    await browserTabs.createTab(PLATFORM_URLS[platform], true);
   };
 
   useEffect(() => {
@@ -1364,7 +1363,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setFacebookAccounts([]);
       setExtensionProxy(null);
     } catch (e: any) {
-      setError(e?.message || "Logout failed");
+      setError(e?.message || t("logoutFailed"));
     }
   };
 
@@ -1501,7 +1500,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setFacebookAccounts([]);
       setExtensionProxy(null);
     } catch (e: any) {
-      setError(e?.message || "Restart failed");
+      setError(e?.message || t("restartFailed"));
     }
   };
 

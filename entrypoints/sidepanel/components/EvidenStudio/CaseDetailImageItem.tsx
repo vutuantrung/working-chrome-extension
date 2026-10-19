@@ -74,18 +74,18 @@ const CaseDetailImageItem = ({
                 className={`case-detail__thumbnail ${isDeleting ? "case-detail__thumbnail--deleting" : ""}`}
                 onClick={() => !isDeleting && setDetailItem(item)}
             >
-                <img src={src} alt={meta.name || "Screenshot"}
+                <img src={src} alt={meta.name || t("screenshot")}
                     className="case-detail__thumbnail-image" />
 
                 {item.kind === "pending" && (
                     <span className="case-detail__status-badge case-detail__status-badge--unsaved">
-                        Pending save
+                        {t("pendingSave")}
                     </span>
                 )}
 
                 {isDeleting && (
                     <span className="case-detail__status-badge case-detail__status-badge--removing">
-                        Removing
+                        {t("removing")}
                     </span>
                 )}
 

@@ -18,24 +18,24 @@ export const STATUS_KEY = {
     DA_PHAN_CONG: "da-phan-cong",
 }
 
-export const STATUS_FILTERS = [
+export const STATUS_FILTERS: LocalizedOption[] = [
     { id: "all", label_id: "all" },
     { id: "da-ra-soat", label_id: "reviewedStatus" },
     { id: "da-phan-cong", label_id: "assignedStatus" },
-] satisfies LocalizedOption[];
+]
 
 export const STATUS_CONFIG: Record<string, { label_id: TranslationKey; className: string }> = {
     all: { label_id: "all", className: "" },
     "da-ra-soat": { label_id: "reviewedStatus", className: "group-status--reviewed" },
     "da-phan-cong": { label_id: "assignedStatus", className: "group-status--assigned" },
-};
+}
 
-export const AUTOMATION_TABS = [
+export const AUTOMATION_TABS: LocalizedOption[] = [
     { id: "config" as AutomationSubTab, label_id: "configTab" },
     { id: "monitor" as AutomationSubTab, label_id: "monitorTab" },
-] satisfies LocalizedOption<AutomationSubTab>[];
+]
 
-export const PLATFORM_OPTIONS = [
+export const PLATFORM_OPTIONS: LocalizedOption[] = [
     { id: "facebook", label_id: "platformFacebook" },
     { id: "youtube", label_id: "platformYoutube" },
     { id: "tiktok", label_id: "platformTiktok" },
@@ -43,17 +43,21 @@ export const PLATFORM_OPTIONS = [
     { id: "telegram", label_id: "platformTelegram" },
     { id: "twitter", label_id: "platformTwitter" },
     { id: "discord", label_id: "platformDiscord" },
-] satisfies LocalizedOption[];
+]
 
-export const TYPE_OPTIONS = [
+export const FB_GROUP_TYPE: LocalizedOption[] = [
     { id: "group", label_id: "group" },
     { id: "private_group", label_id: "private_group" },
     { id: "profile", label_id: "profile" },
     { id: "fanpage", label_id: "fanpage" },
-] satisfies LocalizedOption[];
+]
 
 export const PLATFORM_LABELS: Record<PlatformId, string> = {
-    facebook: "Facebook", tiktok: "TikTok", x: "X (Twitter)", threads: "Threads", youtube: "Youtube"
+    facebook: "Facebook",
+    tiktok: "TikTok",
+    x: "X (Twitter)",
+    threads: "Threads",
+    youtube: "Youtube"
 };
 
 export const PLATFORM_URLS: Record<string, string> = {
@@ -87,6 +91,26 @@ export const DEFAULT_SCROLLING_URL = [
     "https://www.facebook.com/?filter=groups&sk=h_chr",
 ];
 
+export const JOIN_STATUS_TAB: LocalizedOption[] = [
+    { id: "all", label_id: "all" },
+    { id: "joined", label_id: "joinedFilter" },
+    { id: "not_joined", label_id: "notJoinedFilter" },
+    { id: "requested", label_id: "requestedFilter" },
+];
+
+export const LOGIN_ERROR_MESSAGES: LocalizedOption[] = [
+    { id: "no_accounts", label_id: "login_err_no_account" },
+    { id: "no_cookies", label_id: "login_err_no_cookie" },
+    { id: "cookies_invalid", label_id: "login_err_cookies_invalid" },
+    { id: "unknown", label_id: "login_err_unknown" },
+];
+
+export const LOGIN_ERROR_MESSAGES2: Record<string, string> = {
+    no_accounts: "No account is linked. Please add an account first.",
+    no_cookies: "This account has no saved session. Please re-authenticate.",
+    cookies_invalid: "The session for this account has expired or is invalid. Please log in again.",
+    unknown: "Login failed. Please contact support or try again.",
+};
 
 export type MainTab = "dashboard" | "automation" | "group" | "eviden";
 
@@ -98,11 +122,11 @@ export const PLATFORM_CHANGED_EVENT = "hydra:login-success-redirectplatform-chan
 /** Options keep stable IDs. label_id is a dictionary key, not display text. */
 export type LocalizedOption<T extends string = string> = { id: T; label_id: TranslationKey };
 export function localizeOptions<T extends string, O extends LocalizedOption<T>>(
-  options: readonly O[],
-  t: (key: TranslationKey) => string,
+    options: readonly O[],
+    t: (key: TranslationKey) => string,
 ): Array<Omit<O, "label_id"> & { label: string }> {
-  return options.map(({ label_id, ...option }) => ({
-    ...option,
-    label: t(label_id),
-  })) as Array<Omit<O, "label_id"> & { label: string }>;
+    return options.map(({ label_id, ...option }) => ({
+        ...option,
+        label: t(label_id),
+    })) as Array<Omit<O, "label_id"> & { label: string }>;
 }

@@ -13,7 +13,7 @@ interface PersonaCardProps {
 }
 
 const PersonaCard = ({ persona, selected, onSelect }: PersonaCardProps) => {
-  const { t } = useTranslation();
+    const { t } = useTranslation();
     const fullName = [persona.first_name, persona.last_name].filter(Boolean).join(" ").trim() || t("unnamedPersona");
     const hasJob = Boolean(persona.job && persona.job !== "string");
 
@@ -25,7 +25,9 @@ const PersonaCard = ({ persona, selected, onSelect }: PersonaCardProps) => {
             aria-label={`${selected ? t("deselect") : t("select")} ${fullName}`}
             className={`persona-card ${selected ? "persona-card--selected" : ""}`}
         >
-            <span className="persona-card__avatar"><Avatar persona={persona} size={46} /></span>
+            <span className="persona-card__avatar">
+                <Avatar persona={persona} size={46} />
+            </span>
             <span className="persona-card__body">
                 <span className="persona-card__title-row">
                     <span className="persona-card__name" title={fullName}>{fullName}</span>

@@ -71,7 +71,7 @@ function ImageDetailModal({
           </FormField>
 
           <p className="image-detail-modal__captured">
-            Captured: {new Date(meta.capture_time).toLocaleString()}
+            {t("captured")}: {new Date(meta.capture_time).toLocaleString()}
           </p>
         </div>
 
@@ -81,10 +81,10 @@ function ImageDetailModal({
             download={`screenshot-${Date.now()}.png`}
             className="image-detail-modal__download"
           >
-            Download {meta.capacity ? `(${formatBytes(meta.capacity)})` : null}
+            {t("download")} {meta.capacity ? `(${formatBytes(meta.capacity)})` : null}
           </a>
           <Button onClick={onClose} className="image-detail-modal__done">
-            Done
+            {t("done")}
           </Button>
         </div>
       </div>

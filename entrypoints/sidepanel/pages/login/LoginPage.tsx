@@ -142,7 +142,7 @@ function Login() {
         <div className="login-mobile-brand"><span className="login-brand-symbol">H</span> LERNA LAKES</div>
         <h1 className="modern-login-title">{t("loginWelcome")}</h1>
         <p className="login-subtitle">
-          Enter your account details to access your workspace.
+          {t("loginSubtitle")}
         </p>
 
         <form onSubmit={handleSubmit} className="modern-login-form">
@@ -216,7 +216,9 @@ function Login() {
             {loading ? t("loginSigning") : <>{t("loginSubmit")} <FaArrowRight aria-hidden="true" /></>}
           </button>
         </form>
-        <div className="login-secure-note"><FaLock aria-hidden="true" /> Protected sign-in</div>
+        <div className="login-secure-note"><FaLock aria-hidden="true" />
+          {t("loginProtected")}
+        </div>
       </div></div>
     </div>
   );

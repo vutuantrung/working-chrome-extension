@@ -15,16 +15,10 @@ import { useAuth } from "../../contexts/AuthContext";
 import type { PlatformId, PlatformObject, SocialAccount } from "../../types/types";
 import PlatformSelect from "../../components/PlatformSelect";
 import { useTranslation } from "../../helpers/i18n";
+import { localizeOptions, LOGIN_ERROR_MESSAGES } from "../../helpers/constants";
 
 const chromeStorageKey = (id: PlatformId) => id === "facebook" ? "fbLoginMode" : `${id}LoginMode`;
 const localStorageKey = (id: PlatformId) => id === "facebook" ? "local:fbLoginMode" : `local:${id}LoginMode`;
-
-const LOGIN_ERROR_MESSAGES: Record<string, string> = {
-  no_accounts: "No account is linked. Please add an account first.",
-  no_cookies: "This account has no saved session. Please re-authenticate.",
-  cookies_invalid: "The session for this account has expired or is invalid. Please log in again.",
-  unknown: "Login failed. Please contact support or try again.",
-};
 
 const FacebookLoginMode: React.FC = () => {
   const { t } = useTranslation();
@@ -90,8 +84,8 @@ const FacebookLoginMode: React.FC = () => {
         localStorageService.removeItem("fbLoginModeSelected");
 
         setErrorMessage(
-          LOGIN_ERROR_MESSAGES[loginResult.reason ?? "unknown"] ??
-          LOGIN_ERROR_MESSAGES.unknown,
+          localizeOptions(LOGIN_ERROR_MESSAGES, t).find(opt => opt.id === (result.reason ?? "unknown"))?.label ??
+          localizeOptions(LOGIN_ERROR_MESSAGES, t).find(opt => opt.id === "unknown")?.label,
         );
         setStep("loginMode");
         return;
@@ -147,8 +141,8 @@ const FacebookLoginMode: React.FC = () => {
     } catch { }
 
     setErrorMessage(
-      LOGIN_ERROR_MESSAGES[result.reason ?? "unknown"] ??
-      LOGIN_ERROR_MESSAGES.unknown,
+      localizeOptions(LOGIN_ERROR_MESSAGES, t).find(opt => opt.id === (result.reason ?? "unknown"))?.label ??
+      localizeOptions(LOGIN_ERROR_MESSAGES, t).find(opt => opt.id === "unknown")?.label,
     );
   };
 
@@ -157,8 +151,7 @@ const FacebookLoginMode: React.FC = () => {
       const storedUser = await appStorage.getItem<{
         extension_session?: { extension_config_id?: string };
       }>("local:user");
-      const extensionConfigId =
-        storedUser?.extension_session?.extension_config_id;
+      const extensionConfigId = storedUser?.extension_session?.extension_config_id;
       if (extensionConfigId) {
         console.log(
           "[refreshPersonaAccounts] Skipping — extension config mode",
@@ -268,7 +261,8 @@ const FacebookLoginMode: React.FC = () => {
         {selectedPlatform
           ?
           < section className="switch-platform-redesign__section">
-            <button className="switch-platform-redesign__back" onClick={() => setSelectedPlatform(null)}>← {t("allPlatforms")}
+            <button className="switch-platform-redesign__back"
+              onClick={() => setSelectedPlatform(null)}>← {t("allPlatforms")}
             </button>
             <div className="switch-platform-redesign__selected">
               <strong>{selectedPlatform.label}</strong>
@@ -313,7 +307,7 @@ const FacebookLoginMode: React.FC = () => {
               currentPlatformId="facebook"
               onSelectPlatform={(platform) => handleSelectPlatform(platform)} />
             <p className="switch-platform-redesign__hint">
-              Your current workspace and data will remain available when switching networks.
+              {t("platformHintSafe")}
             </p>
           </section>
         }
@@ -323,78 +317,3 @@ const FacebookLoginMode: React.FC = () => {
 };
 
 export default FacebookLoginMode;
-
-// const oldUI = (
-//     <div className="fb-login-mode-container">
-//       <PlatformMetaBar platformLabel={footerLabel} />
-
-//       {step === "platform" ? (
-//         <>
-//           <section className="switch-platform-redesign__section">
-//             <div className="switch-platform-redesign__section-heading">
-//               <span>AVAILABLE NETWORKS</span>
-//               <span>Select a platform ↓</span>
-//             </div>
-//             <PlatformSelect
-//               busyId={null}
-//               variant="switch"
-//               currentPlatformId="facebook"
-//               onSelectPlatform={(platform) => handleSelectPlatform(platform)} />
-//             <p className="switch-platform-redesign__hint">
-//               Your current workspace and data will remain available when switching networks.
-//             </p>
-//           </section>
-//         </>
-//       ) : (
-//         <>
-//           <button
-//             onClick={() => {
-//               setStep("platform");
-//               setErrorMessage(null);
-//             }}
-//             className="platform-back-btn"
-//           >
-//             ← Back to platforms
-//           </button>
-
-//           {selectedPlatform && (
-//             <div className="login-mode-platform-badge">
-//               <span className="login-mode-platform-icon">
-//                 {selectedPlatform.icon}
-//               </span>
-//               <span className="login-mode-platform-name">
-//                 {selectedPlatform.label}
-//               </span>
-//             </div>
-//           )}
-
-//           <div className="fb-login-mode-options">
-//             <button
-//               className="fb-login-mode-btn fb-login-mode-btn--auto"
-//               disabled={isModeBusy}
-//               onClick={() => void handleLoginMode("auto")}
-//             >
-//               {isAutoLoading && <span className="loading-spinner loading-spinner--inline" />}
-//               {isAutoLoading ? "Logging in…" : "Log in to system account"}
-//             </button>
-//             <button
-//               className="fb-login-mode-btn fb-login-mode-btn--manual"
-//               disabled={isModeBusy}
-//               onClick={() => void handleLoginMode("manual")}
-//             >
-//               {isManualLoading && (
-//                 <span className="platform-flow-spinner platform-flow-spinner--inline platform-flow-spinner--manual" />
-//               )}
-//               {isManualLoading ? "Opening…" : "Log in to your account"}
-//             </button>
-//           </div>
-//         </>
-//       )}
-
-//       {errorMessage && (
-//         <div className="notification-text notification-failed">
-//           {errorMessage}
-//         </div>
-//       )}
-//     </div>
-//   )

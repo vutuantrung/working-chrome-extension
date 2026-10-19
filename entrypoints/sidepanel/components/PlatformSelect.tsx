@@ -17,18 +17,33 @@ const PlatformSelect = ({
   currentPlatformId,
 }: PlatformSelectProps) => {
   const { t } = useTranslation();
+  const arialLabelByPlatform = (platform: PlatformObject) => `${platform.label}${platform.disabled
+    ? `, ${t("comingSoon")}`
+    : currentPlatformId === platform.id && variant === "switch"
+      ? `, ${t("currentPlatform")}`
+      : ""
+    }`;
+  const classNameByPlatform = (platform: PlatformObject) => `platform-select__card ${platform.disabled || busyId !== null
+    ? "platform-select__card--disabled"
+    : ""
+    } ${currentPlatformId === platform.id && variant === "switch"
+      ? "platform-select__card--current"
+      : ""
+    }`;
+  const isDisabledByPlatform = (platform: PlatformObject) => platform.disabled || busyId !== null;
+  const displayIconByPlatform = (platform: PlatformObject) => variant === "switch" && !platform.disabled && <span className="platform-select__action">{currentPlatformId === platform.id ? t("current") : "↗"}</span>
+
   return (
     <div className={`platform-select ${variant === "switch" ? "platform-select--switch" : ""}`}>
       <div className="platform-select__grid">
         {PLATFORMS.map((platform) => {
-          const isDisabled = platform.disabled || busyId !== null;
           return (
             <button
               key={platform.id}
               type="button"
-              disabled={isDisabled}
-              aria-label={`${platform.label}${platform.disabled ? `, ${t("comingSoon")}` : currentPlatformId === platform.id && variant === "switch" ? `, ${t("currentPlatform")}` : ""}`}
-              className={`platform-select__card ${isDisabled ? "platform-select__card--disabled" : ""} ${currentPlatformId === platform.id && variant === "switch" ? "platform-select__card--current" : ""}`}
+              disabled={isDisabledByPlatform(platform)}
+              aria-label={arialLabelByPlatform(platform)}
+              className={classNameByPlatform(platform)}
               style={
                 {
                   "--platform-gradient": platform.gradient,
@@ -51,7 +66,7 @@ const PlatformSelect = ({
               <span className="platform-select__label">
                 {platform.label}
               </span>
-              {variant === "switch" && !platform.disabled && <span className="platform-select__action">{currentPlatformId === platform.id ? t("current") : "↗"}</span>}
+              {displayIconByPlatform(platform)}
             </button>
           );
         })}

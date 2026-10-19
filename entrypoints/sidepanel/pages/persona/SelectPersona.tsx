@@ -112,9 +112,9 @@ const SelectPersona: React.FC = () => {
 
       try {
         const data = await api.persona.getPersonas(user?.id ?? "");
-        console.log("[SelectPersona] raw data:", data);
+        // console.log("[SelectPersona] raw data:", data);
         list = parseList(data);
-        console.log("[SelectPersona] parsed list:", list.length, list);
+        // console.log("[SelectPersona] parsed list:", list.length, list);
       } catch (err) {
         console.error("[SelectPersona] getPersonas error:", err);
         setErrorMsg(t("personaLoadError"));

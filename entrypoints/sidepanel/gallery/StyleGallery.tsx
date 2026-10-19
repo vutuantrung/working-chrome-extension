@@ -45,7 +45,7 @@ import AssignItem, { infiltrationLabels, type InfiltrationStatus } from "../page
 import DashboardPage from "../pages/dashboard/DashboardPage";
 import WorkspacePageHeader from "../components/WorkspacePageHeader";
 import { MultiSelectFilter, SearchInput } from "../components/ui";
-import { PLATFORM_OPTIONS, TYPE_OPTIONS, localizeOptions } from "../helpers/constants";
+import { PLATFORM_OPTIONS, FB_GROUP_TYPE, localizeOptions } from "../helpers/constants";
 import { demoGroupProfiles } from "./groupSamples";
 import { AuthContext } from "../contexts/AuthContext";
 import PlatformSelect from "../components/PlatformSelect";
@@ -443,7 +443,7 @@ function GalleryFiltersDemo() {
   const [platforms, setPlatforms] = useState<string[]>([]);
   const [types, setTypes] = useState<string[]>([]);
   return <div className="gallery-stack"><SearchInput id="gallery-group-search" value={query} onChange={setQuery} placeholder={t("searchGroups")} />
-    <div className="gallery-inline"><MultiSelectFilter label={t("platform")} options={localizeOptions(PLATFORM_OPTIONS, t)} selectedValues={platforms} onChange={setPlatforms} /><MultiSelectFilter label={t("groupType")} options={localizeOptions(TYPE_OPTIONS, t)} selectedValues={types} onChange={setTypes} /></div>
+    <div className="gallery-inline"><MultiSelectFilter label={t("platform")} options={localizeOptions(PLATFORM_OPTIONS, t)} selectedValues={platforms} onChange={setPlatforms} /><MultiSelectFilter label={t("groupType")} options={localizeOptions(FB_GROUP_TYPE, t)} selectedValues={types} onChange={setTypes} /></div>
     <small>Search: {query || "(empty)"} · Platforms: {platforms.join(", ") || "all"} · Types: {types.join(", ") || "all"}</small>
   </div>;
 }

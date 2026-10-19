@@ -3,6 +3,7 @@ import { getChannelIcon } from "../../helpers/helpers-ui";
 import type { GroupProfile } from "../../types/types";
 import { useTranslation, type AppLanguage, translate } from "../../helpers/i18n";
 import { formatTimeSince } from "../../helpers/helpers";
+import { FB_GROUP_TYPE } from "../../helpers/constants";
 
 /** Membership states returned by the profiles API. Do not infer a status when absent. */
 export const infiltrationLabels = {
@@ -45,6 +46,7 @@ function AssignItem(profile: any) {
     const type = profile.type;
     const url = profile.url;
     const name = profile.name || t("unknownName");
+    const channelName = profile.channel_name || t("unknownChannel");
     const id = profile.group_id;
     const updatedTime = typeof profile.updated_time === "number"
         ? profile.updated_time
@@ -66,13 +68,15 @@ function AssignItem(profile: any) {
         }
     };
 
+    const groupTypeLabel = (FB_GROUP_TYPE.find(option => option.id === type)?.label_id ?? type);
+
     return (
         <article className={`group-task-card${activity === "inactive" ? " group-task-card--inactive" : ""}`}>
             <div className="group-task-card__main">
-                <div className="group-task-card__avatar" aria-label={typeLabels[type] ?? type}>
+                <div className="group-task-card__avatar" aria-label={t(groupTypeLabel)}>
                     <TypeIcon aria-hidden="true" />
-                    <span className="group-task-card__channel" title={profile.channel_name || "Unknown channel"}>
-                        {getChannelIcon(profile.channel_name)}
+                    <span className="group-task-card__channel" title={channelName}>
+                        {getChannelIcon(channelName)}
                     </span>
                 </div>
                 <div className="group-task-card__content">
@@ -92,7 +96,7 @@ function AssignItem(profile: any) {
                     <a href={url || undefined}
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label={`Mở ${name}`}
+                        aria-label={`${t("open")} ${name}`}
                         title={t("openLink")}
                         className={!url ? "is-disabled" : ""}
                         onClick={!url ? (event) => event.preventDefault() : undefined}>
@@ -108,7 +112,7 @@ function AssignItem(profile: any) {
 
                     <button type="button"
                         title={t("copyId")}
-                        aria-label={`Sao chép ID ${name}`}
+                        aria-label={`${t("copyId")} ${name}`}
                         onClick={copyId}
                         disabled={!id}>
                         <FiCopy />

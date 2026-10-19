@@ -1,7 +1,7 @@
 import "../../assets/css/pages/PersonaPage.css";
+import React, { useEffect, useState } from "react";
 import api from "../../infrastructure/api";
 import { localStorageService } from "../../../../entrypoints/sidepanel/application/services/SidepanelServices";
-import React, { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { parseList } from "../../helpers/helpers";
 import { Persona, ViewState } from "../../types/types";

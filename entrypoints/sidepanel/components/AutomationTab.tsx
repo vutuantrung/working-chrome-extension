@@ -294,7 +294,7 @@ function AutomationTab({
                   <p>{t("automationControlHint")}</p>
                 </div>
                 <span className={`automation-state-chip ${formData.userActivatingAutomation ? "is-on" : "is-off"}`}>
-                  {formData.userActivatingAutomation ? "On" : "Off"}
+                  {formData.userActivatingAutomation ? t("on") : t("off")}
                 </span>
               </div>
               <div className="automation-setting-row">

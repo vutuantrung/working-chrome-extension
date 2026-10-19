@@ -6,7 +6,7 @@ import { appStorage } from "../../../../entrypoints/sidepanel/application/servic
 import { useAuth } from "../../contexts/AuthContext";
 import { User } from "../../types/types";
 
-import { TYPE_OPTIONS, PLATFORM_OPTIONS, localizeOptions } from "../../helpers/constants";
+import { FB_GROUP_TYPE, PLATFORM_OPTIONS, localizeOptions, JOIN_STATUS_TAB } from "../../helpers/constants";
 import { MultiSelectFilter, SearchInput } from "../../components/ui";
 import { getPageNumbers } from "../../helpers/helpers";
 import AssignItem, { getInfiltrationStatus, type InfiltrationStatus } from "./AssignItem";
@@ -76,7 +76,7 @@ function GroupPage({ dataSource = getMemberSourcesGroup }: GroupPageProps = {}) 
       const count = typeof res?.total === "number" ? res.total : dataList.length;
 
       console.log("Fetched profiles:", dataList, "Total count:", count);
-      
+
       setProfiles(dataList);
       setTotalCount(count);
     } catch (err: any) {
@@ -120,13 +120,6 @@ function GroupPage({ dataSource = getMemberSourcesGroup }: GroupPageProps = {}) 
   };
   const visibleProfiles = statusFilter === "all" ? profiles : profiles.filter((item) => getInfiltrationStatus(item) === statusFilter);
 
-  const translatedStatusTabs = [
-    { id: "all", label: t("all") },
-    { id: "joined", label: t("joinedFilter") },
-    { id: "not_joined", label: t("notJoinedFilter") },
-    { id: "requested", label: t("requestedFilter") },
-  ];
-
   const handleSearch = (v: string) => { setSearch(v); setPage(1); };
   const handleStatusFilter = (s: any) => { setStatusFilter(s); };
 
@@ -147,14 +140,14 @@ function GroupPage({ dataSource = getMemberSourcesGroup }: GroupPageProps = {}) 
         <div className="group-page__filter-row">
           <div className="group-page__advanced-filters">
             <MultiSelectFilter label={t("channel")} leftIcon={<FiLayers />} options={localizeOptions(PLATFORM_OPTIONS, t)} selectedValues={selectedPlatforms} onChange={(values) => { setSelectedPlatforms(values); setPage(1); }} />
-            <MultiSelectFilter label={t("groupType")} leftIcon={<FiList />} options={localizeOptions(TYPE_OPTIONS, t)} selectedValues={selectedTypes} onChange={(values) => { setSelectedTypes(values); setPage(1); }} />
+            <MultiSelectFilter label={t("groupType")} leftIcon={<FiList />} options={localizeOptions(FB_GROUP_TYPE, t)} selectedValues={selectedTypes} onChange={(values) => { setSelectedTypes(values); setPage(1); }} />
           </div>
           <button className="group-page__filter-icon" type="button" title={t("clearFilters")} aria-label={t("clearFilters")} onClick={() => { setSelectedPlatforms([]); setSelectedTypes([]); setStatusFilter("all"); setPage(1); }}><FiFilter /><span className="group-page__filter-dot" aria-hidden="true">{selectedPlatforms.length + selectedTypes.length + (statusFilter === 'all' ? 0 : 1) || ''}</span></button>
         </div>
       </div>
 
       <nav className="group-page__status-tabs" aria-label={t("filterStatus")}>
-        {translatedStatusTabs.map((item) => (
+        {localizeOptions(JOIN_STATUS_TAB, t).map((item) => (
           <button key={item.id} type="button"
             className={`group-page__status-tab ${statusFilter === item.id ? 'is-active' : ''}`}
             onClick={() => handleStatusFilter(item.id)}
