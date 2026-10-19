@@ -14,6 +14,7 @@ import {
   useLocation,
 } from "react-router-dom";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useTranslation } from "../helpers/i18n";
 
 import { useAuth } from "../contexts/AuthContext";
 
@@ -44,13 +45,14 @@ function Navigation() {
     logout,
     restart,
     extensionProxy,
-    isApikeySession,
   } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [restarting, setRestarting] = useState(false);
   const [proxyMatchesExtension, setProxyMatchesExtension] = useState(false);
   const [proxyHealth, setProxyHealth] = useState<any>(null);
+
+  const { t } = useTranslation();
 
   const extensionProxyIdentity = useMemo(() => {
     const host = typeof extensionProxy?.host === "string"
@@ -163,7 +165,7 @@ function Navigation() {
             <FaUser />
           </div>
           <div className="user-info">
-            <span className="user-greeting">Hi,</span>
+            <span className="user-greeting">{t("greeting")},</span>
             <span className="user-name-display">{user?.name}</span>
           </div>
         </div>

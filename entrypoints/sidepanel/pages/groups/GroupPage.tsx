@@ -12,6 +12,7 @@ import { getPageNumbers } from "../../helpers/helpers";
 import AssignItem, { getInfiltrationStatus, type InfiltrationStatus } from "./AssignItem";
 import { getMemberSourcesGroup } from "../../infrastructure/api/source-member.api";
 import { useTranslation } from "../../helpers/i18n";
+import WorkspacePageHeader from "../../components/WorkspacePageHeader";
 
 
 const PAGE_SIZE = 10;
@@ -125,6 +126,13 @@ function GroupPage({ dataSource = getMemberSourcesGroup }: GroupPageProps = {}) 
 
   return (
     <div className="group-page">
+
+      <WorkspacePageHeader
+        eyebrow={t("groupListEyebrow")}
+        title={t("navGroup")}
+        description={t("groupListDescription")}
+      />
+
       <header className="group-page__header">
         <h1>{t("tasksTitle")}</h1>
       </header>

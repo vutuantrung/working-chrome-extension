@@ -43,7 +43,7 @@ const dictionary = {
     selectPersona: "Select Persona", selectPersonaHint: "Choose the persona you want to operate as", noPersonas: "No personas available.", loadingPersonas: "Loading personas…", creatingPersona: "Setting up your persona…", justMoment: "This only takes a moment", activatingPersona: "Activating persona…", continue: "Continue", activating: "Activating…", switchPersonaTitle: "Switch Persona", switchPersonaHint: "Select a persona to switch to", noOtherPersonas: "No other personas available", switchPersonaUnavailable: "Switch persona unavailable", switchPersonaUnavailableHint: "Your session uses extension config. Persona switching is unavailable while extension config is assigned.", switchingPersona: "Switching persona…", switching: "Switching…", switch: "Switch", switchConfirm: "Switch persona?", yesSwitch: "Yes, switch", cancel: "Cancel", thisPersona: "this persona",
     personaLoadError: "Failed to load personas. Please try again.", personaCreateError: "Failed to create a persona. Please try again.", personaActivateError: "Failed to activate persona. Please try again.", personaSwitchError: "Failed to switch persona. Please try again.",
     comingSoon: "Coming Soon", unsupportedPlatform: "Unsupported Platform",
-    dashboardEyebrow: "WORKSPACE / OVERVIEW", dashboardDescription: "Track your content activity and recent automation performance.", automationEyebrow: "WORKSPACE / AUTOMATION", automationDescription: "Monitor execution progress, statuses, and task activity.",
+    dashboardEyebrow: "WORKSPACE / OVERVIEW", dashboardDescription: "Track your content activity and recent automation performance.", automationEyebrow: "WORKSPACE / AUTOMATION", automationDescription: "Monitor execution progress, statuses, and task activity.",groupListEyebrow: "WORKSPACE / GROUPS", groupListDescription: "Track your target status and joining progress.",
     navDashboard: "Dashboard", navAutomation: "Automation", navGroup: "Groups", navEviden: "Evidence", navigation: "Main navigation", monitoring: "Monitoring", evidenceCollection: "Evidence collection", evidenceStudio: "Evidence studio", switchPlatform: "Switch platform", switchPersona: "Switch persona", expandSidebar: "Expand sidebar", collapseSidebar: "Collapse sidebar", collapse: "Collapse",
     back: "Back", settings: "Settings", preferences: "PREFERENCES", settingsHint: "Customize your workspace and how the interface behaves.",
     platform: "Platform", platformHint: "Choose a social network and manage its connection.",
@@ -68,7 +68,7 @@ const dictionary = {
     login_err_no_account: "No account is linked. Please add an account first.",
     login_err_no_cookie: "This account has no saved session. Please re-authenticate.",
     login_err_cookies_invalid: "The session for this account has expired or is invalid. Please log in again.",
-    login_err_unknown: "Login failed. Please contact support or try again.",
+    login_err_unknown: "Login failed. Please contact support or try again.", greeting: "Hi"
   },
   vi: {
     platformFacebook: "Facebook", platformYoutube: "YouTube", platformTiktok: "TikTok", platformThreads: "Threads", platformTelegram: "Telegram", platformTwitter: "Twitter", platformDiscord: "Discord", platformX: "X (Twitter)",
@@ -90,7 +90,7 @@ const dictionary = {
     selectPersona: "Chọn nhân dạng", selectPersonaHint: "Chọn nhân dạng bạn muốn sử dụng", noPersonas: "Không có nhân dạng nào.", loadingPersonas: "Đang tải nhân dạng…", creatingPersona: "Đang tạo nhân dạng…", justMoment: "Quá trình này chỉ mất ít phút", activatingPersona: "Đang kích hoạt nhân dạng…", continue: "Tiếp tục", activating: "Đang kích hoạt…", switchPersonaTitle: "Chuyển nhân dạng", switchPersonaHint: "Chọn nhân dạng muốn chuyển đến", noOtherPersonas: "Không có nhân dạng khác", switchPersonaUnavailable: "Không thể chuyển nhân dạng", switchPersonaUnavailableHint: "Phiên hiện tại dùng extension config; không thể chuyển nhân dạng khi cấu hình này đang được gán.", switchingPersona: "Đang chuyển nhân dạng…", switching: "Đang chuyển…", switch: "Chuyển", switchConfirm: "Chuyển nhân dạng?", yesSwitch: "Có, chuyển", cancel: "Hủy", thisPersona: "nhân dạng này",
     personaLoadError: "Không thể tải nhân dạng. Vui lòng thử lại.", personaCreateError: "Không thể tạo nhân dạng. Vui lòng thử lại.", personaActivateError: "Không thể kích hoạt nhân dạng. Vui lòng thử lại.", personaSwitchError: "Không thể chuyển nhân dạng. Vui lòng thử lại.",
     comingSoon: "Sắp ra mắt", unsupportedPlatform: "Nền tảng chưa được hỗ trợ",
-    dashboardEyebrow: "KHÔNG GIAN / TỔNG QUAN", dashboardDescription: "Theo dõi hoạt động nội dung và hiệu suất tự động hóa gần đây.", automationEyebrow: "KHÔNG GIAN / TỰ ĐỘNG HÓA", automationDescription: "Theo dõi tiến độ, trạng thái và hoạt động tác vụ.",
+    dashboardEyebrow: "KHÔNG GIAN / TỔNG QUAN", dashboardDescription: "Theo dõi hoạt động nội dung và hiệu suất tự động hóa gần đây.", automationEyebrow: "KHÔNG GIAN / TỰ ĐỘNG HÓA", automationDescription: "Theo dõi tiến độ, trạng thái và hoạt động tác vụ.",groupListEyebrow: "KHÔNG GIAN / NHÓM THEO DÕI", groupListDescription: "Theo dõi tình trạng của đối tượng và quá trình thâm nhập.",
     navDashboard: "Tổng quan", navAutomation: "Tự động hóa", navGroup: "Hội nhóm", navEviden: "Bằng chứng", navigation: "Điều hướng chính", monitoring: "Giám sát", evidenceCollection: "Bộ sưu tập bằng chứng", evidenceStudio: "Studio bằng chứng", switchPlatform: "Chuyển nền tảng", switchPersona: "Chuyển nhân dạng", expandSidebar: "Mở rộng menu", collapseSidebar: "Thu gọn menu", collapse: "Thu gọn",
     back: "Quay lại", settings: "Cài đặt", preferences: "TÙY CHỌN", settingsHint: "Tùy chỉnh không gian làm việc và giao diện ứng dụng.",
     platform: "Nền tảng", platformHint: "Chọn mạng xã hội và quản lý kết nối.",
@@ -115,7 +115,7 @@ const dictionary = {
     login_err_no_account: "Không có tài khoản nào được liên kết. Vui lòng thêm tài khoản trước.",
     login_err_no_cookie: "Tài khoản này không có phiên đăng nhập đã lưu. Vui lòng xác thực lại.",
     login_err_cookies_invalid: "Phiên đăng nhập cho tài khoản này đã hết hạn hoặc không hợp lệ. Vui lòng đăng nhập lại.",
-    login_err_unknown: "Đăng nhập thất bại. Vui lòng liên hệ hỗ trợ hoặc thử lại.",
+    login_err_unknown: "Đăng nhập thất bại. Vui lòng liên hệ hỗ trợ hoặc thử lại.", greeting: "Xin chào"
 
   }
 } as const;

@@ -664,7 +664,7 @@ function ConfirmModalDemo() {
 }
 
 export default function StyleGallery() {
-  const { language } = useTranslation();
+  const { language, t } = useTranslation();
   const [galleryTheme, setGalleryTheme] = useState<"light" | "dark">(() => document.documentElement.dataset.colorMode === "dark" ? "dark" : "light");
   const chooseTheme = (theme: "light" | "dark") => {
     setGalleryTheme(theme);
@@ -725,7 +725,7 @@ export default function StyleGallery() {
 
         <h2 className="style-gallery__section-title">Pages</h2>
         <Preview id="app-shell-navigation" title="App shell / Navigation" file="assets/css/layout/navigation-shell.css">
-          <div className="modern-navigation gallery-normal-width"><div className="nav-content"><div className="user-profile"><div className="user-avatar"><FaUser /></div><div className="user-info"><span className="user-greeting">Hi,</span><span className="user-name-display">Alex</span></div></div><div className="nav-actions"><button className="modern-monitoring-btn"><FaCog /></button></div></div></div>
+          <div className="modern-navigation gallery-normal-width"><div className="nav-content"><div className="user-profile"><div className="user-avatar"><FaUser /></div><div className="user-info"><span className="user-greeting">{t("greeting")},</span><span className="user-name-display">Alex</span></div></div><div className="nav-actions"><button className="modern-monitoring-btn"><FaCog /></button></div></div></div>
         </Preview>
         <Preview id="dashboardpage" title="DashboardPage (real page, fixed mock stats)" file="pages/dashboard/DashboardPage.tsx"><div className="gallery-real-component-frame"><DashboardPage /></div></Preview>
         <Preview id="settingspage" title="SettingsPage (isolated visual preview)" file="pages/settings/SettingsPage.tsx"><SettingsPreview /></Preview>

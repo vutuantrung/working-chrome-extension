@@ -10,25 +10,12 @@ export const TASK_STATES = {
     CANCELED: "canceled",
 };
 
-export const PRIORITY_LABELS: Record<number, TranslationKey> = { 3: "priorityUrgent", 2: "priorityHigh", 1: "priorityMedium", 0: "priorityLow" };
-
-export const STATUS_KEY = {
-    ALL: "all",
-    DA_RA_SOAT: "da-ra-soat",
-    DA_PHAN_CONG: "da-phan-cong",
-}
-
-export const STATUS_FILTERS: LocalizedOption[] = [
-    { id: "all", label_id: "all" },
-    { id: "da-ra-soat", label_id: "reviewedStatus" },
-    { id: "da-phan-cong", label_id: "assignedStatus" },
-]
-
-export const STATUS_CONFIG: Record<string, { label_id: TranslationKey; className: string }> = {
-    all: { label_id: "all", className: "" },
-    "da-ra-soat": { label_id: "reviewedStatus", className: "group-status--reviewed" },
-    "da-phan-cong": { label_id: "assignedStatus", className: "group-status--assigned" },
-}
+export const PRIORITY_LABELS: Record<number, TranslationKey> = {
+    3: "priorityUrgent",
+    2: "priorityHigh",
+    1: "priorityMedium",
+    0: "priorityLow"
+};
 
 export const AUTOMATION_TABS: LocalizedOption[] = [
     { id: "config" as AutomationSubTab, label_id: "configTab" },
@@ -104,13 +91,6 @@ export const LOGIN_ERROR_MESSAGES: LocalizedOption[] = [
     { id: "cookies_invalid", label_id: "login_err_cookies_invalid" },
     { id: "unknown", label_id: "login_err_unknown" },
 ];
-
-export const LOGIN_ERROR_MESSAGES2: Record<string, string> = {
-    no_accounts: "No account is linked. Please add an account first.",
-    no_cookies: "This account has no saved session. Please re-authenticate.",
-    cookies_invalid: "The session for this account has expired or is invalid. Please log in again.",
-    unknown: "Login failed. Please contact support or try again.",
-};
 
 export type MainTab = "dashboard" | "automation" | "group" | "eviden";
 

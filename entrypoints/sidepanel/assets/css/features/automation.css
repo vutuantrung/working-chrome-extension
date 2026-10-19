@@ -388,10 +388,6 @@
   min-height: 0;
   min-width: 0;
   overflow: hidden;
-  background: #f5f6fa
-}
-
-.automation-page>.workspace-page-header {
-  flex-shrink: 0;
-  padding: 24px 26px 12px
+  background: #f5f6fa;
+  padding: 18px 14px 34px;
 }

@@ -212,7 +212,8 @@ function AutomationPage({ activeView, setActiveSubTab }: AutomationPageProps) {
   const scheduleInfo = parseScheduleInfo();
 
   return (
-    <div className="automation-page">
+    <main className="automation-page">
+
       <WorkspacePageHeader
         eyebrow={t("automationEyebrow")}
         title={t("navAutomation")}
@@ -280,7 +281,7 @@ function AutomationPage({ activeView, setActiveSubTab }: AutomationPageProps) {
           onClose={handleCloseJsonEditor}
         />
       )}
-    </div>
+    </main>
   );
 }
 

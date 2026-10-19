@@ -20,8 +20,20 @@ import {
   getPlatformCookieDomains,
   SOCIAL_COOKIE_DOMAINS,
 } from "../../sidepanel/utils/social-cookie-domains";
-import { getSelectedPlatformId } from "../helpers/helpers";
-import type { PlatformId } from "../types/types";
+import {
+  getSelectedPlatformId,
+  normalizeSameSite,
+  parseList,
+  parsePersonaRecord
+} from "../helpers/helpers";
+import type {
+  PlatformId,
+  AuthContextType,
+  LoginResult,
+  NonFacebookPlatform,
+  SocialAccount,
+  User
+} from "../types/types";
 import {
   extractPersonaSocialAccounts,
   normalizePersonaSocialAccount,
@@ -35,8 +47,6 @@ import {
 } from "../../sidepanel/utils/resolveEffectiveProxy";
 import { decryptCookieString } from "../../sidepanel/utils/cookieCipher";
 import { PLATFORM_URLS } from "../helpers/constants";
-import { AuthContextType, LoginResult, NonFacebookPlatform, SocialAccount, User } from "../types/types";
-import { normalizeSameSite, parseList, parsePersonaRecord } from "../helpers/helpers";
 import { useTranslation } from "../helpers/i18n";
 
 const MANUAL_PLATFORM_COOKIES_KEY = "local:manualPlatformCookies";
