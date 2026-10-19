@@ -1,5 +1,5 @@
 import type { TranslationKey } from "./i18n";
-import { AutomationSubTab, PlatformId, Tab } from "../types/types";
+import { AutomationSubTab, PlatformId } from "../types/types";
 
 export const SELECTED_PLATFORM_KEY = "selectedPlatform";
 
@@ -10,12 +10,7 @@ export const TASK_STATES = {
     CANCELED: "canceled",
 };
 
-export const PRIORITY_LABELS: { [key: number]: string } = {
-    3: "Urgent",
-    2: "High",
-    1: "Medium",
-    0: "Low",
-};
+export const PRIORITY_LABELS: Record<number, TranslationKey> = { 3: "priorityUrgent", 2: "priorityHigh", 1: "priorityMedium", 0: "priorityLow" };
 
 export const STATUS_KEY = {
     ALL: "all",
@@ -23,46 +18,42 @@ export const STATUS_KEY = {
     DA_PHAN_CONG: "da-phan-cong",
 }
 
-export const STATUS_FILTERS: { id: string; label: string }[] = [
-    { id: "all", label: "Tất cả" },
-    { id: "da-ra-soat", label: "Đã rà soát" },
-    { id: "da-phan-cong", label: "Đã phân công" },
-];
+export const STATUS_FILTERS = [
+    { id: "all", label_id: "all" },
+    { id: "da-ra-soat", label_id: "reviewedStatus" },
+    { id: "da-phan-cong", label_id: "assignedStatus" },
+] satisfies LocalizedOption[];
 
-export const STATUS_CONFIG: Record<string, { label: string; className: string }> = {
-    "all": { label: "Tất cả", className: "" },
-    "da-ra-soat": { label: "Đã rà soát", className: "group-status--reviewed" },
-    "da-phan-cong": { label: "Đã phân công", className: "group-status--assigned" },
+export const STATUS_CONFIG: Record<string, { label_id: TranslationKey; className: string }> = {
+    all: { label_id: "all", className: "" },
+    "da-ra-soat": { label_id: "reviewedStatus", className: "group-status--reviewed" },
+    "da-phan-cong": { label_id: "assignedStatus", className: "group-status--assigned" },
 };
 
-export const AUTOMATION_TABS: Tab<AutomationSubTab>[] = [
-    { id: "config", label: "Config" },
-    { id: "monitor", label: "Monitor" },
-];
+export const AUTOMATION_TABS = [
+    { id: "config" as AutomationSubTab, label_id: "configTab" },
+    { id: "monitor" as AutomationSubTab, label_id: "monitorTab" },
+] satisfies LocalizedOption<AutomationSubTab>[];
 
 export const PLATFORM_OPTIONS = [
-    { id: "facebook", label: "Facebook" },
-    { id: "youtube", label: "Youtube" },
-    { id: "tiktok", label: "Tiktok" },
-    { id: "threads", label: "Threads" },
-    { id: "telegram", label: "Telegram" },
-    { id: "twitter", label: "Twitter" },
-    { id: "discord", label: "Discord" },
-];
+    { id: "facebook", label_id: "platformFacebook" },
+    { id: "youtube", label_id: "platformYoutube" },
+    { id: "tiktok", label_id: "platformTiktok" },
+    { id: "threads", label_id: "platformThreads" },
+    { id: "telegram", label_id: "platformTelegram" },
+    { id: "twitter", label_id: "platformTwitter" },
+    { id: "discord", label_id: "platformDiscord" },
+] satisfies LocalizedOption[];
 
 export const TYPE_OPTIONS = [
-    { id: "group", label: "Nhóm công khai" },
-    { id: "private_group", label: "Nhóm kín" },
-    { id: "profile", label: "Cá nhân" },
-    { id: "fanpage", label: "Trang" },
-];
+    { id: "group", label_id: "group" },
+    { id: "private_group", label_id: "private_group" },
+    { id: "profile", label_id: "profile" },
+    { id: "fanpage", label_id: "fanpage" },
+] satisfies LocalizedOption[];
 
-export const PLATFORM_LABELS: Record<PlatformId, string> = {
-    facebook: "Facebook",
-    tiktok: "TikTok",
-    x: "X (Twitter)",
-    threads: "Threads",
-    youtube: "Youtube"
+export const PLATFORM_LABELS: Record<PlatformId, TranslationKey> = {
+    facebook: "platformFacebook", tiktok: "platformTiktok", x: "platformX", threads: "platformThreads", youtube: "platformYoutube"
 };
 
 export const PLATFORM_URLS: Record<string, string> = {
@@ -103,36 +94,15 @@ export const DEFAULT_CASE_ID = 'new';
 export const DEFAULT_PAGE_SIZE = 10;
 
 export const PLATFORM_CHANGED_EVENT = "hydra:login-success-redirectplatform-changed";
-/** Translate display labels at render time; keep IDs and API values unchanged. */
-export const TYPE_OPTION_KEYS: Record<string, TranslationKey> = {
-  group: "group",
-  private_group: "private_group",
-  profile: "profile",
-  fanpage: "fanpage",
-};
-export const STATUS_FILTER_KEYS: Record<string, TranslationKey> = {
-  all: "all",
-  "da-ra-soat": "reviewedStatus",
-  "da-phan-cong": "assignedStatus",
-};
-export const AUTOMATION_TAB_KEYS: Record<AutomationSubTab, TranslationKey> = {
-  config: "configTab",
-  monitor: "monitorTab",
-};
-export const PRIORITY_KEYS: Record<number, TranslationKey> = {
-  3: "priorityUrgent",
-  2: "priorityHigh",
-  1: "priorityMedium",
-  0: "priorityLow",
-};
 
-export function localizeOptions<T extends { id: string; label: string }>(
-  options: T[],
-  keys: Record<string, TranslationKey>,
+/** Options keep stable IDs. label_id is a dictionary key, not display text. */
+export type LocalizedOption<T extends string = string> = { id: T; label_id: TranslationKey };
+export function localizeOptions<T extends string, O extends LocalizedOption<T>>(
+  options: readonly O[],
   t: (key: TranslationKey) => string,
-): T[] {
-  return options.map(option => ({
+): Array<Omit<O, "label_id"> & { label: string }> {
+  return options.map(({ label_id, ...option }) => ({
     ...option,
-    label: keys[option.id] ? t(keys[option.id]) : option.label,
-  }));
+    label: t(label_id),
+  })) as Array<Omit<O, "label_id"> & { label: string }>;
 }
