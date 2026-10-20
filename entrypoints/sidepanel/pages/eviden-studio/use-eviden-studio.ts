@@ -1,13 +1,20 @@
+import { AxiosError } from "axios";
 import { useState, useEffect, useCallback, useRef } from "react";
 import type { ProfileCase } from "../../types/types";
 import {
   extensionStorage,
   screenshotCapture,
 } from "../../../sidepanel/application/services/SidepanelServices";
-import { AxiosError } from "axios";
 import { ImageItem, ImageMeta, SavedImage } from "../../types/types";
-import { buildImageUrl, createProfileCase, defaultPendingMeta, defaultSavedMeta, getCaseStorageKey, itemKey, patchCaseInfo, postCaseImages } from "../../helpers/helpers";
+import {
+  buildImageUrl,
+  defaultPendingMeta,
+  defaultSavedMeta,
+  getCaseStorageKey,
+  itemKey
+} from "../../helpers/helpers";
 import { DEFAULT_CASE_ID } from "../../helpers/constants";
+import api from "../../infrastructure/api";
 
 
 export interface Screenshot {
@@ -239,7 +246,7 @@ export function useEvidenStudio({ selectedCase, onSaved }: UseEvidenStudioOption
 
       if (isNewCase) {
         // CREATE — single multipart POST with case info + images
-        updatedCase = await createProfileCase(
+        updatedCase = await api.profileCase.createProfileCase(
           { ...selectedCase, ...caseFields },
           pending.map((p) => p.dataUrl),
           pendingMeta,
@@ -248,7 +255,7 @@ export function useEvidenStudio({ selectedCase, onSaved }: UseEvidenStudioOption
       } else {
         const results = await Promise.allSettled([
           // 1. PATCH /cases/:id — case info + metadata edits + deletions (JSON)
-          patchCaseInfo(
+          api.profileCase.patchCaseInfo(
             selectedCase.id!,
             {
               name: selectedCase.name !== caseFields.name ? caseFields.name : undefined,
@@ -267,7 +274,7 @@ export function useEvidenStudio({ selectedCase, onSaved }: UseEvidenStudioOption
 
           // 2. POST /cases/:id/images — new files only (multipart), skipped if none
           ...(pending.length > 0
-            ? [postCaseImages(
+            ? [api.profileCase.postCaseImages(
               selectedCase.id!,
               pending.map((p) => p.dataUrl),
               pendingMeta,

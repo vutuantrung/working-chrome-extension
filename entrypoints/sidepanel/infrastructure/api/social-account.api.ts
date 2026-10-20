@@ -18,7 +18,7 @@ export const getSocialAccountGroups = async (id: string, offset?: number, limit?
     return response.data;
 };
 
-export const getSocialAccountsByPersona = async (persona_id: string, filter?: any) => {
+export const getSocialAccountsByPersona = async (personaId: string, filter?: any) => {
     const response = await http.get(
         "/social-account",
         {
@@ -26,7 +26,7 @@ export const getSocialAccountsByPersona = async (persona_id: string, filter?: an
                 filter: JSON.stringify({
                     offset: 0,
                     limit: 100,
-                    where: { persona_id },
+                    where: { persona_id: personaId },
                     ...(filter || {}),
                 }),
             },

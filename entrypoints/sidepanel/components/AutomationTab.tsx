@@ -1,3 +1,4 @@
+import "../assets/css/components/AutomationTab.css";
 import { useState, useEffect, useMemo, useRef } from "react";
 import { User } from "../types/types";
 import {
@@ -6,7 +7,6 @@ import {
 } from "../application/services/SidepanelServices";
 import { FaClock, FaPlayCircle, FaCheckCircle, FaSpinner } from "../assets/constants/icons";
 import { isTimeValid } from "../helpers/helpers";
-import "../assets/css/components/AutomationTab.css";
 import { useTranslation } from "../helpers/i18n";
 
 interface AutomationTabProps {

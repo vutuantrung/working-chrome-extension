@@ -1,6 +1,6 @@
 import { http } from "../../helpers/helpers-http";
 
-export const getPersonas = async (user_id: string, filter?: any) => {
+export const getPersonas = async (userId: string, filter?: any) => {
     const response = await http.get(
         "/personas",
         {
@@ -8,7 +8,7 @@ export const getPersonas = async (user_id: string, filter?: any) => {
                 filter: JSON.stringify({
                     offset: 0,
                     limit: 500,
-                    where: { user_id },
+                    where: { user_id: userId },
                     ...(filter || {}),
                 }),
             },

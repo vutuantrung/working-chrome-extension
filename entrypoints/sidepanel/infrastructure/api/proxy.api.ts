@@ -1,13 +1,13 @@
 import { http } from "../../helpers/helpers-http";
 
-export const getProxiesByPersona = async (persona_id: string, filter?: any) => {
+export const getProxiesByPersona = async (personaId: string, filter?: any) => {
     const response = await http.get(
         "/proxies", {
         params: {
             filter: JSON.stringify({
                 offset: 0,
                 limit: 100,
-                where: { persona_id },
+                where: { persona_id: personaId },
                 ...(filter || {}),
             }),
         },

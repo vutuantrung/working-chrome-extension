@@ -9,8 +9,8 @@ import {
 import { CaseFilter, ProfileCase, GetProfileCasesResponse, PlatformId } from "../../types/types";
 import CaseSidebar from "../../components/EvidenStudio/CaseSidebar";
 import CaseDetail from "../../components/EvidenStudio/CaseDetail";
-import { getProfileCases } from "../../helpers/helpers";
 import { useTranslation } from "../../helpers/i18n";
+import api from "../../infrastructure/api";
 
 interface EvidenStudioProps {
   platform: PlatformId
@@ -44,7 +44,7 @@ function EvidenStudio({ platform }: EvidenStudioProps) {
   useEffect(() => {
     const fetchCases = async () => {
       const { search, limit, offset } = filter;
-      const data = await getProfileCases({
+      const data = await api.profileCase.getProfileCases({
         ...(search ? {
           where: { name: { like: `%${search}%` } }
         } : {}),

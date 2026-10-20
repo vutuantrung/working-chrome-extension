@@ -9,36 +9,36 @@ export interface UpdateExtensionSessionPayload {
 // Login using an apikey instead of username/password.
 // Sends the apikey to the same signin endpoint; the server returns
 // the same session response so downstream logic is identical.
-export const loginWithApikeyApi = async (apikey: string, extension_id: string) => {
+export const loginWithApikeyApi = async (apikey: string, extensionId: string) => {
   const response = await http.post(
     "/extension-sessions/signin",
     {
       api_key: apikey,
-      extension_id: extension_id || "",
+      extension_id: extensionId || "",
     });
   return response.data;
 };
 
-export const logoutApi = async (extension_id: string) => {
+export const logoutApi = async (extensionId: string) => {
   const response = await http.post(
     "/extension-sessions/signout",
     {
-      extension_id
+      extension_id: extensionId
     });
   return response.data;
 };
 
-export const updateExtensionSession = async (extension_id: string, payload: UpdateExtensionSessionPayload) => {
+export const updateExtensionSession = async (extensionId: string, payload: UpdateExtensionSessionPayload) => {
   const response = await http.patch(
-    `/extension-sessions/${extension_id}`,
+    `/extension-sessions/${extensionId}`,
     payload,
   );
   return response.data;
 };
 
-export const getExtensionConfigInfo = async (extension_config_id: string, filter?: any) => {
+export const getExtensionConfigInfo = async (extensionConfigId: string, filter?: any) => {
   const response = await http.get(
-    `/extension-configs/${extension_config_id}`,
+    `/extension-configs/${extensionConfigId}`,
     {
       params: {
         relation_proxy: true,
