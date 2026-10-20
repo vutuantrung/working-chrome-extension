@@ -4,7 +4,7 @@ import {
   extensionCommands,
   extensionStorage,
   localStorageService,
-} from "../../../entrypoints/sidepanel/application/services/SidepanelServices";
+} from "../application/services/SidepanelServices";
 import {
   HashRouter as Router,
   Routes,

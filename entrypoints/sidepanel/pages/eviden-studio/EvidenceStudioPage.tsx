@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import {
   browserTabs,
   extensionStorage as storageService,
-} from "../../../sidepanel/application/services/SidepanelServices";
+} from "../../application/services/SidepanelServices";
 import { CaseFilter, ProfileCase, GetProfileCasesResponse, PlatformId } from "../../types/types";
 import CaseSidebar from "../../components/EvidenStudio/CaseSidebar";
 import CaseDetail from "../../components/EvidenStudio/CaseDetail";

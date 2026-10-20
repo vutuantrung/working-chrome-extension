@@ -4,7 +4,7 @@ import {
   appStorage,
   extensionStorage,
   localStorageService,
-} from "../../../../entrypoints/sidepanel/application/services/SidepanelServices";
+} from "../../application/services/SidepanelServices";
 import { useAuth } from "../../contexts/AuthContext";
 import {
   getPlatformLabel,

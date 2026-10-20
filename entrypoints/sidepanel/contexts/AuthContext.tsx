@@ -13,13 +13,13 @@ import {
   extensionCommands,
   extensionStorage,
   localStorageService,
-} from "../../sidepanel/application/services/SidepanelServices";
+} from "../application/services/SidepanelServices";
 import type { BrowserCookie, CookieSetDetails, StorageChangeMap } from "../types/BrowserPorts";
 import api from "../infrastructure/api"
 import {
   getPlatformCookieDomains,
   SOCIAL_COOKIE_DOMAINS,
-} from "../../sidepanel/utils/social-cookie-domains";
+} from "../utils/social-cookie-domains";
 import {
   getSelectedPlatformId,
   normalizeSameSite,
@@ -44,8 +44,8 @@ import {
   resolveEffectiveProxy,
   findExtensionAccountProxyByPlatform,
   isActiveProxy,
-} from "../../sidepanel/utils/resolveEffectiveProxy";
-import { decryptCookieString } from "../../sidepanel/utils/cookieCipher";
+} from "../utils/resolveEffectiveProxy";
+import { decryptCookieString } from "../utils/cookieCipher";
 import { PLATFORM_URLS } from "../helpers/constants";
 import { useTranslation } from "../helpers/i18n";
 

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import { appStorage } from "../../../../entrypoints/sidepanel/application/services/SidepanelServices";
-import { hasExtensionConfigId } from "../../../../entrypoints/sidepanel/utils/resolveEffectiveProxy";
+import { appStorage } from "../../application/services/SidepanelServices";
+import { hasExtensionConfigId } from "../../utils/resolveEffectiveProxy";
 import { FaArrowRight, FaEye, FaEyeSlash, FaLock, FaShieldAlt, FaUser } from "../../assets/constants/icons";
 import { User } from "../../types/types";
 import "../../assets/css/pages/Login.css";

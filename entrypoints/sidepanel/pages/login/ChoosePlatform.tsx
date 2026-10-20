@@ -5,11 +5,11 @@ import {
   appStorage,
   extensionStorage,
   localStorageService,
-} from "../../../../entrypoints/sidepanel/application/services/SidepanelServices";
-import api from '../../../../entrypoints/sidepanel/infrastructure/api';
+} from "../../application/services/SidepanelServices";
+import api from '../../infrastructure/api';
 import { useLocation, useNavigate } from "react-router-dom";
 import { setSelectedPlatformId } from "../../helpers/helpers";
-import { normalizePersonaSocialAccount } from "../../../../entrypoints/sidepanel/utils/resolveEffectiveProxy";
+import { normalizePersonaSocialAccount } from "../../utils/resolveEffectiveProxy";
 import { PLATFORMS } from "../../helpers/helpers-ui";
 import { useAuth } from "../../contexts/AuthContext";
 import type { PlatformId, PlatformObject, SocialAccount } from "../../types/types";

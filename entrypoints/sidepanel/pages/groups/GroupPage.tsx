@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { FiFilter, FiRefreshCw, FiAlertCircle, FiLayers, FiList } from "../../assets/constants/icons";
 import { FaChevronLeft, FaChevronRight } from "../../assets/constants/icons";
 
-import { appStorage } from "../../../../entrypoints/sidepanel/application/services/SidepanelServices";
+import { appStorage } from "../../application/services/SidepanelServices";
 import { useAuth } from "../../contexts/AuthContext";
 import { User } from "../../types/types";
 

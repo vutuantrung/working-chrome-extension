@@ -10,7 +10,7 @@ import {
   appStorage,
   extensionCommands,
   extensionStorage as storageService,
-} from "../../../sidepanel/application/services/SidepanelServices";
+} from "../../application/services/SidepanelServices";
 import { AutomationSubTab } from "../../types/types";
 import TopTabs from "../../components/TopTabs";
 import { AUTOMATION_TABS, localizeOptions } from "../../helpers/constants";

@@ -4,7 +4,7 @@ import type { ProfileCase } from "../../types/types";
 import {
   extensionStorage,
   screenshotCapture,
-} from "../../../sidepanel/application/services/SidepanelServices";
+} from "../../application/services/SidepanelServices";
 import { ImageItem, ImageMeta, SavedImage } from "../../types/types";
 import {
   buildImageUrl,

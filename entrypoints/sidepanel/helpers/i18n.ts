@@ -118,7 +118,7 @@ const dictionary = {
     login_err_unknown: "Đăng nhập thất bại. Vui lòng liên hệ hỗ trợ hoặc thử lại.", greeting: "Xin chào"
 
   }
-} as const;
+}
 
 export type TranslationKey = keyof typeof dictionary.en;
 export function translate(language: AppLanguage, key: TranslationKey): string {
